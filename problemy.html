@@ -35,7 +35,7 @@
           <li>Zamknij Serial Monitor i Plotter – czasem blokują port.</li>
         </ul></td></tr>
       <tr><td><b>Błąd kompilacji</b> przy <code>ledcAttach</code></td><td>Zainstalowany jest stary pakiet esp32 (2.x). W Menedżerze płytek zainstaluj pakiet <b>esp32 od Espressif w wersji 3.x</b>.</td></tr>
-      <tr><td><b>Błąd: brak pliku VL53L1X.h</b></td><td>Zainstaluj bibliotekę <b><span data-k="czujnikOdleglosci.biblioteka">VL53L1X (Pololu)</span></b> w Menedżerze bibliotek.</td></tr>
+      <tr><td><b>Błąd: brak pliku VL53L0X.h</b></td><td>Zainstaluj bibliotekę <b><span data-k="czujnikOdleglosci.biblioteka">VL53L0X (Pololu)</span></b> w Menedżerze bibliotek.</td></tr>
       <tr><td><b>Skaner I2C nic nie widzi</b></td><td>
         <ul>
           <li>Odłącz USB i sprawdź przewody według kolorów: 3V3, GND, SDA → pin <b data-k="piny.sda">6</b>, SCL → pin <b data-k="piny.scl">7</b>.</li>
@@ -46,17 +46,17 @@
         </ul></td></tr>
       <tr><td><b>Skaner widzi 0x29, ale program pisze „Nie widzę lasera!”</b></td><td>
         <ul>
-          <li>Pod adresem 0x29 może być czujnik <b>VL53L0X</b> zamiast VL53L1X – oba mają ten sam adres, a biblioteka VL53L1X nie obsługuje VL53L0X.</li>
-          <li>Prowadzący sprawdza to szkicem <code>narzedzia/rozpoznaj_laser</code> – wypisuje, jaki czujnik jest podłączony.</li>
-          <li>Jeśli to VL53L1X: odłącz i podłącz USB (czujnik czasem nie kończy startu), sprawdź zasilanie 3V3.</li>
+          <li>Odłącz i podłącz USB – czujnik czasem nie kończy startu. Sprawdź zasilanie 3V3.</li>
+          <li>Czy jest zainstalowana biblioteka <b>VL53L0X</b> od Pololu (a nie VL53L1X)?</li>
+          <li>Prowadzący może sprawdzić model czujnika szkicem <code>narzedzia/rozpoznaj_laser</code> – VL53L0X i VL53L1X mają ten sam adres 0x29.</li>
         </ul></td></tr>
       <tr><td><b>Czujnik zwraca 0 albo 65535</b></td><td>
         <ul>
-          <li>65535 (albo inne bardzo duże liczby) zwykle znaczy, że czujnik nie odpowiedział – przerwana rozmowa po I2C. Sprawdź SDA, SCL i GND.</li>
+          <li>Około 8190 znaczy, że czujnik nic nie widzi (za daleko). 65535 zwykle znaczy, że czujnik nie odpowiedział – przerwana rozmowa po I2C. Sprawdź SDA, SCL i GND.</li>
           <li>Uruchom skaner L02: czy oba adresy są widoczne?</li>
           <li>Przewody SDA i SCL trzymaj przy GND, z dala od przewodów silników.</li>
           <li>Czujnik odległości: zdejmij folię ochronną z okienka. Sprawdź, czy w stożku nie ma nóżki albo prowadnicy.</li>
-          <li>Czujnik odległości: zbyt blisko podłogi (poniżej kilku centymetrów) pomiar może być zły – status różny od 0.</li>
+          <li>Czujnik odległości: zbyt blisko podłogi (poniżej kilku centymetrów) pomiar może być zły.</li>
         </ul></td></tr>
       <tr><td><b>Płytka się resetuje</b> (znów widać napis powitalny)</td><td>
         <ul>

@@ -201,7 +201,7 @@
       silniki: { x: 530, y: 30, t: "Silniki 816", o: "Cztery silniki szczotkowe. Im większa moc z ESC, tym szybciej się kręcą." },
       usb: { x: 20, y: 190, t: "Komputer", t2: "USB 5 V", o: "Port USB komputera daje 5 V. Tym kablem zasilamy ESP32 i wgrywamy programy." },
       esp: { x: 190, y: 190, t: "ESP32-C6", t2: "5 V → 3,3 V", o: "Na płytce ESP32 jest mały stabilizator, który robi z 5 V napięcie 3,3 V. Mikrokontroler pracuje na 3,3 V i daje 3,3 V na pinie 3V3." },
-      czujniki: { x: 360, y: 190, t: "Czujniki", t2: "MPU6050, VL53L1X", o: "Czujniki zasilamy z pinu 3V3 płytki ESP32. Ich sygnały też mają 3,3 V, więc mogą rozmawiać z ESP32 bezpośrednio." }
+      czujniki: { x: 360, y: 190, t: "Czujniki", t2: "MPU6050, VL53L0X", o: "Czujniki zasilamy z pinu 3V3 płytki ESP32. Ich sygnały też mają 3,3 V, więc mogą rozmawiać z ESP32 bezpośrednio." }
     };
     var s = '<svg viewBox="0 0 680 330" role="img" aria-label="Schemat napięć na stanowisku">' +
       '<defs><marker id="np-gr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#4A5060"/></marker></defs>';
@@ -787,7 +787,7 @@
   // 10. Stożek widzenia czujnika odległości
   // =====================================================================
   R.stozek = function (box) {
-    var kat = ((K.czujnikOdleglosci || {}).stozekStopnie || 27) / 2;
+    var kat = ((K.czujnikOdleglosci || {}).stozekStopnie || 25) / 2;
     var tg = Math.tan(kat * Math.PI / 180);
     html(box, '<svg viewBox="0 0 600 380" role="img" aria-label="Widok z boku: stożek widzenia czujnika odległości"></svg>' +
       '<div class="sterowanie">' + suwak("h", "Wysokość drona", 100, 800, 10, 400) + suwak("d", "Odległość prowadnicy od czujnika", 0, 200, 5, 120) + '</div>' +
@@ -863,7 +863,7 @@
       return g;
     }
     s += modul(60, (K.mpu || {}).model || "MPU6050", hex((K.mpu || {}).adres || 0x68), naMpu, "#1F4F8A");
-    s += modul(210, (K.czujnikOdleglosci || {}).model || "VL53L1X", hex((K.czujnikOdleglosci || {}).adres || 0x29), naLaser, "#2E6B4F");
+    s += modul(210, (K.czujnikOdleglosci || {}).model || "VL53L0X", hex((K.czujnikOdleglosci || {}).adres || 0x29), naLaser, "#2E6B4F");
     // magistrala: 4 pionowe linie
     SYGNALY.forEach(function (sy, i) {
       var x = 190 + i * 18, kk = kolor(P[sy]);
@@ -918,7 +918,7 @@
     ];
     box.classList.add("tabela-kontener");
     box.innerHTML = "<table><thead><tr><th>Przewód</th><th>Kolor</th><th>Pin na MPU6050</th><th>Pin na " +
-      ((K.czujnikOdleglosci || {}).model || "VL53L1X") + "</th><th>Pin na ESP32</th></tr></thead><tbody>" +
+      ((K.czujnikOdleglosci || {}).model || "VL53L0X") + "</th><th>Pin na ESP32</th></tr></thead><tbody>" +
       w.map(function (r) {
         return "<tr><td><b>" + r[0] + "</b></td><td><span class=\"kolor-przewodu\" style=\"background:" + kolor(P[r[0]]) + "\"></span>" + (P[r[0]] || "") +
           "</td><td>" + r[1] + "</td><td>" + r[2] + "</td><td><b>" + r[3] + "</b></td></tr>";

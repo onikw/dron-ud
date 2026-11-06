@@ -46,7 +46,7 @@
     <li>Goldpiny przylutowane do wszystkich czujników (MPU6050 i czujnik odległości).</li>
     <li>Sprawdzona biegunowość wszystkich silników (test niżej). Jeśli wynik różni się od <code>js/config.js</code> – popraw config.</li>
     <li>Śruby i nakrętki w kilku długościach na każdym stole (zespoły same dobierają długość).</li>
-    <li>Na każdym komputerze: Arduino IDE 2.x, pakiet <b>esp32 (Espressif) 3.x</b>, biblioteka <b><span data-k="czujnikOdleglosci.biblioteka">VL53L1X (Pololu)</span></b>. Test: kompilacja <code>L01_pierwszy_program</code>.</li>
+    <li>Na każdym komputerze: Arduino IDE 2.x, pakiet <b>esp32 (Espressif) 3.x</b>, biblioteka <b><span data-k="czujnikOdleglosci.biblioteka">VL53L0X (Pololu)</span></b>. Test: kompilacja <code>L01_pierwszy_program</code>.</li>
     <li>Kable I2C około 1 m, 4 przewody w kolorach z <code>config.js</code>.</li>
     <li>Na każdej platformie: płytka stykowa z wpiętym ESP32, kabel USB z transmisją danych.</li>
     <li>Multimetr, zasilacz laboratoryjny (albo bateria 1,5 V) i jeden zapasowy silnik 816 do doświadczenia.</li>
@@ -90,9 +90,9 @@
   <h2 id="uwagi">Uwagi techniczne</h2>
   <ul>
     <li><b>I2C na kablu 1 m:</b> szkice ustawiają <code>Wire.setClock(100000)</code> i <code>Wire.setTimeOut(50)</code>. Przy kłopotach: SDA i SCL skręcone z GND, krótsze przewody, ewentualnie dodatkowe rezystory podciągające 4,7 kΩ do 3V3 na platformie.</li>
-    <li><b>Stożek czujnika odległości (~27°):</b> na wysokości 50 cm stożek ma u dołu ok. 24 cm szerokości. Prowadnica bliżej niż ok. 12 cm od osi czujnika może wejść w stożek. Najprościej odsunąć prowadnicę od osi czujnika. Da się też zawęzić pole widzenia czujnika (ROI), ale biblioteka Pololu nie ma do tego gotowej funkcji – trzeba zapisać rejestry <code>ROI_CONFIG__USER_ROI_*</code> przez <code>writeReg()</code>.</li>
+    <li><b>Stożek czujnika odległości (~25°):</b> na wysokości 50 cm stożek ma u dołu ok. 22 cm szerokości. Prowadnica bliżej niż ok. 11 cm od osi czujnika może wejść w stożek. Najprościej odsunąć prowadnicę od osi czujnika. Da się też zawęzić pole widzenia czujnika (ROI), ale biblioteka Pololu nie ma do tego gotowej funkcji – trzeba zapisać rejestry <code>ROI_CONFIG__USER_ROI_*</code> przez <code>writeReg()</code>.</li>
     <li><b>Skaner widzi 0x29, a L03 pisze „Nie widzę lasera!”:</b> wgraj <code>narzedzia/rozpoznaj_laser/rozpoznaj_laser.ino</code> – rozpozna, czy to VL53L0X czy VL53L1X. Biblioteka Pololu VL53L1X przy innym modelu kończy <code>init()</code> błędem.</li>
-    <li><b>Czujnik VL53L0X zamiast VL53L1X:</b> biblioteka Pololu „VL53L0X”, zasięg ok. 1,2 m. Zmienić trzeba L03, L08, L09, L10 (inne nazwy funkcji: <code>init()</code>, <code>setMeasurementTimingBudget()</code>, <code>startContinuous()</code>, <code>readRangeContinuousMillimeters()</code>) oraz pole <code>czujnikOdleglosci</code> w <code>config.js</code>.</li>
+    <li><b>Czujnik odległości to VL53L0X</b> (sprawdzone szkicem <code>rozpoznaj_laser</code>). Szkice L03, L08, L09 i L10 używają biblioteki Pololu „VL53L0X”. Ta biblioteka nie ma trybu Short ani statusu pomiaru: „nic nie widzę” to ok. 8190 mm, brak odpowiedzi to 65535.</li>
     <li><b>Tryb sterowania ESC:</b> domyślnie <code>TRYB_MOSFET</code> (PWM 20 kHz). Dla ESC z wejściem RC zmień jeden <code>#define</code> na <code>TRYB_ESC_RC</code> (1000–2000 µs, 50 Hz).</li>
     <li><b>Piny ESP32-C6:</b> nigdy nie używamy dla ESC pinów 4, 5, 8, 9, 15 (startowe), 12, 13 (USB), 16, 17 (UART0). BOOT (GPIO9) jest czytany po starcie jako STOP awaryjny.</li>
   </ul>

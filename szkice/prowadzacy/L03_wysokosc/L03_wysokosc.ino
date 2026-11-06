@@ -11,11 +11,11 @@
  *   - Kiedy pomiar jest dobry, a kiedy nie.
  *
  *  CO MUSI BYĆ PODŁĄCZONE
- *   - Laser VL53L1X na dronie, patrzy w dół na podłogę.
+ *   - Czujnik VL53L0X na dronie, patrzy w dół na podłogę.
  *   - Kabel z drona (ok. 1 m) wpięty w płytkę stykową:
  *     czerwony = 3V3, czarny = GND, żółty = SDA -> pin 6,
  *     niebieski = SCL -> pin 7.
- *   - Biblioteka „VL53L1X” od Pololu (Menedżer bibliotek).
+ *   - Biblioteka „VL53L0X” od Pololu (Menedżer bibliotek).
  *
  *  JAK TO DZIAŁA
  *   Czujnik wysyła błysk niewidzialnego światła i mierzy,
@@ -29,31 +29,34 @@
  *   odległość = prędkość światła × czas / 2   (tam i z powrotem)
  *   Światło pokonuje 1 mm w ok. 3 bilionowe części sekundy (3 ps)!
  *
- *   Tryb Short: do ok. 1,3 m, mniej czuły na słońce.
- *   Budżet czasu 33 ms: tyle trwa jeden pomiar (ok. 30 na sekundę).
- *   STATUS 0 = dobry pomiar. Inna liczba = coś nie tak
- *   (za blisko, za daleko, za słabe odbicie).
+ *   Zasięg: do ok. 1,2 m. Budżet czasu 33 ms: tyle trwa jeden pomiar
+ *   (ok. 30 na sekundę). Gdy czujnik nic nie widzi (za daleko),
+ *   podaje ok. 8190 mm. Taki pomiar pokazujemy na wykresie jako 0.
  *
  *  ZADANIA
  *   1. Zmierz odległość do dłoni. Zapisz ją w DLON_MM.
- *   2. Zbliżaj dłoń powoli. Znajdź najmniejszą odległość, przy której
- *      status jest jeszcze 0. Zapisz ją w NAJBLIZEJ_MM.
- *   3. Porównaj jasną i ciemną kartkę: wypisz siłę sygnału.
+ *   2. Zbliżaj dłoń powoli. Przy jakiej najmniejszej odległości wynik
+ *      jeszcze zgadza się z linijką? Zapisz ją w NAJBLIZEJ_MM.
+ *   3. Z jakiej największej odległości czujnik widzi jasną kartkę?
+ *      Zapisz w NAJDALEJ_MM. Potem sprawdź ciemną – widzi z daleka?
  */
 
 #include <Wire.h>
-#include <VL53L1X.h>
+#include <VL53L0X.h>
 
 // ================== KONFIGURACJA ==================
 const int PIN_SDA = 6;
 const int PIN_SCL = 7;
 
-// ROZWIĄZANIE 1 i 2 (przykładowe wyniki – zmierz swoje!):
+// ROZWIĄZANIA 1–3 (przykładowe wyniki – zmierz swoje!):
 const int DLON_MM = 150;
-const int NAJBLIZEJ_MM = 40;
+const int NAJBLIZEJ_MM = 30;
+const int NAJDALEJ_MM = 1100;
 // ==================================================
 
-VL53L1X laser;   // nasz czujnik
+const int NIC_NIE_WIDZI_MM = 8000;   // VL53L0X daje ok. 8190, gdy nic nie widzi
+
+VL53L0X laser;   // nasz czujnik
 
 // Uruchamia laser. Zwraca false, gdy się nie udało.
 bool laserStart() {
@@ -62,36 +65,38 @@ bool laserStart() {
   Wire.setTimeOut(50);     // nie czekaj w nieskończoność, gdy czujnik milczy
   laser.setTimeout(500);
   if (!laser.init()) return false;
-  laser.setDistanceMode(VL53L1X::Short);     // tryb krótki
-  laser.setMeasurementTimingBudget(33000);   // 33 ms (w mikrosekundach)
-  laser.startContinuous(33);                 // mierz bez przerwy
+  laser.setMeasurementTimingBudget(33000);   // 33 ms na jeden pomiar (w mikrosekundach)
+  laser.startContinuous();                   // mierz bez przerwy
   return true;
+}
+
+// Czy czujnik ma już nowy pomiar? Pytamy rejestr przerwania w czujniku,
+// więc program nie stoi i nie czeka na pomiar.
+bool pomiarGotowy() {
+  return (laser.readReg(VL53L0X::RESULT_INTERRUPT_STATUS) & 0x07) != 0;
 }
 
 void setup() {
   Serial.begin(115200);
   delay(1000);
   while (!laserStart()) {
-    Serial.println("Nie widzę lasera! Uruchom skaner L02. Widzi 0x29? To może być inny model czujnika – zawołaj prowadzącego.");
+    Serial.println("Nie widzę lasera! Uruchom skaner L02. Widzi 0x29? Zawołaj prowadzącego.");
     delay(2000);
   }
   Serial.println("L03: laser działa.");
 }
 
 void loop() {
-  if (laser.dataReady()) {           // nowy pomiar gotowy?
-    laser.read(false);               // odczytaj go (bez czekania)
+  if (pomiarGotowy()) {
+    int mm = laser.readRangeContinuousMillimeters();
+    bool dobry = !laser.timeoutOccurred() && mm < NIC_NIE_WIDZI_MM;
     Serial.print("odleglosc_mm:");
-    Serial.print(laser.ranging_data.range_mm);
-    Serial.print(",status:");
-    Serial.print(laser.ranging_data.range_status);
+    Serial.print(dobry ? mm : 0);      // 0 = nic nie widzi
     Serial.print(",dlon:");
     Serial.print(DLON_MM);
     Serial.print(",najblizej:");
     Serial.print(NAJBLIZEJ_MM);
-    // ROZWIĄZANIE 3: siła odbitego światła (jasne odbija więcej)
-    Serial.print(",sygnal:");
-    Serial.print(laser.ranging_data.peak_signal_count_rate_MCPS);
-    Serial.println();
+    Serial.print(",najdalej:");
+    Serial.println(NAJDALEJ_MM);
   }
 }

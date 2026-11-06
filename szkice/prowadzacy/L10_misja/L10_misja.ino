@@ -41,7 +41,7 @@
  */
 
 #include <Wire.h>
-#include <VL53L1X.h>
+#include <VL53L0X.h>
 
 // ================== MISJA ==================
 // ROZWIĄZANIE: przykładowa misja „schodki w górę i w dół”
@@ -222,7 +222,7 @@ bool czytajKomende() {
 }
 
 // ================== LASER ==================
-VL53L1X laser;
+VL53L0X laser;
 float wysokosc_mm = 0;
 unsigned long czas_pomiaru = 0;
 
@@ -232,16 +232,21 @@ bool laserStart() {
   Wire.setTimeOut(50);     // nie czekaj w nieskończoność, gdy czujnik milczy
   laser.setTimeout(500);
   if (!laser.init()) return false;
-  laser.setDistanceMode(VL53L1X::Short);
-  laser.setMeasurementTimingBudget(33000);
-  laser.startContinuous(33);
+  laser.setMeasurementTimingBudget(33000);   // 33 ms na jeden pomiar (w mikrosekundach)
+  laser.startContinuous();                   // mierz bez przerwy
   return true;
 }
 
-bool dobryPomiar() {
-  int s = laser.ranging_data.range_status;
-  return s == VL53L1X::RangeValid || s == VL53L1X::RangeValidMinRangeClipped ||
-         s == VL53L1X::RangeValidNoWrapCheckFail;
+// Czy czujnik ma już nowy pomiar? Pytamy rejestr przerwania w czujniku,
+// więc program nie stoi i nie czeka na pomiar.
+bool pomiarGotowy() {
+  return (laser.readReg(VL53L0X::RESULT_INTERRUPT_STATUS) & 0x07) != 0;
+}
+
+// Czy pomiar jest dobry? VL53L0X daje ok. 8190 mm, gdy nic nie widzi,
+// a 65535, gdy nie odpowiedział na czas.
+bool dobryPomiar(int mm) {
+  return !laser.timeoutOccurred() && mm < 8000;
 }
 
 // ================== REGULATOR (jak w L09) ==================
@@ -407,10 +412,10 @@ void loop() {
   if (czytajKomende()) obsluzKomende();
   sprawdzPrzycisk();
 
-  if (laser.dataReady()) {
-    laser.read(false);
-    if (dobryPomiar()) {
-      wysokosc_mm = laser.ranging_data.range_mm;
+  if (pomiarGotowy()) {
+    int mm = laser.readRangeContinuousMillimeters();
+    if (dobryPomiar(mm)) {
+      wysokosc_mm = mm;
       czas_pomiaru = millis();
       if (stan != CZEKAJ) maszynaStanow();
       Serial.print("zadana:");

@@ -41,7 +41,7 @@ img/                      zdjęcia (lista niżej) i logo-ud.png
 |:--|:--|:--|
 | 2 (7.11) | `L01_pierwszy_program` | Serial (UART), mruganie diodą RGB_BUILTIN |
 | 2 | `L02_skaner_i2c` | skan adresów 1–126 z nazwami urządzeń |
-| 2 (dla chętnych) | `L03_wysokosc` | czujnik odległości, tryb Short, 33 ms, Plotter |
+| 2 (dla chętnych) | `L03_wysokosc` | czujnik odległości VL53L0X, 33 ms, Plotter |
 | 2 (dla chętnych) | `L04_akcelerometr` | MPU6050 przez Wire: WHO_AM_I, rejestry, g i °/s |
 | 3 (21.11) | `L05_pwm_dioda` | PWM ręcznie i wolno, potem LEDC |
 | 3 | `L06_jeden_silnik` | moc z Serial Monitora, rampa, MAX_MOC |
@@ -50,7 +50,7 @@ img/                      zdjęcia (lista niżej) i logo-ud.png
 | 4 | `L09_trzymaj_wysokosc` | moc zawisu + PID, komendy, anti-windup |
 | 5 (19.12) | `L10_misja` | maszyna stanów, tablica kroków, start „s” |
 
-Każdy szkic jest samodzielny (tylko `Wire` i biblioteka czujnika). I2C: `Wire.setClock(100000)` i `Wire.setTimeOut(50)` (kabel ok. 1 m). Szkice z silnikami: najpierw wyjścia ESC na 0, start rozbrojony, `u` uzbraja, `x`/spacja i BOOT (GPIO9) to STOP, `MAX_MOC` 60%, zawsze rampa. L09 i L10: STOP przy braku pomiaru > 200 ms, wysokości > `WYSOKOSC_MAX` i po `CZAS_MAX`, z wypisaniem powodu. Tryb ESC wybiera jeden `#define`: `TRYB_MOSFET` (domyślny, LEDC 20 kHz, 10 bitów) albo `TRYB_ESC_RC` (1000–2000 µs, 50 Hz).
+Każdy szkic jest samodzielny (tylko `Wire` i biblioteka czujnika). Czujnik odległości to **VL53L0X** (biblioteka Pololu „VL53L0X”). Do rozpoznania modelu służy `narzedzia/rozpoznaj_laser/`. I2C: `Wire.setClock(100000)` i `Wire.setTimeOut(50)` (kabel ok. 1 m). Szkice z silnikami: najpierw wyjścia ESC na 0, start rozbrojony, `u` uzbraja, `x`/spacja i BOOT (GPIO9) to STOP, `MAX_MOC` 60%, zawsze rampa. L09 i L10: STOP przy braku pomiaru > 200 ms, wysokości > `WYSOKOSC_MAX` i po `CZAS_MAX`, z wypisaniem powodu. Tryb ESC wybiera jeden `#define`: `TRYB_MOSFET` (domyślny, LEDC 20 kHz, 10 bitów) albo `TRYB_ESC_RC` (1000–2000 µs, 50 Hz).
 
 ## Jak zmienić piny i układ silników
 
@@ -73,7 +73,6 @@ Te wartości pochodzą z planu kursu i **nie zostały sprawdzone na sprzęcie** 
 - układ silników: M1 przód-lewy CW, M2 przód-prawy CCW, M3 tył-prawy CW, M4 tył-lewy CCW
 - biegunowość: typ A czerwony +, niebieski −; typ B biały +, czarny − (test przed lutowaniem – instrukcja na `prowadzacy.html`)
 - oznaczenie śmigieł: A/B wytłoczone na śmigle (A = CW, B = CCW)
-- czujnik odległości: VL53L1X (jeśli VL53L0X – biblioteka Pololu „VL53L0X”, zasięg ok. 1,2 m, zmiany w L03, L08–L10)
 - kolory przewodów I2C: czerwony 3V3, czarny GND, żółty SDA, niebieski SCL
 - mocowanie czujników: puste – uzupełnij `mocowanieCzujnikow`
 - pinout płytki w `config.js` (`pinout`) – używany tylko w rysunkach, sprawdź z nadrukiem na płytce
@@ -115,7 +114,7 @@ Logo Uniwersytetu Dzieci jest już w `img/logo-ud.png`. Dopóki zdjęcia nie ma,
    `https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json`
    (nowsze wersje IDE mają ten pakiet już na liście – wtedy ten krok można pominąć).
 3. **Menedżer płytek** (ikona płytki po lewej) → wpisz `esp32` → pakiet **„esp32” od Espressif Systems** → wybierz wersję **3.x** → **Instaluj** (kilkaset MB, kilka minut).
-4. **Menedżer bibliotek** (ikona książek) → wpisz `VL53L1X` → zainstaluj **„VL53L1X” od Pololu**.
+4. **Menedżer bibliotek** (ikona książek) → wpisz `VL53L0X` → zainstaluj **„VL53L0X” od Pololu**.
 5. Podłącz ESP32-C6 kablem USB do złącza oznaczonego **USB**. Windows 11 rozpozna płytkę bez dodatkowych sterowników (port pojawi się jako `COMx`).
 6. **Narzędzia → Płytka → esp32 → ESP32C6 Dev Module**, **Narzędzia → Port → COMx**, **Narzędzia → USB CDC On Boot → Enabled** (bez tego Serial Monitor jest pusty).
 7. Test: otwórz `szkice/uczen/L01_pierwszy_program/L01_pierwszy_program.ino`, kliknij **Wgraj**, otwórz Serial Monitor (115200).
@@ -126,8 +125,8 @@ Jeśli używasz złącza **UART** zamiast USB, może być potrzebny sterownik CP
 
 ```bash
 arduino-cli core install esp32:esp32@3.3.8 --additional-urls https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
-arduino-cli lib install VL53L1X
+arduino-cli lib install VL53L0X
 arduino-cli compile --fqbn esp32:esp32:esp32c6:CDCOnBoot=cdc szkice/uczen/L01_pierwszy_program
 ```
 
-Wersję podaj wprost – bez niej `arduino-cli` potrafi wybrać starą wersję 2.x, w której nie ma `ledcAttach()`. Wszystkie szkice z obu folderów były kompilowane z rdzeniem esp32 3.3.8 i biblioteką Pololu VL53L1X 1.3.1.
+Wersję podaj wprost – bez niej `arduino-cli` potrafi wybrać starą wersję 2.x, w której nie ma `ledcAttach()`. Wszystkie szkice z obu folderów były kompilowane z rdzeniem esp32 3.3.8 i biblioteką Pololu VL53L0X 1.3.1.

@@ -12,7 +12,7 @@
  *   - Że gładszy wykres = większe opóźnienie.
  *
  *  CO MUSI BYĆ PODŁĄCZONE
- *   - Laser VL53L1X: 3,3 V, GND, SDA -> pin 6, SCL -> pin 7.
+ *   - Czujnik VL53L0X: 3,3 V, GND, SDA -> pin 6, SCL -> pin 7.
  *
  *  JAK TO DZIAŁA
  *   Na Plotterze są 3 linie z TEGO SAMEGO pomiaru:
@@ -37,7 +37,7 @@
  */
 
 #include <Wire.h>
-#include <VL53L1X.h>
+#include <VL53L0X.h>
 
 // ================== KONFIGURACJA ==================
 const int PIN_SDA = 6;
@@ -50,7 +50,7 @@ const float ALFA = 0.5;
 static_assert(N >= 1 && N <= 20, "N musi być od 1 do 20");
 // ==================================================
 
-VL53L1X laser;
+VL53L0X laser;
 
 int ostatnie[20];      // tablica na ostatnie pomiary
 int gdzie = 0;         // do której szufladki wpisać następny
@@ -63,10 +63,15 @@ bool laserStart() {
   Wire.setTimeOut(50);     // nie czekaj w nieskończoność, gdy czujnik milczy
   laser.setTimeout(500);
   if (!laser.init()) return false;
-  laser.setDistanceMode(VL53L1X::Short);
-  laser.setMeasurementTimingBudget(33000);
-  laser.startContinuous(33);
+  laser.setMeasurementTimingBudget(33000);   // 33 ms na jeden pomiar (w mikrosekundach)
+  laser.startContinuous();                   // mierz bez przerwy
   return true;
+}
+
+// Czy czujnik ma już nowy pomiar? Pytamy rejestr przerwania w czujniku,
+// więc program nie stoi i nie czeka na pomiar.
+bool pomiarGotowy() {
+  return (laser.readReg(VL53L0X::RESULT_INTERRUPT_STATUS) & 0x07) != 0;
 }
 
 // Średnia z N ostatnich pomiarów.
@@ -88,8 +93,9 @@ void setup() {
 }
 
 void loop() {
-  if (laser.dataReady()) {
-    int surowy = laser.read(false);
+  if (pomiarGotowy()) {
+    int surowy = laser.readRangeContinuousMillimeters();
+    if (laser.timeoutOccurred() || surowy >= 8000) return;   // nic nie widzi – pomijamy
     if (pierwszy) {                  // na start: wszystko = pierwszy pomiar
       for (int i = 0; i < 20; i++) ostatnie[i] = surowy;
       wykladniczy = surowy;

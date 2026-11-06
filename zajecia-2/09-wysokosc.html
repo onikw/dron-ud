@@ -22,15 +22,15 @@
     <p><code>odległość = prędkość światła × czas ÷ 2</code> – dzielimy przez 2, bo światło leci tam i z powrotem. Światło pokonuje 1 mm w około 3 bilionowe części sekundy, więc czujnik mierzy naprawdę maleńkie czasy.</p>
     <p class="analogia"><strong>Analogia:</strong> echo w górach. Krzyczysz i liczysz, po ilu sekundach usłyszysz odpowiedź. Im dłużej, tym dalej jest skała.</p>
     <ul>
-      <li><strong>Tryb Short</strong> – zasięg do około <span data-k="czujnikOdleglosci.zasiegMm">1300</span> mm, mniej przeszkadza mu światło słońca.</li>
+      <li><strong>Zasięg</strong> – do około <span data-k="czujnikOdleglosci.zasiegMm">1200</span> mm.</li>
       <li><strong>Budżet czasu 33 ms</strong> – tyle trwa jeden pomiar, czyli około 30 pomiarów na sekundę.</li>
-      <li><strong>Status 0</strong> znaczy „dobry pomiar”. Inna liczba – coś jest nie tak (za blisko, za daleko, za słabe odbicie).</li>
+      <li>Gdy czujnik <strong>nic nie widzi</strong> (za daleko, za słabe odbicie), podaje około 8190 mm. Program pokazuje wtedy na wykresie 0.</li>
     </ul>
   </section>
 
   <section class="krok" id="kod">
     <h2><span class="nr">2</span>Wgraj program</h2>
-    <p>Ten program używa biblioteki <strong><span data-k="czujnikOdleglosci.biblioteka">VL53L1X (Pololu)</span></strong>. Na komputerach w sali jest już zainstalowana.</p>
+    <p>Ten program używa biblioteki <strong><span data-k="czujnikOdleglosci.biblioteka">VL53L0X (Pololu)</span></strong>. Na komputerach w sali jest już zainstalowana.</p>
     <div data-szkic="uczen/L03_wysokosc"></div>
   </section>
 
@@ -45,8 +45,8 @@
     <h2><span class="nr">4</span>Zadania</h2>
     <ol>
       <li>Zmierz odległość do dłoni i wpisz ją w <code>DLON_MM</code>. Sprawdź linijką.</li>
-      <li>Zbliżaj dłoń powoli. Przy jakiej najmniejszej odległości status jest jeszcze 0? Wpisz ją w <code>NAJBLIZEJ_MM</code>.</li>
-      <li>Usuń <code>//</code> przed liniami z <code>sygnal</code>. Porównaj jasną i ciemną kartkę na tej samej wysokości.</li>
+      <li>Zbliżaj dłoń powoli. Przy jakiej najmniejszej odległości wynik jeszcze zgadza się z linijką? Wpisz ją w <code>NAJBLIZEJ_MM</code>.</li>
+      <li>Z jakiej największej odległości czujnik widzi jasną kartkę? Wpisz ją w <code>NAJDALEJ_MM</code>. Potem sprawdź ciemną kartkę – widzi ją z tak samo daleka?</li>
     </ol>
     <div data-quiz="laser"></div>
   </section>

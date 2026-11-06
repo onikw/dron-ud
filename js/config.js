@@ -42,11 +42,11 @@ window.KONFIG = {
   },
 
   czujnikOdleglosci: {
-    model: "VL53L1X",        // jeśli VL53L0X: biblioteka Pololu "VL53L0X", zasięg ok. 1,2 m
-    biblioteka: "VL53L1X (Pololu)",
+    model: "VL53L0X",        // sprawdzone szkicem narzedzia/rozpoznaj_laser
+    biblioteka: "VL53L0X (Pololu)",
     adres: 0x29,
-    zasiegMm: 1300,          // tryb Short
-    stozekStopnie: 27        // pole widzenia czujnika
+    zasiegMm: 1200,          // tryb domyślny
+    stozekStopnie: 25        // pole widzenia czujnika (karta katalogowa VL53L0X)
   },
 
   mpu: { model: "MPU6050", adres: 0x68 },
@@ -78,6 +78,6 @@ window.KONFIG = {
 
   doPotwierdzenia: [
     "plytka", "piny", "silniki", "typySilnikow (biegunowość)", "smigla",
-    "czujnikOdleglosci", "mocowanieCzujnikow", "przewodyI2C", "pinout"
+    "mocowanieCzujnikow", "przewodyI2C", "pinout"
   ]
 };

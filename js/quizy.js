@@ -25,7 +25,7 @@ window.QUIZY = {
   },
   napiecia: {
     gdzie: "Zajęcia 2 · Elektronika · Napięcia na stanowisku",
-    pytanie: "Jakim napięciem zasilamy czujniki MPU6050 i VL53L1X?",
+    pytanie: "Jakim napięciem zasilamy czujniki MPU6050 i VL53L0X?",
     odpowiedzi: ["12 V", "5 V", "3,3 V"],
     poprawna: 2,
     wyjasnienie: "Czujniki i ESP32 pracują na 3,3 V. 12 V z zasilacza idzie tylko do przetwornicy, która zasila silniki. 12 V na czujniku by go zniszczyło."
@@ -110,7 +110,7 @@ window.QUIZY = {
       "Nic się nie zmieni, bo laser jest bardzo cienki"
     ],
     poprawna: 1,
-    wyjasnienie: "Czujnik widzi cały stożek (około 27°), a nie cienką kreskę. Wszystko, co jest w stożku, może zepsuć pomiar."
+    wyjasnienie: "Czujnik widzi cały stożek (około 25°), a nie cienką kreskę. Wszystko, co jest w stożku, może zepsuć pomiar."
   },
   podlaczenie: {
     gdzie: "Zajęcia 2 · Podłączenie do platformy",

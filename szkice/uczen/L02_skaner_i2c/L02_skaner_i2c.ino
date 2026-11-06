@@ -11,7 +11,7 @@
  *   - Jak sprawdzić, czy czujniki są dobrze podłączone.
  *
  *  CO MUSI BYĆ PODŁĄCZONE
- *   - Na dronie: MPU6050 i laser VL53L1X (oba na tych samych 4 przewodach).
+ *   - Na dronie: MPU6050 i laser VL53L0X (oba na tych samych 4 przewodach).
  *   - Kabel z drona (ok. 1 m) wpięty w płytkę stykową:
  *     czerwony = 3V3, czarny = GND, żółty = SDA -> pin 6,
  *     niebieski = SCL -> pin 7.
@@ -50,7 +50,7 @@ const int CO_ILE_MS = 5000;      // skanuj co 5 sekund
 
 // Zamienia adres na nazwę urządzenia.
 String nazwa(int adres) {
-  if (adres == 0x29) return "laser VL53L1X (odległość)";
+  if (adres == 0x29) return "laser VL53L0X (odległość)";
   // ZADANIE 1: dopisz podobną linijkę dla adresu 0x68.
   // To czujnik MPU6050 (żyroskop i akcelerometr).
 
