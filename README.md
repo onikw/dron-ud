@@ -78,15 +78,14 @@ Te wartości pochodzą z planu kursu i **nie zostały sprawdzone na sprzęcie** 
 - mocowanie czujników: puste – uzupełnij `mocowanieCzujnikow`
 - pinout płytki w `config.js` (`pinout`) – używany tylko w rysunkach, sprawdź z nadrukiem na płytce
 
-Na stronach są też ramki „Do uzupełnienia przez prowadzącego”: Kodeks pilota (zajęcia 1), mocowanie ESC i skręcanie ramy (montaż), kolory sygnałów PWM i wpięcie masy (zajęcia 3), zasady zawodów (zajęcia 5).
+Na stronach są też ramki „Do uzupełnienia przez prowadzącego”: mocowanie ESC i skręcanie ramy (montaż), kolory sygnałów PWM i wpięcie masy (zajęcia 3), zasady zawodów (zajęcia 5).
 
 ## Zdjęcia do zrobienia
 
-Dopóki pliku nie ma, strona pokazuje zaślepkę z opisem. Wrzuć zdjęcie pod podaną nazwą do `img/` – pojawi się samo.
+Logo Uniwersytetu Dzieci jest już w `img/logo-ud.png`. Dopóki zdjęcia nie ma, strona pokazuje zaślepkę z opisem. Wrzuć zdjęcie pod podaną nazwą do `img/` – pojawi się samo.
 
 | Plik | Co ma być na zdjęciu | Strona |
 |:--|:--|:--|
-| `img/logo-ud.png` | logo Uniwersytetu Dzieci (nagłówek każdej strony) | wszystkie |
 | `img/montaz-01.jpg` | Wszystkie części zestawu rozłożone na stole, z podpisami | zajecia-2/03-montaz.html |
 | `img/montaz-02.jpg` | Dwa silniki typu A i dwa typu B obok siebie, dobrze widać kolory przewodów | zajecia-2/03-montaz.html |
 | `img/montaz-03.jpg` | Rama widziana z góry, przód zaznaczony strzałką | zajecia-2/03-montaz.html |

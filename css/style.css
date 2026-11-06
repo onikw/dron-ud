@@ -88,7 +88,7 @@ kbd {
   font-size: 1.05rem;
   line-height: 1.15;
 }
-.naglowek .logo img { height: 42px; width: auto; background: var(--bialy); border-radius: 6px; padding: 3px; }
+.naglowek .logo img { height: 50px; width: auto; background: var(--bialy); border-radius: 6px; padding: 3px; }
 .naglowek .logo .zaslepka-logo {
   display: inline-flex;
   align-items: center;
