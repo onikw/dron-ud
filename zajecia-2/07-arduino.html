@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arduino od zera · Inżynieria dronowa</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-strona="z2-07" data-root="../">
+<main class="tresc">
+  <div class="okruszki"><a href="../index.html">Start</a> › Zajęcia 2 › Rozdział 7</div>
+<h1>Arduino od zera</h1>
+  <p class="wstep">ESP32 to <strong>mikrokontroler</strong> – mały komputer, który wykonuje jeden program i steruje elektroniką. Program piszemy na komputerze w Arduino IDE i wysyłamy kablem USB. W Arduino program nazywa się <strong>szkic</strong>.</p>
+
+  <section class="krok" id="okno">
+    <h2><span class="nr">1</span>Okno programu Arduino IDE</h2>
+    <p>Uruchom Arduino IDE. Zapamiętaj, gdzie są najważniejsze przyciski:</p>
+    <div class="rysunek">
+      <svg viewBox="0 0 720 400" role="img" aria-label="Schemat okna Arduino IDE z ponumerowanymi przyciskami">
+        <rect x="10" y="10" width="700" height="380" rx="10" fill="#FFFFFF" stroke="#13171F" stroke-width="2"/>
+        <rect x="10" y="10" width="700" height="56" rx="10" fill="#E9E7DF"/>
+        <circle cx="44" cy="38" r="16" fill="#1F8A8A"/><path d="M36 38 L42 44 L53 32" fill="none" stroke="#fff" stroke-width="3"/>
+        <circle cx="84" cy="38" r="16" fill="#1F8A8A"/><path d="M76 38 L92 38 M86 32 L92 38 L86 44" fill="none" stroke="#fff" stroke-width="3"/>
+        <rect x="150" y="24" width="220" height="28" rx="6" fill="#FFFFFF" stroke="#8A91A3"/>
+        <text x="162" y="43" font-size="13" fill="#13171F">ESP32C6 Dev Module ▾</text>
+        <circle cx="640" cy="38" r="15" fill="#FFFFFF" stroke="#8A91A3"/><path d="M632 44 L637 36 L642 41 L648 32" fill="none" stroke="#13171F" stroke-width="2"/>
+        <circle cx="680" cy="38" r="15" fill="#FFFFFF" stroke="#8A91A3"/><circle cx="678" cy="36" r="6" fill="none" stroke="#13171F" stroke-width="2"/><line x1="682" y1="40" x2="688" y2="46" stroke="#13171F" stroke-width="2"/>
+        <rect x="24" y="80" width="672" height="200" rx="4" fill="#FAFAF7" stroke="#DCDAD2"/>
+        <text x="40" y="108" font-family="monospace" font-size="13" fill="#7FB4FF">void</text><text x="80" y="108" font-family="monospace" font-size="13" fill="#13171F">setup() {</text>
+        <text x="56" y="128" font-family="monospace" font-size="13" fill="#13171F">Serial.begin(115200);</text>
+        <text x="40" y="148" font-family="monospace" font-size="13" fill="#13171F">}</text>
+        <rect x="24" y="290" width="672" height="88" rx="4" fill="#232937"/>
+        <text x="40" y="318" font-family="monospace" font-size="12" fill="#C9CEDA">Szkic używa 312 bajtów...</text>
+        <text x="40" y="338" font-family="monospace" font-size="12" fill="#7FD49A">Hard resetting via RTS pin...</text>
+        <g font-size="14" font-weight="800" fill="#FFFFFF">
+          <circle cx="44" cy="78" r="12" fill="#F2A33A"/><text x="44" y="83" text-anchor="middle" fill="#13171F">1</text>
+          <circle cx="84" cy="78" r="12" fill="#F2A33A"/><text x="84" y="83" text-anchor="middle" fill="#13171F">2</text>
+          <circle cx="384" cy="38" r="12" fill="#F2A33A"/><text x="384" y="43" text-anchor="middle" fill="#13171F">3</text>
+          <circle cx="640" cy="72" r="12" fill="#F2A33A"/><text x="640" y="77" text-anchor="middle" fill="#13171F">4</text>
+          <circle cx="680" cy="72" r="12" fill="#F2A33A"/><text x="680" y="77" text-anchor="middle" fill="#13171F">5</text>
+          <circle cx="670" cy="110" r="12" fill="#F2A33A"/><text x="670" y="115" text-anchor="middle" fill="#13171F">6</text>
+          <circle cx="670" cy="318" r="12" fill="#F2A33A"/><text x="670" y="323" text-anchor="middle" fill="#13171F">7</text>
+        </g>
+      </svg>
+    </div>
+    <ol>
+      <li><strong>Weryfikuj</strong> (ptaszek) – sprawdza i kompiluje program, nic nie wysyła.</li>
+      <li><strong>Wgraj</strong> (strzałka) – kompiluje i wysyła program na płytkę.</li>
+      <li><strong>Wybór płytki i portu.</strong></li>
+      <li><strong>Serial Plotter</strong> – rysuje wykres z liczb, które wysyła płytka.</li>
+      <li><strong>Serial Monitor</strong> (lupa) – pokazuje tekst od płytki.</li>
+      <li><strong>Edytor</strong> – tu jest kod programu.</li>
+      <li><strong>Konsola</strong> – komunikaty: postęp wgrywania i błędy.</li>
+    </ol>
+    <figure class="zdjecie" data-plik="img/arduino-01.png" data-opis="Zrzut ekranu prawdziwego okna Arduino IDE na komputerze w sali"></figure>
+  </section>
+
+  <section class="krok" id="plytka">
+    <h2><span class="nr">2</span>Wybierz płytkę i port</h2>
+    <ol>
+      <li>Podłącz płytkę ESP32 kablem USB (prowadzący sprawdził już połączenia).</li>
+      <li><strong>Narzędzia → Płytka → esp32 → ESP32C6 Dev Module</strong>.</li>
+      <li><strong>Narzędzia → Port</strong> – wybierz port płytki, np. <code>COM5</code>.</li>
+      <li><strong>Narzędzia → USB CDC On Boot → Enabled</strong>. Bez tego Serial Monitor będzie pusty.</li>
+    </ol>
+    <div class="ramka wskazowka"><span class="tytul">Który port to moja płytka?</span>Rozwiń listę portów. Odłącz USB i rozwiń ją jeszcze raz. Port, który zniknął, to twoja płytka. Podłącz ją z powrotem.</div>
+    <figure class="zdjecie" data-plik="img/arduino-02.png" data-opis="Zrzut ekranu menu Narzędzia z wybraną płytką ESP32C6 Dev Module, portem i USB CDC On Boot: Enabled"></figure>
+  </section>
+
+  <section class="krok" id="program">
+    <h2><span class="nr">3</span>Pierwszy program</h2>
+    <p>Każdy szkic ma dwie części:</p>
+<pre class="bez-dymkow"><code>   start
+     |
+  setup()        &lt;- wykonuje się RAZ, po włączeniu
+     |
+  loop()  &lt;--+   &lt;- wykonuje się W KÓŁKO
+     |       |
+     +-------+</code></pre>
+    <p><strong>Serial</strong> to rozmowa płytki z komputerem po kablu. Płytka wysyła bity – zera i jedynki – jeden po drugim, z prędkością <strong>115200 bitów na sekundę</strong>. Komputer składa je w litery. Obie strony muszą „mówić” w tym samym tempie, dlatego w programie jest <code>Serial.begin(115200)</code> i tę samą liczbę ustawiasz w Serial Monitorze.</p>
+    <p>Skopiuj kod przyciskiem „Kopiuj” i wklej do pustego szkicu w Arduino IDE (albo pobierz plik i otwórz go przez <strong>Plik → Otwórz</strong>).</p>
+    <div data-szkic="uczen/L01_pierwszy_program"></div>
+  </section>
+
+  <section class="krok" id="wgraj">
+    <h2><span class="nr">4</span>Wgraj program</h2>
+    <ol>
+      <li>Kliknij <strong>Wgraj</strong> (strzałka) albo naciśnij <kbd>Ctrl</kbd>+<kbd>U</kbd>.</li>
+      <li>Poczekaj, aż w konsoli pojawi się <code>Hard resetting via RTS pin...</code>.</li>
+      <li>Dioda na płytce powinna mrugać.</li>
+    </ol>
+    <div class="ramka wskazowka"><span class="tytul">„Failed to connect” albo wgrywanie się zawiesza</span>Kliknij Wgraj. Gdy w konsoli pojawi się <code>Connecting...</code>, przytrzymaj przycisk <strong>BOOT</strong> na płytce, naciśnij i puść <strong>RST</strong>, potem puść BOOT.</div>
+  </section>
+
+  <section class="krok" id="monitor">
+    <h2><span class="nr">5</span>Otwórz Serial Monitor</h2>
+    <ol>
+      <li>Kliknij lupę w prawym górnym rogu albo <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>M</kbd>.</li>
+      <li>Na dole ustaw <strong>115200 baud</strong>.</li>
+      <li>Powinien pojawiać się tekst od płytki. Nie widzisz pierwszego napisu? Naciśnij <strong>RST</strong> na płytce.</li>
+    </ol>
+    <figure class="zdjecie" data-plik="img/arduino-03.png" data-opis="Zrzut ekranu Serial Monitora z napisem od płytki i ustawieniem 115200 baud"></figure>
+  </section>
+
+  <section class="krok" id="zadania">
+    <h2><span class="nr">6</span>Zadania</h2>
+    <p>W kodzie szukaj napisów <code>// ZADANIE</code>. Po każdej zmianie wgraj program jeszcze raz.</p>
+    <ol>
+      <li>Zmień tempo mrugania <code>TEMPO_MS</code> na 100, potem na 2000.</li>
+      <li>Dokończ sygnał SOS: 3 krótkie, 3 długie, 3 krótkie mrugnięcia. Potem ustaw <code>TRYB_SOS = true</code>.</li>
+      <li>Wypisuj licznik mrugnięć w Serial Monitorze.</li>
+    </ol>
+    <div data-quiz="arduino"></div>
+  </section>
+</main>
+<script src="../js/config.js"></script>
+<script src="../js/slowniczek.js"></script>
+<script src="../js/quizy.js"></script>
+<script src="../js/szkice.js"></script>
+<script src="../js/rysunki.js"></script>
+<script src="../js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Akcelerometr · Inżynieria dronowa</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-strona="z2-10" data-root="../">
+<main class="tresc">
+  <div class="okruszki"><a href="../index.html">Start</a> › Zajęcia 2 › Rozdział 10 (dla chętnych)</div>
+<h1>Akcelerometr</h1>
+  <div class="dla-chetnych"><div><strong>Dla zespołów, które zdążą.</strong> Jeśli dziś nie starczy czasu, zrobicie ten rozdział na początku zajęć 3. Tak jest zaplanowane – nikt nie musi się spieszyć.</div></div>
+  <p class="wstep">Tym razem porozmawiamy z czujnikiem MPU6050 bez gotowej biblioteki – żeby zobaczyć, jak to wygląda od środka.</p>
+
+  <section class="krok" id="rejestry" data-odhacz="Rozumiem">
+    <h2><span class="nr">1</span>Rejestry, czyli ponumerowane szufladki</h2>
+    <p>Czujnik ma w środku ponumerowane szufladki – <strong>rejestry</strong>. W każdej leży jedna liczba od 0 do 255, czyli jeden <strong>bajt</strong>. Jedne szufladki to ustawienia, inne – wyniki pomiarów.</p>
+    <div class="tabela-kontener"><table>
+      <thead><tr><th>Szufladka</th><th>Co w niej jest</th></tr></thead>
+      <tbody>
+        <tr><td><code>0x75</code></td><td><b>WHO_AM_I</b> – „kim jestem”. Zwykle 0x68. Klony czujnika mogą mieć tu inną liczbę – program tylko ostrzeże i będzie działał dalej.</td></tr>
+        <tr><td><code>0x6B</code></td><td>zasilanie – po włączeniu czujnik śpi. Wpisanie 0 go budzi.</td></tr>
+        <tr><td><code>0x3B</code> … <code>0x48</code></td><td>14 bajtów pomiarów: przyspieszenie X, Y, Z, temperatura, obrót X, Y, Z</td></tr>
+      </tbody>
+    </table></div>
+    <p>Każdy pomiar zajmuje dwie szufladki. Program skleja je w jedną liczbę i przelicza: na <strong>g</strong> (przyspieszenie, 1 g to grawitacja Ziemi) i na <strong>stopnie na sekundę</strong> (obrót).</p>
+    <ul>
+      <li><strong>Akcelerometr</strong> mierzy przyspieszenie. Gdy dron stoi, czuje tylko grawitację – dlatego wie, gdzie jest „dół”.</li>
+      <li><strong>Żyroskop</strong> mierzy, jak szybko się obracasz. Gdy dron stoi, pokazuje około 0.</li>
+    </ul>
+  </section>
+
+  <section class="krok" id="kod">
+    <h2><span class="nr">2</span>Wgraj program i otwórz Serial Plotter</h2>
+    <div data-szkic="uczen/L04_akcelerometr"></div>
+    <p>Na Plotterze kliknij nazwę linii w legendzie, żeby ją ukryć. Akcelerometr i żyroskop mają bardzo różne liczby, więc łatwiej oglądać je osobno.</p>
+    <figure class="zdjecie" data-plik="img/akcelerometr-01.png" data-opis="Zrzut ekranu Serial Plottera z liniami ax_g, ay_g, az_g podczas przechylania drona"></figure>
+  </section>
+
+  <section class="krok" id="zadania">
+    <h2><span class="nr">3</span>Zadania</h2>
+    <ol>
+      <li>Przelicz surowe liczby: podziel <code>ax</code>, <code>ay</code>, <code>az</code> przez <code>LSB_NA_G</code>, a <code>gx</code>, <code>gy</code>, <code>gz</code> przez <code>LSB_NA_STOPIEN</code>.</li>
+      <li>Ostrożnie przechyl drona na prowadnicy w bok i w przód. Która linia się zmienia?</li>
+      <li>Policz kąt przechylenia: <code>atan2(ay, az) * 180.0 / PI</code>.</li>
+    </ol>
+    <div data-quiz="akcelerometr"></div>
+  </section>
+</main>
+<script src="../js/config.js"></script>
+<script src="../js/slowniczek.js"></script>
+<script src="../js/quizy.js"></script>
+<script src="../js/szkice.js"></script>
+<script src="../js/rysunki.js"></script>
+<script src="../js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Słowniczek · Inżynieria dronowa</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-strona="slowniczek" data-root="" data-bez-dymkow>
+<main class="tresc">
+  <div class="okruszki"><a href="index.html">Start</a> › Pomoc</div>
+<h1>Słowniczek</h1>
+  <p class="wstep">Wszystkie trudniejsze słowa z poradnika. Na stronach rozdziałów te słowa są podkreślone kropkami – najedź na nie albo dotknij, żeby zobaczyć wyjaśnienie.</p>
+  <dl class="slowniczek" id="lista-slow"></dl>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var dl = document.getElementById("lista-slow");
+      (window.SLOWNICZEK || []).slice().sort(function (a, b) { return a.haslo.localeCompare(b.haslo, "pl"); })
+        .forEach(function (h) {
+          var dt = document.createElement("dt"); dt.textContent = h.haslo;
+          var dd = document.createElement("dd"); dd.textContent = h.opis;
+          dl.appendChild(dt); dl.appendChild(dd);
+        });
+    });
+  </script>
+</main>
+<script src="js/config.js"></script>
+<script src="js/slowniczek.js"></script>
+<script src="js/quizy.js"></script>
+<script src="js/rysunki.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

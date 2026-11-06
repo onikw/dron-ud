@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pomiar wysokości · Inżynieria dronowa</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-strona="z2-09" data-root="../">
+<main class="tresc">
+  <div class="okruszki"><a href="../index.html">Start</a> › Zajęcia 2 › Rozdział 9 (dla chętnych)</div>
+<h1>Pomiar wysokości</h1>
+  <div class="dla-chetnych"><div><strong>Dla zespołów, które zdążą.</strong> Jeśli dziś nie starczy czasu, zrobicie ten rozdział na początku zajęć 3. Tak jest zaplanowane – nikt nie musi się spieszyć.</div></div>
+  <p class="wstep">Żeby dron mógł trzymać wysokość, musi wiedzieć, jak wysoko jest. Zmierzy to światłem.</p>
+
+  <section class="krok" id="tof" data-odhacz="Rozumiem">
+    <h2><span class="nr">1</span>Czas lotu światła</h2>
+    <p>Czujnik wysyła krótki błysk niewidzialnego światła i mierzy, po jakim czasie światło wróci odbite od podłogi. To <strong>czas lotu</strong> (po angielsku Time of Flight, ToF).</p>
+<pre class="bez-dymkow"><code>  [czujnik] ----błysk---->  |
+            &lt;---odbicie---  |  podłoga
+            |&lt;-- odległość -&gt;|</code></pre>
+    <p><code>odległość = prędkość światła × czas ÷ 2</code> – dzielimy przez 2, bo światło leci tam i z powrotem. Światło pokonuje 1 mm w około 3 bilionowe części sekundy, więc czujnik mierzy naprawdę maleńkie czasy.</p>
+    <p class="analogia"><strong>Analogia:</strong> echo w górach. Krzyczysz i liczysz, po ilu sekundach usłyszysz odpowiedź. Im dłużej, tym dalej jest skała.</p>
+    <ul>
+      <li><strong>Tryb Short</strong> – zasięg do około <span data-k="czujnikOdleglosci.zasiegMm">1300</span> mm, mniej przeszkadza mu światło słońca.</li>
+      <li><strong>Budżet czasu 33 ms</strong> – tyle trwa jeden pomiar, czyli około 30 pomiarów na sekundę.</li>
+      <li><strong>Status 0</strong> znaczy „dobry pomiar”. Inna liczba – coś jest nie tak (za blisko, za daleko, za słabe odbicie).</li>
+    </ul>
+  </section>
+
+  <section class="krok" id="kod">
+    <h2><span class="nr">2</span>Wgraj program</h2>
+    <p>Ten program używa biblioteki <strong><span data-k="czujnikOdleglosci.biblioteka">VL53L1X (Pololu)</span></strong>. Na komputerach w sali jest już zainstalowana.</p>
+    <div data-szkic="uczen/L03_wysokosc"></div>
+  </section>
+
+  <section class="krok" id="plotter">
+    <h2><span class="nr">3</span>Otwórz Serial Plotter</h2>
+    <p>Zamknij Serial Monitor i otwórz <strong>Narzędzia → Serial Plotter</strong> (115200). Płytka wysyła liczby w formacie <code>nazwa:wartość</code>, a Plotter rysuje z nich wykres na żywo.</p>
+    <p>Powoli przesuwaj drona w górę i w dół po prowadnicy. Linia <code>odleglosc_mm</code> powinna iść za nim.</p>
+    <figure class="zdjecie" data-plik="img/wysokosc-01.png" data-opis="Zrzut ekranu Serial Plottera: wykres odległości, gdy dron jest przesuwany po prowadnicy"></figure>
+  </section>
+
+  <section class="krok" id="zadania">
+    <h2><span class="nr">4</span>Zadania</h2>
+    <ol>
+      <li>Zmierz odległość do dłoni i wpisz ją w <code>DLON_MM</code>. Sprawdź linijką.</li>
+      <li>Zbliżaj dłoń powoli. Przy jakiej najmniejszej odległości status jest jeszcze 0? Wpisz ją w <code>NAJBLIZEJ_MM</code>.</li>
+      <li>Usuń <code>//</code> przed liniami z <code>sygnal</code>. Porównaj jasną i ciemną kartkę na tej samej wysokości.</li>
+    </ol>
+    <div data-quiz="laser"></div>
+  </section>
+</main>
+<script src="../js/config.js"></script>
+<script src="../js/slowniczek.js"></script>
+<script src="../js/quizy.js"></script>
+<script src="../js/szkice.js"></script>
+<script src="../js/rysunki.js"></script>
+<script src="../js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Misja · Inżynieria dronowa</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-strona="z5-01" data-root="../">
+<main class="tresc">
+  <div class="okruszki"><a href="../index.html">Start</a> › Zajęcia 5 › Rozdział 1</div>
+<h1>Misja</h1>
+  <p class="wstep">Wasz dron umie trzymać wysokość. Teraz zaplanujecie całą misję: wznieś się, leć na kolejne wysokości, wyląduj.</p>
+
+  <section class="krok" id="stany" data-odhacz="Rozumiem">
+    <h2><span class="nr">1</span>Maszyna stanów</h2>
+    <p>Dron jest zawsze w <strong>jednym stanie</strong> – jak postać w grze, która stoi, skacze albo biegnie. Gdy coś się stanie, przechodzi do innego stanu.</p>
+<pre class="bez-dymkow"><code> CZEKAJ --"s"--&gt; START --2 s--&gt; MISJA --kroki gotowe--&gt; LĄDOWANIE
+   ^                           (krok 1, 2, 3 ...)           |
+   |                                                        v
+   +------------- STOP (x, BOOT, zabezpieczenia) &lt;------ KONIEC</code></pre>
+    <div class="tabela-kontener"><table>
+      <thead><tr><th>Stan</th><th>Co robi dron</th></tr></thead>
+      <tbody>
+        <tr><td>CZEKAJ</td><td>stoi, czeka na <code>u</code> i <code>s</code></td></tr>
+        <tr><td>START</td><td>wznosi się na 150 mm przez 2 s</td></tr>
+        <tr><td>MISJA</td><td>wykonuje po kolei kroki z tablicy <code>KROKI</code></td></tr>
+        <tr><td>LĄDOWANIE</td><td>płynnie schodzi w dół, przy ziemi wyłącza silniki</td></tr>
+        <tr><td>KONIEC</td><td>rozbraja się i wypisuje czas misji</td></tr>
+      </tbody>
+    </table></div>
+    <div data-quiz="misja"></div>
+  </section>
+
+  <section class="krok" id="kroki">
+    <h2><span class="nr">2</span>Zaplanuj misję</h2>
+    <p>Misja to tablica. Każda linijka to jeden krok: <strong>{wysokość w mm, czas w ms}</strong>.</p>
+<pre class="bez-dymkow"><code>const int KROKI[][2] = {
+  {200, 3000},   // 200 mm przez 3 s
+  {300, 3000},   // 300 mm przez 3 s
+};</code></pre>
+    <p>Zmieniacie <strong>tylko tę tablicę</strong>. Wysokości od 100 do 700 mm, cała misja krótsza niż 60 s (program to sprawdzi). Przed startem wpiszcie w KONFIGURACJI swoje nastawy z zajęć 4.</p>
+    <div data-szkic="uczen/L10_misja"></div>
+  </section>
+
+  <section class="krok kontrolny" id="przed">
+    <h2>Zawołaj prowadzącego przed pierwszym startem</h2>
+    <p>Prowadzący sprawdzi tablicę kroków i nastawy.</p>
+  </section>
+
+  <section class="krok" id="lot">
+    <h2><span class="nr">3</span>Lot</h2>
+    <ol>
+      <li>Otwórz Serial Plotter (115200, Nowa linia).</li>
+      <li><code>u</code> – uzbrój, potem <code>s</code> – start.</li>
+      <li>Patrz: <code>zadana</code> rysuje plan misji, <code>wysokosc</code> próbuje za nim nadążyć, <code>stan_x100</code> pokazuje stan (0 = CZEKAJ … 400 = KONIEC).</li>
+      <li>Im bliżej siebie są <code>zadana</code> i <code>wysokosc</code>, tym lepiej.</li>
+    </ol>
+  </section>
+</main>
+<script src="../js/config.js"></script>
+<script src="../js/slowniczek.js"></script>
+<script src="../js/quizy.js"></script>
+<script src="../js/szkice.js"></script>
+<script src="../js/rysunki.js"></script>
+<script src="../js/app.js"></script>
+</body>
+</html>

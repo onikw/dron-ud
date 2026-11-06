@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Podłączenie do platformy · Inżynieria dronowa</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-strona="z2-06" data-root="../">
+<main class="tresc">
+  <div class="okruszki"><a href="../index.html">Start</a> › Zajęcia 2 › Rozdział 6</div>
+<h1>Podłączenie do platformy</h1>
+  <p class="wstep">Kabel z drona schodzi na platformę. Wpinacie jego cztery przewody w płytkę stykową, w której siedzi ESP32. Robimy to krok po kroku, przy odłączonym USB.</p>
+
+  <section class="krok" id="schemat" data-odhacz="Rozumiem schemat">
+    <h2><span class="nr">1</span>Schemat połączeń</h2>
+    <p>Oba czujniki siedzą na <strong>tych samych czterech liniach</strong>. Taka wspólna linia to <strong>magistrala</strong> I2C. Kliknij przewód, żeby go wyróżnić.</p>
+    <div data-rysunek="schematI2C"></div>
+    <div data-rysunek="tabelaI2C"></div>
+    <div data-quiz="podlaczenie"></div>
+  </section>
+
+  <section class="krok" id="usb">
+    <h2><span class="nr">2</span>Odłącz USB</h2>
+    <p>Sprawdź, że kabel USB płytki ESP32 jest <strong>odłączony</strong> od komputera. Przewody zawsze wpinamy bez zasilania.</p>
+  </section>
+
+  <section class="krok" id="kolumny">
+    <h2><span class="nr">3</span>Znajdź właściwe kolumny</h2>
+    <p>Na płytce ESP32 obok nóżek są napisy. Znajdź nóżki <b>3V3</b>, <b>GND</b>, <b data-k="piny.sda">6</b> (SDA) i <b data-k="piny.scl">7</b> (SCL). Przewód wpinasz w wolny otwór <strong>w tej samej kolumnie</strong> co nóżka.</p>
+    <figure class="zdjecie" data-plik="img/podlaczenie-01.jpg" data-opis="Platforma z góry: ESP32 na płytce stykowej, zaznaczone kolumny 3V3, GND, 6 i 7"></figure>
+    <div class="ramka uwaga"><span class="tytul">Uwaga na 5V</span>Obok jest też nóżka 5V. Czerwony przewód idzie do <strong>3V3</strong>, nie do 5V.</div>
+  </section>
+
+  <section class="krok" id="gnd">
+    <h2><span class="nr">4</span>Wepnij GND</h2>
+    <p>Zawsze zaczynamy od masy. Przewód <span data-k="przewodyI2C.GND" data-kolor>czarny</span> wepnij w kolumnę nóżki <b>GND</b>.</p>
+  </section>
+
+  <section class="krok" id="zasilanie">
+    <h2><span class="nr">5</span>Wepnij 3V3</h2>
+    <p>Przewód <span data-k="przewodyI2C.3V3" data-kolor>czerwony</span> wepnij w kolumnę nóżki <b>3V3</b>.</p>
+  </section>
+
+  <section class="krok" id="sda">
+    <h2><span class="nr">6</span>Wepnij SDA i SCL</h2>
+    <p>Przewód <span data-k="przewodyI2C.SDA" data-kolor>żółty</span> (SDA) wepnij w kolumnę nóżki <b data-k="piny.sda">6</b>.<br>
+       Przewód <span data-k="przewodyI2C.SCL" data-kolor>niebieski</span> (SCL) wepnij w kolumnę nóżki <b data-k="piny.scl">7</b>.</p>
+    <figure class="zdjecie" data-plik="img/podlaczenie-02.jpg" data-opis="Zbliżenie: cztery przewody wpięte w płytkę stykową obok nóżek 3V3, GND, 6 i 7"></figure>
+  </section>
+
+  <section class="krok" id="kabel">
+    <h2><span class="nr">7</span>Ułóż kabel</h2>
+    <p>Kabel ma około 1 metra. Ułóż go luźno, bez napinania. Przewody SDA i SCL trzymaj przy GND, z dala od przewodów silników i zasilacza.</p>
+    <figure class="zdjecie" data-plik="img/podlaczenie-03.jpg" data-opis="Całe stanowisko: dron na prowadnicy, kabel ułożony luźno do platformy"></figure>
+  </section>
+
+  <section class="krok" id="lista" data-odhacz="Wszystko sprawdzone">
+    <h2><span class="nr">8</span>Lista kontrolna przed zasileniem</h2>
+    <p>Odhaczcie każdy punkt. Sprawdza osoba, która nie wpinała przewodów.</p>
+    <ul class="lista-kontrolna" id="przed-zasileniem">
+      <li>USB było odłączone przez cały czas wpinania.</li>
+      <li>Czerwony przewód jest w kolumnie <b>3V3</b> (nie 5V).</li>
+      <li>Czarny przewód jest w kolumnie <b>GND</b>.</li>
+      <li>Żółty przewód (SDA) jest w kolumnie nóżki <b data-k="piny.sda">6</b>, niebieski (SCL) w kolumnie nóżki <b data-k="piny.scl">7</b>.</li>
+      <li>Żaden przewód nie jest przesunięty o jeden otwór.</li>
+      <li>Żaden przewód nie idzie do zasilacza 12 V ani do przetwornicy.</li>
+      <li>Przewody na czujnikach są podłączone według tej samej tabeli kolorów.</li>
+      <li>Kabel nie jest napięty i nie wisi przy śmigłach.</li>
+    </ul>
+  </section>
+
+  <section class="krok kontrolny" id="prowadzacy">
+    <h2>Zawołaj prowadzącego, zanim podłączysz USB</h2>
+    <p>Prowadzący sprawdzi połączenia. Dopiero gdy powie „OK”, podłączcie kabel USB do komputera.</p>
+  </section>
+</main>
+<script src="../js/config.js"></script>
+<script src="../js/slowniczek.js"></script>
+<script src="../js/quizy.js"></script>
+<script src="../js/rysunki.js"></script>
+<script src="../js/app.js"></script>
+</body>
+</html>

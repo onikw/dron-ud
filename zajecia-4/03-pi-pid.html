@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PI, PID i strojenie · Inżynieria dronowa</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-strona="z4-03" data-root="../">
+<main class="tresc">
+  <div class="okruszki"><a href="../index.html">Start</a> › Zajęcia 4 › Rozdział 3</div>
+<h1>PI, PID i strojenie</h1>
+  <p class="wstep">Regulator P zostawia dron trochę za nisko i potrafi się bujać. Dodamy dwa kolejne człony: I i D. Razem dają regulator PID – serce prawie każdego drona, robota i termostatu.</p>
+
+  <section class="krok" id="pid" data-odhacz="Rozumiem">
+    <h2><span class="nr">1</span>Trzy człony</h2>
+<pre class="bez-dymkow"><code>moc = moc_zawisu + Kp·błąd + Ki·suma_błędów + Kd·zmiana_błędu</code></pre>
+    <div class="tabela-kontener"><table>
+      <thead><tr><th>Człon</th><th>Po ludzku</th><th>Co robi</th></tr></thead>
+      <tbody>
+        <tr><td><b>P</b> = Kp · błąd</td><td>„im dalej, tym mocniej”</td><td>główny kurek</td></tr>
+        <tr><td><b>I</b> = Ki · suma błędów</td><td>„ciągle za nisko? dodaję po trochu”</td><td>usuwa stały błąd</td></tr>
+        <tr><td><b>D</b> = Kd · zmiana błędu</td><td>„zbliżam się szybko? hamuję”</td><td>gasi bujanie</td></tr>
+      </tbody>
+    </table></div>
+    <p><strong>Anti-windup:</strong> suma błędów ma limit <code>SUMA_MAX</code>. Bez niego, gdy dron stoi na ziemi, suma rosłaby bez końca, a po starcie dron wystrzeliłby w górę.</p>
+    <div data-quiz="pid"></div>
+  </section>
+
+  <section class="krok" id="kod">
+    <h2><span class="nr">2</span>Ten sam program L09</h2>
+    <p>Pracujecie dalej na szkicu z poprzedniego rozdziału. Komendy <code>i 0.002</code> i <code>d 0.5</code> ustawiają Ki i Kd.</p>
+    <div data-szkic="uczen/L09_trzymaj_wysokosc"></div>
+  </section>
+
+  <section class="krok" id="ki">
+    <h2><span class="nr">3</span>Dodaj Ki</h2>
+    <ol>
+      <li>W funkcji <code>regulator()</code> dopisz do wzoru <code>+ Ki * suma_bledow</code> (ZADANIE 2). Wgraj.</li>
+      <li>Ustaw swoje Kp i moc zawisu, potem <code>i 0.002</code>.</li>
+      <li>Patrz na różnicę między <code>zadana</code> a <code>wysokosc</code>. Co się dzieje po kilku sekundach?</li>
+    </ol>
+  </section>
+
+  <section class="krok" id="kd">
+    <h2><span class="nr">4</span>Dodaj Kd</h2>
+    <ol>
+      <li>Dopisz do wzoru <code>+ Kd * zmiana_bledu</code> (ZADANIE 3). Wgraj.</li>
+      <li>Ustaw <code>d 0.5</code>. Zmień zadaną wysokość z 200 na 400 (<code>h 200</code>, potem <code>h 400</code>).</li>
+      <li>Czy dron mniej „przestrzeliwuje” cel? Za duże Kd sprawi, że silniki będą drżeć.</li>
+    </ol>
+  </section>
+
+  <section class="krok" id="strojenie">
+    <h2><span class="nr">5</span>Strojenie</h2>
+    <p>Kolejność, która zwykle działa:</p>
+    <ol>
+      <li><strong>Moc zawisu</strong> – tak, żeby dron prawie wisiał.</li>
+      <li><strong>Kp</strong> – zwiększaj, aż zacznie się bujać, potem trochę zmniejsz.</li>
+      <li><strong>Kd</strong> – dodaj, żeby zgasić bujanie. Można wtedy trochę podnieść Kp.</li>
+      <li><strong>Ki</strong> – na końcu, małe, żeby usunąć stały błąd.</li>
+    </ol>
+<pre class="bez-dymkow"><code> tylko Kp, za małe:     ___________ zadana
+                       /‾‾‾‾‾‾‾‾‾‾‾ wysokość – wisi trochę za nisko
+ Kp za duże:           /\/\/\/\/\/  bujanie
+ Kp + Ki + Kd:         /‾‾‾‾‾‾‾‾‾‾  szybko i dokładnie</code></pre>
+    <p>Zapiszcie swoje nastawy w kodzie i w komentarzu na górze szkicu (ZADANIE 4): co robi Kp, Ki i Kd – własnymi słowami. Przydadzą się na zawodach.</p>
+  </section>
+</main>
+<script src="../js/config.js"></script>
+<script src="../js/slowniczek.js"></script>
+<script src="../js/quizy.js"></script>
+<script src="../js/szkice.js"></script>
+<script src="../js/rysunki.js"></script>
+<script src="../js/app.js"></script>
+</body>
+</html>

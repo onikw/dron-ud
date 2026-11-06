@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wstęp do elektroniki · Inżynieria dronowa</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-strona="z2-01" data-root="../">
+<main class="tresc">
+  <div class="okruszki"><a href="../index.html">Start</a> › Zajęcia 2 › Rozdział 1</div>
+  <h1>Wstęp do elektroniki</h1>
+  <p class="wstep">Zanim złożymy drona, musimy rozumieć, co płynie w jego przewodach. Każda część to jedno pojęcie, jeden rysunek, którym możesz się pobawić, i jedno pytanie na koniec.</p>
+
+  <nav class="spis" aria-label="Spis treści">
+    <ol>
+      <li><a href="#napiecie">Napięcie, prąd i opór</a></li>
+      <li><a href="#obwod">Obwód zamknięty i otwarty</a></li>
+      <li><a href="#stanowisko">Napięcia na stanowisku</a></li>
+      <li><a href="#multimetr">Multimetr</a></li>
+      <li><a href="#silnik">Silnik szczotkowy</a></li>
+      <li><a href="#pwm">PWM w skrócie</a></li>
+      <li><a href="#plytka">Płytka stykowa</a></li>
+    </ol>
+  </nav>
+
+  <!-- 1 -->
+  <section class="krok" id="napiecie" data-odhacz="Rozumiem">
+    <h2><span class="nr">1</span>Napięcie, prąd i opór</h2>
+    <p>Elektryczność najłatwiej zrozumieć, wyobrażając sobie wodę w rurach.</p>
+    <ul>
+      <li><strong>Napięcie</strong> to jak wysokość wody w zbiorniku. Im wyżej, tym mocniej woda pcha w dół. Mierzymy je w <strong>woltach (V)</strong>.</li>
+      <li><strong>Prąd</strong> to przepływ – ile wody przepływa przez rurę w każdej sekundzie. Mierzymy go w <strong>amperach (A)</strong>.</li>
+      <li><strong>Opór</strong> to zwężenie rury. Im węższa rura, tym mniej wody przepłynie. Mierzymy go w <strong>omach (Ω)</strong>.</li>
+    </ul>
+    <p class="analogia"><strong>Analogia:</strong> podnieś zbiornik wyżej, a woda popłynie szybciej. Zwęź rurę, a popłynie wolniej. Z prądem jest dokładnie tak samo.</p>
+    <p>Wszystko łączy jeden wzór, <strong>prawo Ohma</strong>: <code>I = U / R</code>, czyli prąd = napięcie ÷ opór.</p>
+    <div data-rysunek="woda"></div>
+    <div data-quiz="woda"></div>
+  </section>
+
+  <!-- 2 -->
+  <section class="krok" id="obwod" data-odhacz="Rozumiem">
+    <h2><span class="nr">2</span>Obwód zamknięty i otwarty</h2>
+    <p>Prąd płynie tylko wtedy, gdy ma <strong>zamkniętą drogę</strong>: wychodzi z plusa, przechodzi przez elementy i wraca do minusa. Taką drogę nazywamy <strong>obwodem</strong>.</p>
+    <ul>
+      <li><strong>Plus (+)</strong> – stąd prąd wypływa. Przewody plusa są zwykle czerwone.</li>
+      <li><strong>Minus (−)</strong>, czyli <strong>masa (GND)</strong> – tu prąd wraca. To wspólne „zero woltów” dla całego układu. Przewody masy są zwykle czarne.</li>
+    </ul>
+    <p>Kliknij przełącznik i obserwuj kropki. To ładunki, które płyną w przewodach.</p>
+    <div data-rysunek="obwod"></div>
+    <p class="analogia"><strong>Analogia:</strong> obwód działa jak łańcuch roweru. Wystarczy, że pęknie w jednym miejscu, i cały łańcuch przestaje przenosić napęd – choć pedały dalej da się kręcić.</p>
+    <div data-quiz="obwod"></div>
+  </section>
+
+  <!-- 3 -->
+  <section class="krok" id="stanowisko" data-odhacz="Rozumiem">
+    <h2><span class="nr">3</span>Jakie napięcia mamy na stanowisku</h2>
+    <p>Na waszym stanowisku są trzy różne napięcia. Każde ma swoje zadanie:</p>
+    <div class="tabela-kontener"><table>
+      <thead><tr><th>Napięcie</th><th>Skąd</th><th>Co zasila</th></tr></thead>
+      <tbody>
+        <tr><td><b>12 V</b></td><td>zasilacz z gniazdka</td><td>tylko przetwornicę</td></tr>
+        <tr><td><b>napięcie silników</b></td><td>przetwornica step-down</td><td>moduły ESC i silniki (od zajęć 3)</td></tr>
+        <tr><td><b>5 V</b></td><td>port USB komputera</td><td>płytkę ESP32</td></tr>
+        <tr><td><b>3,3 V</b></td><td>stabilizator na płytce ESP32</td><td>mikrokontroler i czujniki</td></tr>
+      </tbody>
+    </table></div>
+    <div data-rysunek="napiecia"></div>
+    <div class="ramka uwaga"><span class="tytul">Nigdy nie podłączamy 12 V do czujników</span>Czujniki są zrobione na 3,3 V. Za wysokie napięcie przepchnie przez nie za duży prąd i spali je w ułamku sekundy. Dlatego przewody od zasilacza nigdy nie trafiają na płytkę stykową z czujnikami.</div>
+    <div data-quiz="napiecia"></div>
+  </section>
+
+  <!-- 4 -->
+  <section class="krok" id="multimetr" data-odhacz="Zrobione z prowadzącym">
+    <h2><span class="nr">4</span>Multimetr</h2>
+    <p><strong>Multimetr</strong> to przyrząd, który pokazuje, co dzieje się w przewodach. Ma pokrętło do wyboru pomiaru i kilka gniazd na sondy (przewody pomiarowe). Czarna sonda prawie zawsze siedzi w gnieździe <strong>COM</strong>.</p>
+    <p>Kliknij pozycję na pokrętle albo przycisk pod rysunkiem.</p>
+    <div data-rysunek="multimetr"></div>
+    <div class="tabela-kontener"><table>
+      <thead><tr><th>Co mierzysz</th><th>Pokrętło</th><th>Czerwona sonda</th><th>Jak podłączasz</th></tr></thead>
+      <tbody>
+        <tr><td>napięcie</td><td>V⎓</td><td>VΩ</td><td><b>równolegle</b> – sondy na dwóch punktach</td></tr>
+        <tr><td>prąd</td><td>mA albo 10A</td><td>mA albo <b>10A</b></td><td><b>szeregowo</b> – prąd płynie przez multimetr</td></tr>
+        <tr><td>ciągłość</td><td>Ω / pisk</td><td>VΩ</td><td>na przewodzie <b>bez zasilania</b></td></tr>
+      </tbody>
+    </table></div>
+    <div class="ramka uwaga"><span class="tytul">Gniazdo 10A</span>Po pomiarze prądu od razu przełóż czerwoną sondę z powrotem do VΩ. Jeśli zostanie w 10A, następny pomiar napięcia zrobi zwarcie i może spalić bezpiecznik multimetru.</div>
+    <h3>Ćwiczenie przy stole, razem z prowadzącym</h3>
+    <ol>
+      <li>Zmierz napięcie zasilacza (V⎓). Ile pokazuje?</li>
+      <li>Zmierz napięcie między pinem 3V3 a GND na płytce ESP32 (płytka podłączona do USB).</li>
+      <li>Sprawdź ciągłość jednego przewodu z kabla drona (Ω / pisk). Czy piszczy?</li>
+    </ol>
+    <div data-quiz="multimetr"></div>
+  </section>
+
+  <!-- 5 -->
+  <section class="krok" id="silnik" data-odhacz="Rozumiem">
+    <h2><span class="nr">5</span>Silnik szczotkowy</h2>
+    <p>Nasz dron ma cztery małe <strong>silniki szczotkowe</strong> 816 (8,5 mm średnicy, 16 mm długości). W środku są magnesy i wirnik z cewkami. Gdy płynie prąd, cewki stają się magnesami i odpychają się od magnesów obudowy – wirnik się kręci.</p>
+    <p>Najważniejsza cecha: <strong>zamiana przewodów odwraca kierunek obrotu</strong>. Sprawdź to na rysunku.</p>
+    <div data-rysunek="silnik"></div>
+    <h3>Nasze dwa typy silników</h3>
+    <p>Kierunek zawsze liczymy, <strong>patrząc z góry, od strony śmigła</strong>.</p>
+    <div class="tabela-kontener"><table>
+      <thead><tr><th>Typ</th><th>Przewody</th><th>Plus (+)</th><th>Minus (−)</th><th>Kierunek</th></tr></thead>
+      <tbody>
+        <tr><td><b>A</b></td><td><span data-k="typySilnikow.A.plus" data-kolor>czerwony</span> i <span data-k="typySilnikow.A.minus" data-kolor>niebieski</span></td>
+          <td data-k="typySilnikow.A.plus">czerwony</td><td data-k="typySilnikow.A.minus">niebieski</td><td><b data-k="typySilnikow.A.kierunek">CW</b></td></tr>
+        <tr><td><b>B</b></td><td><span data-k="typySilnikow.B.plus" data-kolor>biały</span> i <span data-k="typySilnikow.B.minus" data-kolor>czarny</span></td>
+          <td data-k="typySilnikow.B.plus">biały</td><td data-k="typySilnikow.B.minus">czarny</td><td><b data-k="typySilnikow.B.kierunek">CCW</b></td></tr>
+      </tbody>
+    </table></div>
+    <p><strong>CW</strong> znaczy zgodnie z ruchem wskazówek zegara, <strong>CCW</strong> – przeciwnie. Dron potrzebuje dwóch silników CW i dwóch CCW, ustawionych po przekątnych. Każde śmigło próbuje obrócić ramę w swoją stronę – dwie pary kręcące się w przeciwne strony znoszą się nawzajem i dron się nie obraca.</p>
+    <h3>Doświadczenie z prowadzącym</h3>
+    <ol>
+      <li>Prowadzący podłącza silnik 816 do zasilacza laboratoryjnego, a multimetr szeregowo (10A).</li>
+      <li>Zwiększa napięcie: silnik kręci się szybciej, a multimetr pokazuje większy prąd.</li>
+      <li>Zamienia przewody: silnik kręci się w drugą stronę.</li>
+    </ol>
+    <div data-quiz="silnik"></div>
+  </section>
+
+  <!-- 6 -->
+  <section class="krok" id="pwm" data-odhacz="Rozumiem">
+    <h2><span class="nr">6</span>PWM w skrócie</h2>
+    <p>Pin ESP32 umie być tylko <strong>włączony</strong> albo <strong>wyłączony</strong>. Jak w takim razie zmieniać prędkość silnika? Trzeba go bardzo szybko włączać i wyłączać – tysiące razy na sekundę. To jest <strong>PWM</strong>.</p>
+    <p><strong>Wypełnienie</strong> mówi, jaką część czasu pin jest włączony. Przesuń suwak.</p>
+    <div data-rysunek="pwm"></div>
+    <p class="analogia"><strong>Analogia:</strong> wyobraź sobie, że co sekundę na chwilę przyciskasz pedał roweru. Im dłużej trzymasz nogę na pedale w każdej sekundzie, tym szybciej jedziesz – choć noga cały czas „włącza się i wyłącza”.</p>
+    <p>Dokładnie zajmiemy się tym na <a href="../zajecia-3/02-pwm.html">zajęciach 3</a>.</p>
+    <div data-quiz="pwm"></div>
+  </section>
+
+  <!-- 7 -->
+  <section class="krok" id="plytka" data-odhacz="Rozumiem">
+    <h2><span class="nr">7</span>Płytka stykowa</h2>
+    <p><strong>Płytka stykowa</strong> pozwala łączyć elementy bez lutowania. Wkładasz nóżkę albo przewód w otwór, a metalowe sprężynki w środku płytki łączą go z sąsiednimi otworami. Trzeba tylko wiedzieć, które otwory są połączone.</p>
+    <ul>
+      <li>Każda <strong>kolumna</strong> ma dwie grupy po <strong>5 otworów</strong>: rzędy a–e i rzędy f–j. Grupy rozdziela przerwa na środku.</li>
+      <li>Wzdłuż krawędzi biegną <strong>szyny zasilania</strong>: czerwona (+) i niebieska (−). Wszystkie otwory jednej szyny są połączone.</li>
+      <li>Na niektórych płytkach szyny są <strong>przerwane w połowie</strong>. Sprawdź to przyciskiem pod rysunkiem.</li>
+    </ul>
+    <p>Kliknij dowolny otwór.</p>
+    <div data-rysunek="plytka"></div>
+    <h3>ESP32 nad przerwą</h3>
+    <p>Kliknij „Pokaż ESP32 na płytce”. Płytka ESP32 jest wpięta nad przerwą: lewe nóżki są w rzędzie b, prawe w rzędzie i. Gdyby wszystkie nóżki trafiły po jednej stronie przerwy, pary nóżek w tej samej kolumnie byłyby zwarte. Wolny otwór w tej samej kolumnie co nóżka (rząd a albo j) jest z nią połączony – tam wpinasz przewód.</p>
+    <p class="podpis">Rysunek jest uproszczony. Dokładne miejsca na waszej platformie pokaże prowadzący.</p>
+    <h3>Gdzie jest błąd?</h3>
+    <p>Na każdej płytce jest jeden błąd. Kliknij element, który jest wpięty źle.</p>
+    <div data-rysunek="bledy"></div>
+    <h3>Kolory przewodów z drona</h3>
+    <div data-rysunek="tabelaI2C"></div>
+    <div data-quiz="plytka"></div>
+  </section>
+</main>
+<script src="../js/config.js"></script>
+<script src="../js/slowniczek.js"></script>
+<script src="../js/quizy.js"></script>
+<script src="../js/rysunki.js"></script>
+<script src="../js/app.js"></script>
+</body>
+</html>

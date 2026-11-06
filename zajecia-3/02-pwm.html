@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PWM i dioda · Inżynieria dronowa</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-strona="z3-02" data-root="../">
+<main class="tresc">
+  <div class="okruszki"><a href="../index.html">Start</a> › Zajęcia 3 › Rozdział 2</div>
+<h1>PWM i dioda</h1>
+  <p class="wstep">Na zajęciach 2 przesuwaliście suwak wypełnienia. Teraz zrobimy PWM naprawdę – najpierw „ręcznie” i bardzo wolno, żeby było widać każde włączenie, a potem sprzętem.</p>
+
+  <section class="krok" id="jak" data-odhacz="Rozumiem">
+    <h2><span class="nr">1</span>Jak działa program</h2>
+<pre class="bez-dymkow"><code> 25%:  _       _       _
+      | |_____| |_____| |_____
+ 50%:  ___     ___     ___
+      |   |___|   |___|   |___
+ 75%:  _____   _____   _____
+      |     |_|     |_|     |_
+      |&lt;-----&gt;|
+        okres</code></pre>
+    <ol>
+      <li><strong>PWM ręcznie i bardzo wolno</strong> – okres 2 sekundy. Widać, jak dioda się włącza i wyłącza, a na Plotterze rysuje się prostokąt 0/1.</li>
+      <li><strong>Coraz szybciej</strong> – aż do 5 ms. W pewnej chwili oko przestaje widzieć mruganie i widzi tylko słabsze światło.</li>
+      <li><strong>PWM sprzętowy (LEDC)</strong> – płytka mruga sama, 5000 razy na sekundę, a program może robić coś innego.</li>
+    </ol>
+    <p>Dioda RGB jest na płytce. Opcjonalnie możesz wpiąć zewnętrzną diodę: pin 22 → rezystor 220 Ω → dłuższa nóżka diody, krótsza → GND.</p>
+  </section>
+
+  <section class="krok" id="kod">
+    <h2><span class="nr">2</span>Wgraj program i otwórz Serial Plotter</h2>
+    <div data-szkic="uczen/L05_pwm_dioda"></div>
+    <p>Na wykresie: <code>stan</code> to prostokąt 0/1, a <code>srednia</code> to jasność, którą widzi oko. Przy szybkich etapach wykres robi się poszarpany – Plotter rysuje punkt co 20 ms i nie nadąża, tak samo jak oko.</p>
+  </section>
+
+  <section class="krok" id="zadania">
+    <h2><span class="nr">3</span>Zadania</h2>
+    <ol>
+      <li>Zmień <code>WYPELNIENIE</code> na 10, 50, 90. Jak zmienia się prostokąt? A jasność na końcu?</li>
+      <li>Zmień pierwszy okres w tablicy <code>OKRESY_MS</code>, np. na 4000.</li>
+      <li>Zrób „oddychającą” diodę: jasność płynnie rośnie od 0 do 100 i spada.</li>
+    </ol>
+  </section>
+</main>
+<script src="../js/config.js"></script>
+<script src="../js/slowniczek.js"></script>
+<script src="../js/quizy.js"></script>
+<script src="../js/szkice.js"></script>
+<script src="../js/rysunki.js"></script>
+<script src="../js/app.js"></script>
+</body>
+</html>

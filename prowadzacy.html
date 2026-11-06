@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dla prowadzącego · Inżynieria dronowa</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-strona="prowadzacy" data-root="" data-bez-dymkow>
+<main class="tresc">
+  <div class="okruszki"><a href="index.html">Start</a> › Dla prowadzącego</div>
+<h1>Dla prowadzącego</h1>
+  <p class="wstep">Ta strona nie ma linku w menu ucznia. Jest tu plan zajęć 2, odpowiedzi do „Sprawdź się”, test biegunowości silników i lista przygotowań.</p>
+
+  <nav class="spis" aria-label="Spis treści">
+    <ol>
+      <li><a href="#plan">Plan zajęć 2</a></li>
+      <li><a href="#przygotowanie">Przygotowanie przed zajęciami</a></li>
+      <li><a href="#biegunowosc">Test biegunowości silników</a></li>
+      <li><a href="#potwierdzenie">Wartości do potwierdzenia</a></li>
+      <li><a href="#odpowiedzi">Odpowiedzi do „Sprawdź się”</a></li>
+      <li><a href="#orientacja">Rozwiązanie ćwiczenia z orientacją</a></li>
+      <li><a href="#szkice">Rozwiązania szkiców</a></li>
+      <li><a href="#uwagi">Uwagi techniczne</a></li>
+    </ol>
+  </nav>
+
+  <h2 id="plan">Plan zajęć 2 (7.11) – minuta po minucie</h2>
+  <div class="tabela-kontener"><table>
+    <thead><tr><th>Czas</th><th>Min.</th><th>Blok</th><th>Co robimy</th></tr></thead>
+    <tbody>
+      <tr><td>0:00–0:05</td><td>5</td><td>Start i rozdanie ram</td><td>Zespoły siadają przy stanowiskach, każdy dostaje ramę ze swoją nazwą. Pokaż stronę startową poradnika i jak odhaczać kroki.</td></tr>
+      <tr><td>0:05–0:20</td><td>15</td><td><a href="zajecia-2/01-elektronika.html">Elektronika</a></td><td>Na rzutniku: woda (U, I, R), obwód, napięcia stanowiska, multimetr (pomiar zasilacza i 3V3, ciągłość przewodu), silnik szczotkowy – doświadczenie z zasilaczem i zamianą przewodów, PWM w jednym zdaniu, płytka stykowa i „Gdzie jest błąd?”. Zespoły klikają rysunki razem z tobą.</td></tr>
+      <tr><td>0:20–0:25</td><td>5</td><td><a href="zajecia-2/02-bezpieczenstwo.html">Bezpieczeństwo</a></td><td>Zasady, trzy sposoby na STOP, role w zespole. Każdy zespół odhacza „Cały zespół przeczytał zasady”.</td></tr>
+      <tr><td>0:25–0:50</td><td>25</td><td><a href="zajecia-2/03-montaz.html">Montaż</a></td><td>Sprawdzenie zestawu, rozpoznanie typów silników, przód ramy, silniki w tulejki (typ A na pozycje CW), ESC i przewody, skręcanie. Pokazuj krok, potem czas na zespoły.</td></tr>
+      <tr><td>0:50–1:00</td><td>10</td><td><a href="zajecia-2/04-silniki.html">Orientacja silników</a></td><td>Ćwiczenie na stronie, potem numery na dronie, dobór i zakładanie śmigieł. Punkt kontrolny: sprawdzasz każdy dron.</td></tr>
+      <tr><td>1:00–1:10</td><td>10</td><td><a href="zajecia-2/05-czujniki.html">Czujniki</a></td><td>MPU6050 płasko na środku, X do przodu. Czujnik odległości w dół, stożek bez przeszkód (pokaż suwak z prowadnicą). Przewody I2C przy GND.</td></tr>
+      <tr><td>1:10–1:25</td><td>15</td><td><a href="zajecia-2/06-podlaczenie.html">Podłączenie</a></td><td>Schemat, wpinanie przy odłączonym USB, lista kontrolna. Punkt kontrolny „zanim podłączysz USB” – obejdź wszystkie stanowiska.</td></tr>
+      <tr><td>1:25–1:50</td><td>25</td><td><a href="zajecia-2/07-arduino.html">Arduino</a> i <a href="zajecia-2/08-skaner.html">skaner</a></td><td>Okno IDE, płytka i port, USB CDC On Boot, wgranie L01 i Serial Monitor (ok. 15 min). Potem L02 – każdy zespół ma zobaczyć 0x29 i 0x68 (ok. 10 min). Szybsze zespoły: L03 i L04.</td></tr>
+      <tr><td>1:50–1:55</td><td>5</td><td>Podsumowanie</td><td>Co dziś zbudowaliśmy, co będzie za dwa tygodnie (silniki się zakręcą). Zespoły, które nie zrobiły L03/L04, zaczną od nich zajęcia 3 – powiedz to wprost, bez presji.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="przygotowanie">Przygotowanie przed zajęciami</h2>
+  <ul class="lista-kontrolna" id="przygotowanie-lista">
+    <li>Goldpiny przylutowane do wszystkich czujników (MPU6050 i czujnik odległości).</li>
+    <li>Sprawdzona biegunowość wszystkich silników (test niżej). Jeśli wynik różni się od <code>js/config.js</code> – popraw config.</li>
+    <li>Silniki przylutowane do modułów ESC: plus silnika do plusa ESC.</li>
+    <li>Na każdym komputerze: Arduino IDE 2.x, pakiet <b>esp32 (Espressif) 3.x</b>, biblioteka <b><span data-k="czujnikOdleglosci.biblioteka">VL53L1X (Pololu)</span></b>. Test: kompilacja <code>L01_pierwszy_program</code>.</li>
+    <li>Kable I2C około 1 m, 4 przewody w kolorach z <code>config.js</code>.</li>
+    <li>Na każdej platformie: płytka stykowa z wpiętym ESP32, kabel USB z transmisją danych.</li>
+    <li>Multimetr, zasilacz laboratoryjny (albo bateria 1,5 V) i jeden zapasowy silnik 816 do doświadczenia.</li>
+    <li>Zdjęcia do poradnika (lista w README) i logo w <code>img/logo-ud.png</code>.</li>
+    <li>Strona otwarta lokalnie na komputerach (na wypadek braku internetu).</li>
+  </ul>
+
+  <h2 id="biegunowosc">Test biegunowości silników (przed lutowaniem)</h2>
+  <ol>
+    <li>Weź baterię 1,5 V albo zasilacz z ograniczeniem prądu (np. 1,5 V, limit 0,3 A).</li>
+    <li>Załóż na wałek kawałek taśmy jako „flagę”, żeby było widać kierunek.</li>
+    <li>Patrz na silnik <b>z góry, od strony wałka</b>.</li>
+    <li>Przyłóż przewody do baterii na chwilę.</li>
+    <li>Przewód, który na <b>plusie</b> daje kierunek zgodny z typem silnika, jest plusem:
+      typ A ma kręcić się <b data-k="typySilnikow.A.kierunek">CW</b>, typ B – <b data-k="typySilnikow.B.kierunek">CCW</b>.</li>
+    <li>Oczekiwany wynik (do potwierdzenia): typ A – plus <b data-k="typySilnikow.A.plus">czerwony</b>, typ B – plus <b data-k="typySilnikow.B.plus">biały</b>. Jeśli jest inaczej, popraw <code>typySilnikow</code> w <code>js/config.js</code>.</li>
+    <li>Zamiana przewodów zawsze odwraca kierunek – sprawdź to na jednym silniku dla pewności.</li>
+  </ol>
+
+  <h2 id="potwierdzenie">Wartości do potwierdzenia</h2>
+  <p>Te pola w <code>js/config.js</code> mają wartości domyślne z planu kursu. Po sprawdzeniu na sprzęcie usuń je z listy <code>doPotwierdzenia</code>:</p>
+  <ul id="do-potwierdzenia"></ul>
+
+  <h2 id="odpowiedzi">Odpowiedzi do „Sprawdź się”</h2>
+  <div class="tabela-kontener"><table>
+    <thead><tr><th>Gdzie</th><th>Pytanie</th><th>Poprawna odpowiedź</th></tr></thead>
+    <tbody id="odpowiedzi-tabela"></tbody>
+  </table></div>
+
+  <h2 id="orientacja">Rozwiązanie ćwiczenia z orientacją</h2>
+  <div class="tabela-kontener"><table>
+    <thead><tr><th>Pozycja</th><th>Numer</th><th>Typ</th><th>Kierunek</th><th>Śmigło</th><th>Pin ESC</th></tr></thead>
+    <tbody id="orientacja-tabela"></tbody>
+  </table></div>
+
+  <h2 id="szkice">Rozwiązania szkiców</h2>
+  <p>Pełne rozwiązania leżą w <code>szkice/prowadzacy/</code>. Wersje ucznia – w <code>szkice/uczen/</code> (te są na stronach).</p>
+  <ul id="lista-szkicow"></ul>
+
+  <h2 id="uwagi">Uwagi techniczne</h2>
+  <ul>
+    <li><b>I2C na kablu 1 m:</b> szkice ustawiają <code>Wire.setClock(100000)</code> i <code>Wire.setTimeOut(50)</code>. Przy kłopotach: SDA i SCL skręcone z GND, krótsze przewody, ewentualnie dodatkowe rezystory podciągające 4,7 kΩ do 3V3 na platformie.</li>
+    <li><b>Stożek czujnika odległości (~27°):</b> na wysokości 50 cm stożek ma u dołu ok. 24 cm szerokości. Prowadnica bliżej niż ok. 12 cm od osi czujnika może wejść w stożek. Najprościej odsunąć prowadnicę od osi czujnika. Da się też zawęzić pole widzenia czujnika (ROI), ale biblioteka Pololu nie ma do tego gotowej funkcji – trzeba zapisać rejestry <code>ROI_CONFIG__USER_ROI_*</code> przez <code>writeReg()</code>.</li>
+    <li><b>Czujnik VL53L0X zamiast VL53L1X:</b> biblioteka Pololu „VL53L0X”, zasięg ok. 1,2 m. Zmienić trzeba L03, L08, L09, L10 (inne nazwy funkcji: <code>init()</code>, <code>setMeasurementTimingBudget()</code>, <code>startContinuous()</code>, <code>readRangeContinuousMillimeters()</code>) oraz pole <code>czujnikOdleglosci</code> w <code>config.js</code>.</li>
+    <li><b>Tryb sterowania ESC:</b> domyślnie <code>TRYB_MOSFET</code> (PWM 20 kHz). Dla ESC z wejściem RC zmień jeden <code>#define</code> na <code>TRYB_ESC_RC</code> (1000–2000 µs, 50 Hz).</li>
+    <li><b>Piny ESP32-C6:</b> nigdy nie używamy dla ESC pinów 4, 5, 8, 9, 15 (startowe), 12, 13 (USB), 16, 17 (UART0). BOOT (GPIO9) jest czytany po starcie jako STOP awaryjny.</li>
+  </ul>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var K = window.KONFIG || {}, Q = window.QUIZY || {};
+      function el(t, txt) { var e = document.createElement(t); if (txt != null) e.textContent = txt; return e; }
+      (K.doPotwierdzenia || []).forEach(function (p) { document.getElementById("do-potwierdzenia").appendChild(el("li", p)); });
+      var tb = document.getElementById("odpowiedzi-tabela");
+      Object.keys(Q).forEach(function (k) {
+        var q = Q[k], tr = el("tr");
+        tr.appendChild(el("td", q.gdzie || k));
+        tr.appendChild(el("td", q.pytanie));
+        var td = el("td"); var b = el("b", q.odpowiedzi[q.poprawna]); td.appendChild(b);
+        td.appendChild(el("div", q.wyjasnienie)); tr.appendChild(td); tb.appendChild(tr);
+      });
+      var T = K.typySilnikow || {}, S = K.smigla || {}, piny = (K.piny || {}).silniki || [];
+      function typ(kier) { for (var t in T) if (T[t].kierunek === kier) return t; return "?"; }
+      function sm(kier) { for (var t in S) if (t !== "opis" && S[t] === kier) return t; return "?"; }
+      var nazwy = { "przod-lewy": "przód-lewy", "przod-prawy": "przód-prawy", "tyl-prawy": "tył-prawy", "tyl-lewy": "tył-lewy" };
+      (K.silniki || []).forEach(function (m, i) {
+        var tr = el("tr");
+        [nazwy[m.pozycja] || m.pozycja, m.nr, typ(m.kierunek), m.kierunek, sm(m.kierunek), "GPIO " + piny[i]].forEach(function (v) { tr.appendChild(el("td", v)); });
+        document.getElementById("orientacja-tabela").appendChild(tr);
+      });
+      Object.keys(window.SZKICE || {}).forEach(function (n) {
+        var f = n.split("/")[1], li = el("li"), a = el("a", f + ".ino");
+        a.href = "szkice/prowadzacy/" + f + "/" + f + ".ino";
+        li.appendChild(a); document.getElementById("lista-szkicow").appendChild(li);
+      });
+    });
+  </script>
+</main>
+<script src="js/config.js"></script>
+<script src="js/slowniczek.js"></script>
+<script src="js/quizy.js"></script>
+<script src="js/szkice.js"></script>
+<script src="js/rysunki.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

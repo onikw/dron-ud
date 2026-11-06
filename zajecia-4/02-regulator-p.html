@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Regulator P · Inżynieria dronowa</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-strona="z4-02" data-root="../">
+<main class="tresc">
+  <div class="okruszki"><a href="../index.html">Start</a> › Zajęcia 4 › Rozdział 2</div>
+<h1>Regulator P</h1>
+  <p class="wstep">Regulator to część programu, która sama ustawia moc silników tak, żeby dron był na zadanej wysokości. Zaczynamy od najprostszej wersji: P.</p>
+
+  <section class="krok" id="jak" data-odhacz="Rozumiem">
+    <h2><span class="nr">1</span>Jak działa regulator P</h2>
+    <p class="analogia"><strong>Analogia: prysznic.</strong> Za zimno? Kręcisz kurkiem na ciepło. Im zimniej, tym mocniej kręcisz.</p>
+<pre class="bez-dymkow"><code>błąd = wysokość zadana − wysokość zmierzona
+(dron za nisko → błąd dodatni → więcej mocy)
+
+moc = moc_zawisu + Kp · błąd</code></pre>
+    <ul>
+      <li><code>moc_zawisu</code> – moc, przy której dron prawie wisi. Punkt startowy.</li>
+      <li><code>Kp</code> – jak mocno reagujemy na błąd. Mało – dron dochodzi powoli. Dużo – buja się w górę i w dół.</li>
+    </ul>
+<pre class="bez-dymkow"><code> zadana ---&gt; (+) --błąd--&gt; [ regulator ] --moc--&gt; [silniki] --&gt; dron
+              ^ (−)                                              |
+              +------------------ [czujnik] &lt;---wysokość---------+</code></pre>
+    <p>To jest <strong>sprzężenie zwrotne</strong>: wynik wraca na początek i zmienia to, co robimy. Regulator liczy nową moc przy każdym pomiarze, co 33 ms.</p>
+    <div data-quiz="regulatorP"></div>
+  </section>
+
+  <section class="krok" id="bezpieczenstwo" data-odhacz="Rozumiem">
+    <h2><span class="nr">2</span>Zabezpieczenia i komendy</h2>
+    <p>Dron sam się zatrzyma i wypisze powód, gdy:</p>
+    <ul>
+      <li>czujnik nie da pomiaru przez <strong>200 ms</strong>,</li>
+      <li>dron będzie wyżej niż <code>WYSOKOSC_MAX</code>,</li>
+      <li>lot potrwa dłużej niż <code>CZAS_MAX</code>.</li>
+    </ul>
+    <div class="tabela-kontener"><table>
+      <thead><tr><th>Komenda</th><th>Co robi</th></tr></thead>
+      <tbody>
+        <tr><td><code>u</code></td><td>uzbrój (tylko gdy czujnik mierzy)</td></tr>
+        <tr><td><code>h 300</code></td><td>wysokość zadana 300 mm; <code>h 0</code> – lądowanie</td></tr>
+        <tr><td><code>z 35</code></td><td>moc zawisu w %</td></tr>
+        <tr><td><code>p 0.05</code></td><td>Kp</td></tr>
+        <tr><td><code>?</code></td><td>pokaż nastawy</td></tr>
+        <tr><td><code>x</code> albo spacja</td><td>STOP</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="krok" id="kod">
+    <h2><span class="nr">3</span>Wgraj program</h2>
+    <div data-szkic="uczen/L09_trzymaj_wysokosc"></div>
+    <p>Na Plotterze: <code>zadana</code>, <code>wysokosc</code> i <code>moc_x10</code> (moc razy 10, żeby było ją widać obok milimetrów).</p>
+  </section>
+
+  <section class="krok kontrolny" id="przed">
+    <h2>Zawołaj prowadzącego, zanim uzbroisz silniki</h2>
+    <p>Prowadzący sprawdzi drona na prowadnicy i powie, od jakiej mocy zawisu zacząć.</p>
+  </section>
+
+  <section class="krok" id="zawis">
+    <h2><span class="nr">4</span>Znajdź moc zawisu</h2>
+    <ol>
+      <li>Wpisz <code>p 0</code> (regulator wyłączony) i <code>u</code>.</li>
+      <li>Zwiększaj moc zawisu małymi krokami: <code>z 25</code>, <code>z 28</code>, <code>z 30</code>…</li>
+      <li>Gdy dron prawie się unosi – to twoja moc zawisu. Zapisz ją. Potem <code>x</code>.</li>
+    </ol>
+  </section>
+
+  <section class="krok" id="kp">
+    <h2><span class="nr">5</span>Dobierz Kp</h2>
+    <ol>
+      <li>Ustaw znalezioną moc zawisu (<code>z</code>) i <code>h 300</code>.</li>
+      <li>Zacznij od <code>p 0.02</code>, uzbrój i obserwuj wykres.</li>
+      <li>Zwiększaj Kp: 0.03, 0.05, 0.08… Kiedy dron zaczyna się bujać? Wybierz trochę mniejsze Kp.</li>
+      <li>Wpisz je w kodzie w <code>Kp</code>, żeby po restarcie nie szukać od nowa.</li>
+    </ol>
+    <p>Zauważ: z samym P dron zwykle wisi <strong>trochę za nisko</strong>. To normalne – naprawimy to w <a href="03-pi-pid.html">następnym rozdziale</a>.</p>
+  </section>
+</main>
+<script src="../js/config.js"></script>
+<script src="../js/slowniczek.js"></script>
+<script src="../js/quizy.js"></script>
+<script src="../js/szkice.js"></script>
+<script src="../js/rysunki.js"></script>
+<script src="../js/app.js"></script>
+</body>
+</html>

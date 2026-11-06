@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bezpieczeństwo · Inżynieria dronowa</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-strona="z2-02" data-root="../">
+<main class="tresc">
+  <div class="okruszki"><a href="../index.html">Start</a> › Zajęcia 2 › Rozdział 2</div>
+<h1>Bezpieczeństwo</h1>
+  <p class="wstep">Śmigło drona kręci się kilkadziesiąt tysięcy razy na minutę. Nawet małe plastikowe śmigło potrafi skaleczyć palec. Te zasady obowiązują na każdych zajęciach – także wtedy, gdy wydaje się, że nic się nie kręci.</p>
+
+  <section class="krok" id="zasady" data-odhacz="Cały zespół przeczytał zasady">
+    <h2><span class="nr">1</span>Zasady przy stanowisku</h2>
+    <ol>
+      <li><strong>Zasilacz 12 V włącza tylko prowadzący.</strong> Wy pracujecie przy płytce stykowej i kablu USB.</li>
+      <li><strong>Przewody wpinamy i wypinamy przy odłączonym USB.</strong> Najpierw odłącz kabel USB, potem poprawiaj połączenia.</li>
+      <li><strong>Zanim podłączysz USB po zmianie połączeń, zawołaj prowadzącego.</strong> Na stronach takie miejsca są oznaczone pomarańczową ramką STOP.</li>
+      <li><strong>Ręce, włosy i rękawy z dala od śmigieł.</strong> Długie włosy zwiąż, luźne rękawy podwiń.</li>
+      <li><strong>Dron lata tylko na prowadnicy.</strong> Nigdy nie zdejmujemy go z prowadnicy, gdy silniki mogą się zakręcić.</li>
+      <li><strong>Nigdy nie zatrzymujemy śmigła ręką.</strong></li>
+      <li><strong>Nie dotykamy przetwornicy ani silników po pracy</strong> – mogą być gorące.</li>
+      <li><strong>Lutownicę obsługuje tylko prowadzący.</strong></li>
+    </ol>
+  </section>
+
+  <section class="krok" id="stop">
+    <h2><span class="nr">2</span>Trzy sposoby na STOP</h2>
+    <p>Od zajęć 3 programy z silnikami mają wbudowane zabezpieczenia. Silniki startują <strong>rozbrojone</strong> (dioda na płytce świeci na czerwono) i kręcą się dopiero po komendzie <code>u</code> (dioda zielona). Zapamiętaj trzy sposoby zatrzymania:</p>
+    <div class="tabela-kontener"><table>
+      <thead><tr><th>Co robisz</th><th>Co się dzieje</th></tr></thead>
+      <tbody>
+        <tr><td>Naciskasz <kbd>spację</kbd> albo wpisujesz <kbd>x</kbd> w Serial Monitorze</td><td>program od razu wyłącza silniki</td></tr>
+        <tr><td>Naciskasz przycisk <strong>BOOT</strong> na płytce ESP32</td><td>STOP awaryjny – działa nawet bez klawiatury</td></tr>
+        <tr><td>Prowadzący wyłącza zasilacz</td><td>silniki tracą zasilanie</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="krok" id="role">
+    <h2><span class="nr">3</span>Role w zespole</h2>
+    <p>Pracujecie we trzech. Zmieniajcie się rolami przy każdym rozdziale:</p>
+    <ul>
+      <li><strong>Pilot</strong> – siedzi przy klawiaturze, wpisuje kod i komendy.</li>
+      <li><strong>Obserwator</strong> – patrzy na drona i na wykres, mówi na głos, co widzi.</li>
+      <li><strong>Strażnik</strong> – pilnuje bezpieczeństwa i trzyma palec przy spacji, gdy silniki mogą się kręcić.</li>
+    </ul>
+    <p>Pamiętacie Kodeks pilota z <a href="../zajecia-1.html">zajęć 1</a>? Obowiązuje dalej.</p>
+  </section>
+
+  <section class="krok" id="gdy">
+    <h2><span class="nr">4</span>Co robić, gdy…</h2>
+    <div class="tabela-kontener"><table>
+      <thead><tr><th>Sytuacja</th><th>Co robisz</th></tr></thead>
+      <tbody>
+        <tr><td>śmigło kręci się, choć nie powinno</td><td>spacja albo BOOT, potem zawołaj prowadzącego</td></tr>
+        <tr><td>czuć spaleniznę albo coś jest bardzo gorące</td><td>odłącz USB, zawołaj prowadzącego, niczego nie dotykaj</td></tr>
+        <tr><td>wypadł przewód z płytki stykowej</td><td>odłącz USB, dopiero potem wepnij przewód</td></tr>
+        <tr><td>ktoś się skaleczył</td><td>od razu powiedz prowadzącemu</td></tr>
+        <tr><td>nie wiesz, czy coś jest bezpieczne</td><td>zapytaj – to zawsze dobry pomysł</td></tr>
+      </tbody>
+    </table></div>
+    <div data-quiz="bezpieczenstwo"></div>
+  </section>
+</main>
+<script src="../js/config.js"></script>
+<script src="../js/slowniczek.js"></script>
+<script src="../js/quizy.js"></script>
+<script src="../js/rysunki.js"></script>
+<script src="../js/app.js"></script>
+</body>
+</html>

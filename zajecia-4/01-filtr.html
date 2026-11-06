@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Filtrowanie pomiarów · Inżynieria dronowa</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-strona="z4-01" data-root="../">
+<main class="tresc">
+  <div class="okruszki"><a href="../index.html">Start</a> › Zajęcia 4 › Rozdział 1</div>
+<h1>Filtrowanie pomiarów</h1>
+  <p class="wstep">Dziś dron nauczy się sam trzymać wysokość. Najpierw musimy uspokoić pomiar: czujnik odległości trochę „skacze”, nawet gdy nic się nie rusza.</p>
+<pre class="bez-dymkow"><code>  czujnik --&gt; filtr --&gt; regulator --&gt; silniki --&gt; dron
+     ^                                              |
+     +----------------------------------------------+</code></pre>
+
+  <section class="krok" id="jak" data-odhacz="Rozumiem">
+    <h2><span class="nr">1</span>Dwa filtry</h2>
+    <p>Na wykresie są trzy linie z tego samego pomiaru:</p>
+    <ul>
+      <li><code>surowy</code> – prosto z czujnika, skacze. To <strong>szum</strong>.</li>
+      <li><code>srednia</code> – średnia z <code>N</code> ostatnich pomiarów. Jak ocena na koniec roku: jedna słabsza ocena nie zmienia wszystkiego.</li>
+      <li><code>wykladniczy</code> – <code>nowy = ALFA × pomiar + (1 − ALFA) × stary</code>. Jak plotka: każda nowa wiadomość trochę zmienia zdanie. <code>ALFA = 1</code> – brak filtra, <code>ALFA = 0,1</code> – mocny filtr.</li>
+    </ul>
+<pre class="bez-dymkow"><code> surowy:   /\/\_/\/\__/\/\/\
+ filtr:    ~~~~~~~~~~~~~~~~~   gładko, ale ze spóźnieniem</code></pre>
+    <div data-quiz="filtr"></div>
+  </section>
+
+  <section class="krok" id="kod">
+    <h2><span class="nr">2</span>Wgraj program i otwórz Serial Plotter</h2>
+    <div data-szkic="uczen/L08_filtr"></div>
+  </section>
+
+  <section class="krok" id="zadania">
+    <h2><span class="nr">3</span>Zadania</h2>
+    <ol>
+      <li>Zmień <code>N</code> na 2, 10, 20. Co się dzieje z linią <code>srednia</code>?</li>
+      <li>Zmień <code>ALFA</code> na 0.8, 0.3, 0.05.</li>
+      <li>Szybko przesuń drona po prowadnicy. Która linia dochodzi do nowej wartości najpóźniej? Dlaczego to może być problem dla regulatora?</li>
+    </ol>
+  </section>
+</main>
+<script src="../js/config.js"></script>
+<script src="../js/slowniczek.js"></script>
+<script src="../js/quizy.js"></script>
+<script src="../js/szkice.js"></script>
+<script src="../js/rysunki.js"></script>
+<script src="../js/app.js"></script>
+</body>
+</html>

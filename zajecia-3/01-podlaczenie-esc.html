@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Podłączenie ESC · Inżynieria dronowa</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-strona="z3-01" data-root="../">
+<main class="tresc">
+  <div class="okruszki"><a href="../index.html">Start</a> › Zajęcia 3 › Rozdział 1</div>
+<h1>Podłączenie ESC</h1>
+  <div class="dla-chetnych"><div><strong>Najpierw dokończcie zajęcia 2.</strong> Jeśli nie zrobiliście <a href="../zajecia-2/09-wysokosc.html">pomiaru wysokości</a> i <a href="../zajecia-2/10-akcelerometr.html">akcelerometru</a>, zacznijcie od nich. Potem wróćcie tutaj.</div></div>
+  <p class="wstep">Dziś silniki się zakręcą. Najpierw podłączymy do platformy sygnały sterujące dla czterech modułów ESC.</p>
+
+  <section class="krok" id="jak" data-odhacz="Rozumiem">
+    <h2><span class="nr">1</span>Jak to jest połączone</h2>
+    <ul>
+      <li><strong>ESC</strong> (moduł sterujący silnikiem) siedzi na dronie, przy swoim silniku.</li>
+      <li>Zasilanie dla ESC idzie z <strong>przetwornicy</strong>, która dostaje 12 V z zasilacza. To podłącza prowadzący.</li>
+      <li>ESP32 wysyła do każdego ESC <strong>sygnał PWM</strong> – jeden przewód na silnik.</li>
+      <li>ESP32 i moduły ESC mają <strong>wspólną masę (GND)</strong>. Bez niej sygnał PWM nie miałby punktu odniesienia.</li>
+    </ul>
+    <div data-rysunek="schematESC"></div>
+    <div data-rysunek="tabelaESC"></div>
+    <div data-quiz="esc"></div>
+  </section>
+
+  <section class="krok" id="usb">
+    <h2><span class="nr">2</span>Odłącz USB i zdejmij śmigła</h2>
+    <p>Na czas podłączania odłącz USB. Śmigła zdejmij – założycie je z powrotem, gdy prowadzący sprawdzi połączenia.</p>
+  </section>
+
+  <section class="krok" id="sygnaly">
+    <h2><span class="nr">3</span>Wepnij sygnały PWM</h2>
+    <p>Przewody sygnałowe z kabla drona wepnij w kolumny nóżek ESP32 według tabeli wyżej: M1 → GPIO <span data-k="piny.silniki">18, 19, 20, 21</span> (po kolei M1, M2, M3, M4).</p>
+    <div class="ramka uzupelnij"><span class="tytul">Do uzupełnienia przez prowadzącego</span>Kolory przewodów sygnałowych M1–M4 i miejsce wpięcia wspólnej masy na płytce stykowej.</div>
+    <figure class="zdjecie" data-plik="img/esc-01.jpg" data-opis="Płytka stykowa z wpiętymi przewodami sygnałów M1–M4 przy nóżkach 18–21"></figure>
+  </section>
+
+  <section class="krok" id="lista" data-odhacz="Wszystko sprawdzone">
+    <h2><span class="nr">4</span>Lista kontrolna</h2>
+    <ul class="lista-kontrolna" id="esc-lista">
+      <li>Każdy sygnał jest w kolumnie właściwej nóżki (M1 → <span data-k="piny.silniki">18, 19, 20, 21</span> po kolei).</li>
+      <li>Żaden przewód z zasilania silników nie trafił na płytkę stykową z ESP32.</li>
+      <li>Masa ESP32 jest połączona z masą ESC.</li>
+      <li>Przewody I2C z zajęć 2 są dalej wpięte dobrze.</li>
+      <li>Śmigła są zdjęte.</li>
+    </ul>
+  </section>
+
+  <section class="krok kontrolny" id="prowadzacy">
+    <h2>Zawołaj prowadzącego</h2>
+    <p>Prowadzący sprawdzi połączenia i podłączy zasilanie ESC. Dopiero potem podłączcie USB.</p>
+  </section>
+</main>
+<script src="../js/config.js"></script>
+<script src="../js/slowniczek.js"></script>
+<script src="../js/quizy.js"></script>
+<script src="../js/rysunki.js"></script>
+<script src="../js/app.js"></script>
+</body>
+</html>

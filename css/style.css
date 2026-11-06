@@ -1,0 +1,720 @@
+/* Inżynieria dronowa – poradnik. Kolory zgodne z prezentacją zajęć. */
+:root {
+  --granat: #13171F;
+  --granat-2: #232937;
+  --krem: #F5F4EF;
+  --bialy: #FFFFFF;
+  --niebieski: #1F5FC8;
+  --niebieski-jasny: #E3ECFA;
+  --pomarancz: #F2A33A;
+  --pomarancz-jasny: #FDF0DC;
+  --zielony: #2E8B4F;
+  --zielony-jasny: #E2F3E8;
+  --czerwony: #C7372B;
+  --czerwony-jasny: #FBE5E2;
+  --tekst: #13171F;
+  --tekst-2: #4A5060;
+  --linia: #DCDAD2;
+  --cien: 0 1px 2px rgba(19, 23, 31, .06), 0 4px 14px rgba(19, 23, 31, .06);
+  --promien: 12px;
+  --czcionka: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "Cascadia Code", "Consolas", "DejaVu Sans Mono", "Liberation Mono", monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-padding-top: 90px; }
+
+body {
+  margin: 0;
+  background: var(--krem);
+  color: var(--tekst);
+  font-family: var(--czcionka);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
+}
+
+img, svg { max-width: 100%; }
+
+a { color: var(--niebieski); text-underline-offset: 2px; }
+a:hover { color: #164a9e; }
+
+h1, h2, h3, h4 { line-height: 1.2; letter-spacing: -0.01em; color: var(--granat); }
+h1 { font-size: 2.3rem; margin: .2em 0 .4em; font-weight: 800; }
+h2 { font-size: 1.65rem; margin: 2.2em 0 .6em; font-weight: 750; }
+h3 { font-size: 1.25rem; margin: 1.4em 0 .5em; font-weight: 700; }
+p { margin: .6em 0; }
+ul, ol { padding-left: 1.4em; }
+li { margin: .25em 0; }
+
+code {
+  font-family: var(--mono);
+  font-size: .9em;
+  background: #ECEAE2;
+  padding: .1em .35em;
+  border-radius: 5px;
+}
+
+kbd {
+  font-family: var(--mono);
+  font-size: .85em;
+  border: 1px solid #BDB9AD;
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  padding: .05em .4em;
+  background: var(--bialy);
+}
+
+/* ---------- nagłówek ---------- */
+.naglowek {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--granat);
+  color: var(--krem);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 20px;
+  min-height: 64px;
+}
+.naglowek a { color: var(--krem); text-decoration: none; }
+.naglowek .logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 750;
+  font-size: 1.05rem;
+  line-height: 1.15;
+}
+.naglowek .logo img { height: 42px; width: auto; background: var(--bialy); border-radius: 6px; padding: 3px; }
+.naglowek .logo .zaslepka-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 42px;
+  padding: 0 10px;
+  border: 1.5px dashed #6B7385;
+  border-radius: 6px;
+  font-size: .7rem;
+  color: #AEB4C2;
+  font-weight: 500;
+}
+.naglowek .logo small { display: block; font-weight: 500; color: #AEB4C2; font-size: .8rem; }
+.naglowek .przycisk-menu {
+  display: none;
+  margin-left: auto;
+  background: transparent;
+  color: var(--krem);
+  border: 1.5px solid #4A5267;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font: inherit;
+  font-size: .95rem;
+  cursor: pointer;
+}
+
+/* ---------- pasek postępu ---------- */
+.postep {
+  position: sticky;
+  top: 64px;
+  z-index: 49;
+  height: 30px;
+  background: var(--granat-2);
+  color: #C9CEDA;
+  font-size: .8rem;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  gap: 12px;
+}
+.postep .tor {
+  flex: 1;
+  height: 8px;
+  background: #3A4152;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.postep .wypelnienie {
+  height: 100%;
+  width: 0;
+  background: var(--pomarancz);
+  border-radius: 4px;
+  transition: width .3s ease;
+}
+
+/* ---------- układ ---------- */
+.uklad {
+  display: grid;
+  grid-template-columns: 270px minmax(0, 1fr);
+  gap: 0;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.menu-boczne {
+  position: sticky;
+  top: 94px;
+  align-self: start;
+  max-height: calc(100vh - 94px);
+  overflow-y: auto;
+  padding: 24px 12px 40px 20px;
+  font-size: .92rem;
+}
+.menu-boczne h4 {
+  margin: 1.2em 0 .3em;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--tekst-2);
+}
+.menu-boczne h4 .data { font-weight: 500; text-transform: none; letter-spacing: 0; }
+.menu-boczne ul { list-style: none; padding: 0; margin: 0; }
+.menu-boczne li { margin: 0; }
+.menu-boczne a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  color: var(--tekst);
+  text-decoration: none;
+  line-height: 1.3;
+}
+.menu-boczne a:hover { background: #E9E7DF; }
+.menu-boczne a.aktywny { background: var(--granat); color: var(--krem); }
+.menu-boczne .znacznik {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #BDB9AD;
+  font-size: 11px;
+  line-height: 14px;
+  text-align: center;
+  color: transparent;
+}
+.menu-boczne .znacznik.czesciowo { border-color: var(--pomarancz); background: linear-gradient(90deg, var(--pomarancz) 50%, transparent 50%); }
+.menu-boczne .znacznik.gotowe { border-color: var(--zielony); background: var(--zielony); color: #fff; }
+.menu-boczne a.aktywny .znacznik { border-color: #8A91A3; }
+
+.tresc {
+  padding: 28px 40px 80px;
+  min-width: 0;
+  max-width: 860px;
+}
+
+.okruszki { font-size: .85rem; color: var(--tekst-2); margin-bottom: .4em; }
+.okruszki a { color: var(--tekst-2); }
+
+.wstep { font-size: 1.12rem; color: var(--tekst-2); max-width: 46em; }
+
+/* ---------- karty kroków ---------- */
+.krok {
+  position: relative;
+  background: var(--bialy);
+  border-radius: var(--promien);
+  box-shadow: var(--cien);
+  padding: 22px 26px 18px;
+  margin: 22px 0;
+  border-left: 6px solid var(--niebieski);
+}
+.krok > h2, .krok > h3 { margin-top: 0; }
+.krok > h2 { font-size: 1.45rem; }
+.krok .nr {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--niebieski);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 800;
+  margin-right: 10px;
+  vertical-align: 2px;
+}
+.krok.zrobiony { border-left-color: var(--zielony); }
+.krok.zrobiony .nr { background: var(--zielony); }
+
+.odhacz {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--linia);
+  font-weight: 650;
+  cursor: pointer;
+  user-select: none;
+  width: 100%;
+}
+.odhacz input {
+  width: 24px;
+  height: 24px;
+  accent-color: var(--zielony);
+  cursor: pointer;
+  margin: 0;
+}
+
+/* punkt kontrolny: Zawołaj prowadzącego */
+.krok.kontrolny {
+  border-left: 0;
+  border: 3px solid var(--pomarancz);
+  background: var(--pomarancz-jasny);
+}
+.krok.kontrolny::before {
+  content: "STOP";
+  position: absolute;
+  top: -14px;
+  left: 22px;
+  background: var(--pomarancz);
+  color: var(--granat);
+  font-weight: 900;
+  letter-spacing: .1em;
+  font-size: .8rem;
+  padding: 3px 12px;
+  border-radius: 20px;
+}
+.krok.kontrolny > h2, .krok.kontrolny > h3 { color: #8A4B00; }
+.krok.kontrolny.zrobiony { border-color: var(--zielony); background: var(--zielony-jasny); }
+.krok.kontrolny.zrobiony::before { content: "SPRAWDZONE"; background: var(--zielony); color: #fff; }
+
+/* dla chętnych */
+.dla-chetnych {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background: var(--niebieski-jasny);
+  border-radius: var(--promien);
+  padding: 16px 20px;
+  margin: 18px 0;
+}
+.dla-chetnych strong { color: var(--niebieski); }
+
+/* ramki informacyjne */
+.ramka {
+  border-radius: var(--promien);
+  padding: 14px 18px;
+  margin: 16px 0;
+  background: var(--bialy);
+  border: 1.5px solid var(--linia);
+}
+.ramka > :first-child { margin-top: 0; }
+.ramka > :last-child { margin-bottom: 0; }
+.ramka .tytul { font-weight: 750; display: block; margin-bottom: 4px; }
+.ramka.uwaga { background: var(--czerwony-jasny); border-color: #EDB3AC; }
+.ramka.uwaga .tytul { color: var(--czerwony); }
+.ramka.wskazowka { background: var(--zielony-jasny); border-color: #B5DCC2; }
+.ramka.wskazowka .tytul { color: var(--zielony); }
+.ramka.info { background: var(--niebieski-jasny); border-color: #BCD0F0; }
+.ramka.info .tytul { color: var(--niebieski); }
+.ramka.uzupelnij { background: #FFFBEA; border: 2px dashed var(--pomarancz); }
+.ramka.uzupelnij .tytul { color: #8A4B00; }
+
+.analogia {
+  border-left: 4px solid var(--pomarancz);
+  padding: 4px 0 4px 16px;
+  margin: 14px 0;
+  font-style: italic;
+  color: var(--tekst-2);
+}
+.analogia strong { font-style: normal; color: var(--tekst); }
+
+/* spis sekcji */
+.spis {
+  background: var(--bialy);
+  border-radius: var(--promien);
+  padding: 14px 20px;
+  box-shadow: var(--cien);
+  columns: 2;
+  column-gap: 30px;
+}
+.spis ol { margin: 0; }
+
+/* ---------- tabele ---------- */
+.tabela-kontener { overflow-x: auto; margin: 14px 0; }
+table { border-collapse: collapse; width: 100%; background: var(--bialy); border-radius: 10px; overflow: hidden; font-size: .95rem; }
+th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--linia); vertical-align: top; }
+th { background: var(--granat); color: var(--krem); font-weight: 650; }
+tr:last-child td { border-bottom: 0; }
+
+.kolor-przewodu {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, .35);
+  vertical-align: -2px;
+  margin-right: 6px;
+}
+
+/* ---------- zdjęcia ---------- */
+figure.zdjecie { margin: 16px 0; }
+figure.zdjecie img { display: block; border-radius: 10px; width: 100%; height: auto; }
+.zaslepka {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  min-height: 190px;
+  padding: 20px;
+  border: 2px dashed #BDB9AD;
+  border-radius: 10px;
+  background: repeating-linear-gradient(45deg, #EFEDE6, #EFEDE6 12px, #F5F4EF 12px, #F5F4EF 24px);
+  color: var(--tekst-2);
+  font-size: .95rem;
+}
+.zaslepka .plik { font-family: var(--mono); font-size: .8rem; background: var(--bialy); padding: 2px 8px; border-radius: 5px; }
+figure.zdjecie figcaption { font-size: .9rem; color: var(--tekst-2); margin-top: 6px; }
+.zdjecia-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.zdjecia-2 figure.zdjecie { margin: 0; }
+
+/* ---------- kod ---------- */
+.kod {
+  margin: 16px 0;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #171B24;
+  box-shadow: var(--cien);
+}
+.kod-pasek {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: #232937;
+  color: #C9CEDA;
+  font-size: .85rem;
+}
+.kod-pasek .nazwa { font-family: var(--mono); margin-right: auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.kod-pasek button, .kod-pasek a {
+  font: inherit;
+  font-size: .82rem;
+  font-weight: 650;
+  color: var(--granat);
+  background: var(--krem);
+  border: 0;
+  border-radius: 6px;
+  padding: 5px 12px;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.kod-pasek button:hover, .kod-pasek a:hover { background: var(--pomarancz); color: var(--granat); }
+.kod-pasek button.skopiowano { background: var(--zielony); color: #fff; }
+.kod pre {
+  margin: 0;
+  padding: 14px 16px;
+  overflow: auto;
+  max-height: 560px;
+  font-family: var(--mono);
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #E4E6EB;
+  tab-size: 2;
+}
+.kod pre code { background: none; padding: 0; font-size: inherit; color: inherit; }
+.kod .k-kom { color: #8B95A7; font-style: italic; }
+.kod .k-str { color: #A5D6A7; }
+.kod .k-num { color: #F7B267; }
+.kod .k-slowo { color: #7FB4FF; font-weight: 600; }
+.kod .k-typ { color: #C792EA; }
+.kod .k-pre { color: #F2A33A; }
+.kod .k-fun { color: #FFE08A; }
+.kod .k-stala { color: #F48FB1; }
+.kod-rozwin {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: #232937;
+  color: #C9CEDA;
+  font: inherit;
+  font-size: .85rem;
+  padding: 8px;
+  cursor: pointer;
+}
+.kod-rozwin:hover { color: #fff; }
+
+/* ---------- Sprawdź się ---------- */
+.sprawdz {
+  background: var(--granat);
+  color: var(--krem);
+  border-radius: var(--promien);
+  padding: 18px 22px;
+  margin: 20px 0;
+}
+.sprawdz .etykieta {
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--pomarancz);
+  font-weight: 800;
+}
+.sprawdz .pytanie { font-weight: 700; font-size: 1.08rem; margin: 4px 0 12px; }
+.sprawdz .odpowiedzi { display: grid; gap: 8px; }
+.sprawdz button {
+  text-align: left;
+  font: inherit;
+  font-size: .98rem;
+  background: var(--granat-2);
+  color: var(--krem);
+  border: 2px solid #3A4152;
+  border-radius: 9px;
+  padding: 9px 14px;
+  cursor: pointer;
+}
+.sprawdz button:hover { border-color: var(--pomarancz); }
+.sprawdz button.dobrze { background: var(--zielony); border-color: var(--zielony); }
+.sprawdz button.zle { background: #6E2A24; border-color: var(--czerwony); }
+.sprawdz .wyjasnienie { margin-top: 12px; padding: 10px 14px; border-radius: 8px; background: #2C3343; display: none; }
+.sprawdz .wyjasnienie.widoczne { display: block; }
+
+/* ---------- interaktywne rysunki ---------- */
+.rysunek {
+  background: var(--bialy);
+  border-radius: var(--promien);
+  box-shadow: var(--cien);
+  padding: 16px;
+  margin: 18px 0;
+}
+.rysunek svg { display: block; width: 100%; height: auto; }
+/* Duże rysunki na telefonie: przewijane w bok w ramce, a nie zmniejszane do nieczytelności. */
+.rysunek .przewin { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+@media (max-width: 640px) {
+  .rysunek .przewin svg { min-width: 620px; }
+  .rysunek .przewin::after { content: "Przesuń rysunek palcem w bok"; display: block; font-size: .8rem; color: var(--tekst-2); margin-top: 4px; }
+}
+.rysunek .sterowanie {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  align-items: center;
+  margin-top: 12px;
+  font-size: .95rem;
+}
+.rysunek label.suwak { display: flex; flex-direction: column; gap: 2px; min-width: 200px; flex: 1; }
+.rysunek label.suwak span { font-weight: 650; }
+.rysunek input[type=range] { width: 100%; accent-color: var(--niebieski); height: 28px; }
+.rysunek .wynik {
+  font-size: 1.1rem;
+  font-weight: 700;
+  background: var(--niebieski-jasny);
+  border-radius: 8px;
+  padding: 8px 14px;
+  margin-top: 10px;
+}
+.rysunek .podpis { font-size: .9rem; color: var(--tekst-2); margin-top: 8px; }
+
+.przycisk {
+  font: inherit;
+  font-size: .95rem;
+  font-weight: 650;
+  background: var(--niebieski);
+  color: #fff;
+  border: 0;
+  border-radius: 9px;
+  padding: 9px 16px;
+  cursor: pointer;
+}
+.przycisk:hover { background: #164a9e; }
+.przycisk.drugi { background: var(--krem); color: var(--granat); border: 1.5px solid var(--linia); }
+.przycisk.drugi:hover { background: #E9E7DF; }
+.przycisk.aktywny { background: var(--granat); color: var(--krem); }
+.grupa-przyciskow { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.klikalne { cursor: pointer; }
+.klikalne:hover { filter: brightness(1.08); }
+.rysunek :focus-visible, .przycisk:focus-visible, button:focus-visible, a:focus-visible {
+  outline: 3px solid var(--pomarancz);
+  outline-offset: 2px;
+}
+
+.komunikat { margin-top: 10px; padding: 10px 14px; border-radius: 8px; font-weight: 600; }
+.komunikat.dobrze { background: var(--zielony-jasny); color: #1E5E35; }
+.komunikat.zle { background: var(--czerwony-jasny); color: #8E2A20; }
+.komunikat.neutralnie { background: #EFEDE6; color: var(--tekst-2); }
+
+/* ćwiczenie z orientacją silników */
+.orientacja { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
+.orientacja .or-svg { max-width: 380px; width: 100%; margin: 0 auto; }
+.orientacja table select { font: inherit; font-size: .9rem; padding: 4px; border-radius: 6px; border: 1.5px solid var(--linia); background: var(--bialy); max-width: 100%; }
+.orientacja td.dobrze { background: var(--zielony-jasny); }
+.orientacja td.zle { background: var(--czerwony-jasny); }
+
+/* płytka stykowa – błędy */
+.bledy { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; }
+.blad-przyklad { border: 1.5px solid var(--linia); border-radius: 10px; padding: 10px; }
+.blad-przyklad h4 { margin: 0 0 6px; font-size: 1rem; }
+
+/* lista kontrolna */
+.lista-kontrolna { list-style: none; padding: 0; }
+.lista-kontrolna li { margin: 0; }
+.lista-kontrolna label { display: flex; gap: 10px; align-items: flex-start; padding: 7px 4px; border-bottom: 1px solid var(--linia); cursor: pointer; }
+.lista-kontrolna input { width: 20px; height: 20px; margin-top: 3px; flex: none; accent-color: var(--zielony); }
+
+/* ---------- słowniczek: dymki ---------- */
+.pojecie {
+  border-bottom: 2px dotted var(--niebieski);
+  cursor: help;
+}
+.pojecie:focus { outline: 2px solid var(--pomarancz); outline-offset: 1px; border-radius: 2px; }
+.dymek {
+  position: absolute;
+  z-index: 100;
+  max-width: 300px;
+  background: var(--granat);
+  color: var(--krem);
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: .9rem;
+  line-height: 1.45;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, .25);
+  pointer-events: none;
+}
+.dymek strong { color: var(--pomarancz); }
+.slowniczek dt { font-weight: 800; font-size: 1.1rem; margin-top: 14px; color: var(--granat); }
+.slowniczek dd { margin: 2px 0 0; padding-left: 0; }
+
+/* ---------- strona startowa ---------- */
+.bohater {
+  background: var(--granat);
+  color: var(--krem);
+  border-radius: 16px;
+  padding: 34px 34px 30px;
+  margin: 8px 0 26px;
+}
+.bohater h1 { color: var(--krem); margin-top: 0; font-size: 2.5rem; }
+.bohater p { color: #C9CEDA; font-size: 1.12rem; max-width: 40em; }
+.bohater .akcent { color: var(--pomarancz); }
+.plan-zajec { display: grid; gap: 14px; }
+.zajecia-karta {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 18px;
+  background: var(--bialy);
+  border-radius: var(--promien);
+  box-shadow: var(--cien);
+  padding: 18px 22px;
+  text-decoration: none;
+  color: var(--tekst);
+  border-left: 6px solid var(--linia);
+}
+a.zajecia-karta:hover { color: var(--tekst); box-shadow: 0 2px 4px rgba(19,23,31,.08), 0 8px 24px rgba(19,23,31,.12); }
+.zajecia-karta.nastepne { border-left-color: var(--pomarancz); }
+.zajecia-karta.odbyte { border-left-color: var(--zielony); }
+.zajecia-karta .numer { font-size: 2.6rem; font-weight: 900; color: var(--niebieski); line-height: 1; }
+.zajecia-karta .data { font-size: .9rem; color: var(--tekst-2); font-weight: 650; margin-top: 4px; }
+.zajecia-karta h3 { margin: 0 0 4px; }
+.zajecia-karta p { margin: 0; color: var(--tekst-2); }
+.zajecia-karta .etykieta {
+  display: inline-block;
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  padding: 2px 9px;
+  border-radius: 20px;
+  margin-left: 8px;
+  vertical-align: 3px;
+}
+.zajecia-karta.nastepne .etykieta { background: var(--pomarancz); color: var(--granat); }
+.zajecia-karta.odbyte .etykieta { background: var(--zielony-jasny); color: var(--zielony); }
+.mini-postep { height: 6px; background: #E9E7DF; border-radius: 3px; margin-top: 10px; overflow: hidden; }
+.mini-postep div { height: 100%; background: var(--pomarancz); width: 0; }
+
+/* ---------- nawigacja dół ---------- */
+.dalej-wstecz { display: flex; justify-content: space-between; gap: 14px; margin-top: 50px; }
+.dalej-wstecz a {
+  flex: 1;
+  background: var(--bialy);
+  border-radius: var(--promien);
+  box-shadow: var(--cien);
+  padding: 14px 18px;
+  text-decoration: none;
+  color: var(--tekst);
+}
+.dalej-wstecz a small { display: block; color: var(--tekst-2); font-size: .8rem; }
+.dalej-wstecz a strong { color: var(--niebieski); }
+.dalej-wstecz a.dalej { text-align: right; }
+.dalej-wstecz .pusty { flex: 1; }
+
+.stopka { font-size: .85rem; color: var(--tekst-2); margin-top: 40px; padding-top: 14px; border-top: 1px solid var(--linia); }
+
+/* ---------- telefon i mały laptop ---------- */
+@media (max-width: 1000px) {
+  .uklad { grid-template-columns: minmax(0, 1fr); }
+  .naglowek .przycisk-menu { display: block; }
+  .menu-boczne {
+    display: none;
+    position: fixed;
+    top: 94px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-height: none;
+    background: var(--krem);
+    z-index: 48;
+    padding: 16px 20px 60px;
+    border-top: 1px solid var(--linia);
+  }
+  body.menu-otwarte .menu-boczne { display: block; }
+  body.menu-otwarte { overflow: hidden; }
+  .tresc { padding: 22px 16px 70px; max-width: none; }
+}
+
+@media (max-width: 640px) {
+  body { font-size: 16px; }
+  h1 { font-size: 1.85rem; }
+  h2 { font-size: 1.4rem; }
+  .bohater { padding: 24px 20px; }
+  .bohater h1 { font-size: 1.9rem; }
+  .krok { padding: 18px 16px 14px; }
+  .naglowek { padding: 8px 14px; gap: 10px; }
+  .naglowek .logo { font-size: .95rem; }
+  .naglowek .logo small { display: none; }
+  .postep { padding: 0 14px; }
+  .spis { columns: 1; }
+  .zdjecia-2 { grid-template-columns: 1fr; }
+  .zajecia-karta { grid-template-columns: 56px minmax(0, 1fr); gap: 12px; padding: 16px; }
+  .zajecia-karta .numer { font-size: 2rem; }
+  .dalej-wstecz { flex-direction: column; }
+  .kod pre { font-size: 12.5px; }
+  th, td { padding: 7px 8px; }
+}
+
+/* ---------- druk: każdy rozdział jako instrukcja ---------- */
+@media print {
+  @page { margin: 14mm 12mm; }
+  body { background: #fff; font-size: 11.5pt; }
+  .naglowek, .postep, .menu-boczne, .dalej-wstecz, .kod-pasek button, .kod-rozwin,
+  .przycisk-menu, .sterowanie, .grupa-przyciskow, .przycisk { display: none !important; }
+  .uklad { display: block; }
+  .tresc { padding: 0; max-width: none; }
+  .krok { box-shadow: none; }
+  .rysunek, .sprawdz, .ramka, table, figure, .odhacz { break-inside: avoid; box-shadow: none; }
+  .kod { box-shadow: none; }
+  .krok { border: 1.5px solid #999; border-left: 6px solid #333; }
+  .krok.kontrolny { border: 3px solid #000; background: #fff; }
+  .krok.kontrolny::before { background: #000; color: #fff; }
+  .sprawdz { background: #fff; color: #000; border: 1.5px solid #999; }
+  .sprawdz button { background: #fff; color: #000; border: 1px solid #999; }
+  .sprawdz .wyjasnienie { display: none !important; }
+  .kod { background: #fff; border: 1px solid #999; }
+  .kod pre { max-height: none; overflow: visible; color: #000; white-space: pre-wrap; font-size: 8.5pt; }
+  .kod .k-kom { color: #555; }
+  .kod .k-str, .kod .k-num, .kod .k-slowo, .kod .k-typ, .kod .k-pre, .kod .k-fun, .kod .k-stala { color: #000; }
+  .odhacz input, .lista-kontrolna input { -webkit-appearance: none; appearance: none; width: 14px; height: 14px; border: 1.5px solid #000; }
+  .pojecie { border-bottom: 0; }
+  .dymek { display: none; }
+  a { color: #000; text-decoration: none; }
+  h1 { font-size: 20pt; }
+  h2 { font-size: 15pt; break-after: avoid; }
+  h3 { font-size: 12.5pt; break-after: avoid; }
+  .bohater { background: #fff; color: #000; border: 2px solid #000; }
+  .bohater h1, .bohater p { color: #000; }
+}

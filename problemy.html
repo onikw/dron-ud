@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coś nie działa? · Inżynieria dronowa</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-strona="problemy" data-root="">
+<main class="tresc">
+  <div class="okruszki"><a href="index.html">Start</a> › Pomoc</div>
+<h1>Coś nie działa?</h1>
+  <p class="wstep">Najczęstsze problemy i co z nimi zrobić. Zanim cokolwiek przepniesz – odłącz USB.</p>
+
+  <div class="tabela-kontener"><table>
+    <thead><tr><th style="width:28%">Problem</th><th>Co sprawdzić</th></tr></thead>
+    <tbody>
+      <tr><td><b>Brak portu</b> w Narzędzia → Port</td><td>
+        <ul>
+          <li>Kabel USB może służyć tylko do ładowania. Weź inny kabel.</li>
+          <li>Kabel musi być w złączu płytki oznaczonym <b>USB</b>.</li>
+          <li>Przytrzymaj BOOT, naciśnij i puść RST, puść BOOT – port powinien wrócić.</li>
+          <li>Windows: zobacz, czy w Menedżerze urządzeń płytka pojawia się po podłączeniu.</li>
+        </ul></td></tr>
+      <tr><td><b>Pusty Serial Monitor</b></td><td>
+        <ul>
+          <li>Narzędzia → <b>USB CDC On Boot: Enabled</b>. Po zmianie wgraj program jeszcze raz.</li>
+          <li>Na dole Serial Monitora ustaw <b>115200 baud</b>.</li>
+          <li>Zamknij i otwórz Serial Monitor, potem naciśnij RST na płytce.</li>
+          <li>Komendy nie działają? Ustaw zakończenie linii na <b>Nowa linia</b>.</li>
+        </ul></td></tr>
+      <tr><td><b>Wgrywanie nie działa</b> (Failed to connect)</td><td>
+        <ul>
+          <li>Kliknij Wgraj, przy <code>Connecting...</code> przytrzymaj BOOT, naciśnij RST, puść BOOT.</li>
+          <li>Zamknij Serial Monitor i Plotter – czasem blokują port.</li>
+        </ul></td></tr>
+      <tr><td><b>Błąd kompilacji</b> przy <code>ledcAttach</code></td><td>Zainstalowany jest stary pakiet esp32 (2.x). W Menedżerze płytek zainstaluj pakiet <b>esp32 od Espressif w wersji 3.x</b>.</td></tr>
+      <tr><td><b>Błąd: brak pliku VL53L1X.h</b></td><td>Zainstaluj bibliotekę <b><span data-k="czujnikOdleglosci.biblioteka">VL53L1X (Pololu)</span></b> w Menedżerze bibliotek.</td></tr>
+      <tr><td><b>Skaner I2C nic nie widzi</b></td><td>
+        <ul>
+          <li>Odłącz USB i sprawdź przewody według kolorów: 3V3, GND, SDA → pin <b data-k="piny.sda">6</b>, SCL → pin <b data-k="piny.scl">7</b>.</li>
+          <li>Czy SDA i SCL nie są zamienione? Czy nic nie jest przesunięte o jeden otwór?</li>
+          <li>Czy czerwony przewód jest w 3V3 (a nie w 5V albo w pustej kolumnie)?</li>
+          <li>Widać tylko jedno urządzenie? Drugi czujnik ma luźny przewód na dronie.</li>
+          <li>MPU6050 pod adresem 0x69 zamiast 0x68 – pin AD0 czujnika jest podłączony do plusa. Zawołaj prowadzącego.</li>
+        </ul></td></tr>
+      <tr><td><b>Czujnik zwraca 0 albo 65535</b></td><td>
+        <ul>
+          <li>65535 (albo inne bardzo duże liczby) zwykle znaczy, że czujnik nie odpowiedział – przerwana rozmowa po I2C. Sprawdź SDA, SCL i GND.</li>
+          <li>Uruchom skaner L02: czy oba adresy są widoczne?</li>
+          <li>Przewody SDA i SCL trzymaj przy GND, z dala od przewodów silników.</li>
+          <li>Czujnik odległości: zdejmij folię ochronną z okienka. Sprawdź, czy w stożku nie ma nóżki albo prowadnicy.</li>
+          <li>Czujnik odległości: zbyt blisko podłogi (poniżej kilku centymetrów) pomiar może być zły – status różny od 0.</li>
+        </ul></td></tr>
+      <tr><td><b>Płytka się resetuje</b> (znów widać napis powitalny)</td><td>
+        <ul>
+          <li>Przy starcie silników: spada napięcie zasilania. Zawołaj prowadzącego – sprawdzi zasilacz, przetwornicę i wspólną masę.</li>
+          <li>Luźny kabel USB albo słaby port w komputerze – spróbuj innego portu.</li>
+          <li>Zwarcie na płytce stykowej (np. 3V3 połączone z GND). Natychmiast odłącz USB.</li>
+        </ul></td></tr>
+      <tr><td><b>Silnik się nie kręci</b> (od zajęć 3)</td><td>
+        <ul>
+          <li>Czy silniki są uzbrojone komendą <code>u</code>? Dioda musi być zielona.</li>
+          <li>Moc za mała – silnik rusza dopiero od kilkunastu procent.</li>
+          <li>Czy zasilacz jest włączony (prowadzący)? Samo USB nie zasila silników.</li>
+        </ul></td></tr>
+      <tr><td><b>Dron sam się zatrzymuje</b> (od zajęć 4)</td><td>Przeczytaj powód w Serial Monitorze: brak pomiaru z lasera, za wysoko albo koniec czasu lotu.</td></tr>
+    </tbody>
+  </table></div>
+  <p>Nie znalazłeś swojego problemu? Zawołaj prowadzącego.</p>
+</main>
+<script src="js/config.js"></script>
+<script src="js/slowniczek.js"></script>
+<script src="js/quizy.js"></script>
+<script src="js/rysunki.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

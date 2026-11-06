@@ -19,14 +19,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - run: pip install -r requirements.txt
-      - run: mkdocs build --strict
+      # Kod na stronie musi być identyczny z plikami .ino, a piny zgodne z js/config.js.
+      - run: python3 narzedzia/wklej_szkice.py --sprawdz
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: site
+          path: .
 
   deploy:
     needs: build

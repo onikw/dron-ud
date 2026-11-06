@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cztery silniki · Inżynieria dronowa</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-strona="z3-04" data-root="../">
+<main class="tresc">
+  <div class="okruszki"><a href="../index.html">Start</a> › Zajęcia 3 › Rozdział 4</div>
+<h1>Cztery silniki</h1>
+  <p class="wstep">Czy trzeba pisać ten sam kod cztery razy? Nie – wystarczy tablica i pętla. Przy okazji sprawdzimy, czy każdy silnik jest tam, gdzie powinien, i kręci się w dobrą stronę.</p>
+
+  <section class="krok" id="tablica" data-odhacz="Rozumiem">
+    <h2><span class="nr">1</span>Tablica i pętla for</h2>
+    <p><strong>Tablica</strong> to jedna nazwa i kilka ponumerowanych szufladek. Numeracja zaczyna się od <strong>zera</strong>:</p>
+<pre class="bez-dymkow"><code>const int PINY_SILNIKOW[4] = {18, 19, 20, 21};
+// PINY_SILNIKOW[0] = 18 (M1) ... PINY_SILNIKOW[3] = 21 (M4)
+
+for (int i = 0; i &lt; 4; i++) {
+  // to się wykona dla i = 0, 1, 2, 3 – czyli dla każdego silnika
+}</code></pre>
+    <div data-rysunek="tabelaESC"></div>
+    <div class="tabela-kontener"><table>
+      <thead><tr><th>Komenda</th><th>Co robi</th></tr></thead>
+      <tbody>
+        <tr><td><code>u</code></td><td>uzbrój</td></tr>
+        <tr><td><code>t</code></td><td>test kolejności: każdy silnik po kolei przez 1 s na niskiej mocy</td></tr>
+        <tr><td><code>r</code></td><td>rozpędzanie wszystkich i zwalnianie</td></tr>
+        <tr><td><code>s</code></td><td>schody (zadanie 2)</td></tr>
+        <tr><td><code>x</code> albo spacja</td><td>STOP</td></tr>
+      </tbody>
+    </table></div>
+    <div data-quiz="uzbrojenie"></div>
+  </section>
+
+  <section class="krok" id="kod">
+    <h2><span class="nr">2</span>Wgraj program</h2>
+    <div data-szkic="uczen/L07_cztery_silniki"></div>
+  </section>
+
+  <section class="krok" id="test" data-odhacz="Kolejność i kierunki się zgadzają">
+    <h2><span class="nr">3</span>Test kolejności i kierunków</h2>
+    <p>Uzbrój (<code>u</code>) i wpisz <code>t</code>. Program po kolei kręci każdym silnikiem i pisze w Serial Monitorze, który to silnik i w którą stronę powinien się kręcić. Obserwator patrzy na drona <strong>z góry</strong> i porównuje:</p>
+    <ul class="lista-kontrolna" id="test-silnikow">
+      <li>M1 kręci się jako pierwszy, z przodu po lewej, <span data-k="silniki.0.kierunek">CW</span>.</li>
+      <li>M2 – z przodu po prawej, <span data-k="silniki.1.kierunek">CCW</span>.</li>
+      <li>M3 – z tyłu po prawej, <span data-k="silniki.2.kierunek">CW</span>.</li>
+      <li>M4 – z tyłu po lewej, <span data-k="silniki.3.kierunek">CCW</span>.</li>
+    </ul>
+    <div class="ramka uwaga"><span class="tytul">Coś się nie zgadza?</span>Zły silnik się kręci – przewód sygnałowy jest w złej kolumnie (odłącz USB i przepnij). Zły kierunek – silnik ma zamienione przewody albo jest nie tego typu. Zawołaj prowadzącego.</div>
+    <figure class="zdjecie" data-plik="img/silniki-04.jpg" data-opis="Obserwator patrzy na drona z góry podczas testu kolejności"></figure>
+  </section>
+
+  <section class="krok" id="zadania">
+    <h2><span class="nr">4</span>Zadania</h2>
+    <ol>
+      <li>Zmień <code>CZAS_ROZPEDZANIA_MS</code> na 1000, potem 8000. Przy 1000 silniki nie zdążą – rampa bezpieczeństwa nie pozwala zwiększać mocy szybciej. Zobacz to na Plotterze.</li>
+      <li>Napisz funkcję <code>schody()</code>: moc 10, 20, 30, 40%, każda przez 1,5 s.</li>
+    </ol>
+    <div class="ramka info"><span class="tytul">Dlaczego czekaj(), a nie delay()?</span>Podczas <code>delay()</code> płytka nic nie robi – nie usłyszałaby nawet komendy STOP. Funkcja <code>czekaj()</code> w tym czasie sprawdza klawiaturę i przycisk BOOT. Po STOP zwraca <code>false</code>, więc piszemy <code>if (!czekaj(1500)) return;</code></div>
+  </section>
+</main>
+<script src="../js/config.js"></script>
+<script src="../js/slowniczek.js"></script>
+<script src="../js/quizy.js"></script>
+<script src="../js/szkice.js"></script>
+<script src="../js/rysunki.js"></script>
+<script src="../js/app.js"></script>
+</body>
+</html>

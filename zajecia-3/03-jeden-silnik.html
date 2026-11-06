@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jeden silnik · Inżynieria dronowa</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-strona="z3-03" data-root="../">
+<main class="tresc">
+  <div class="okruszki"><a href="../index.html">Start</a> › Zajęcia 3 › Rozdział 3</div>
+<h1>Jeden silnik</h1>
+  <p class="wstep">Pierwszy raz zakręcimy silnikiem. Moc wpisujesz w Serial Monitorze, a program pilnuje bezpieczeństwa.</p>
+
+  <section class="krok" id="zasady" data-odhacz="Rozumiem">
+    <h2><span class="nr">1</span>Bezpieczeństwo w programie</h2>
+    <ul>
+      <li>Po włączeniu program <strong>najpierw</strong> ustawia wszystkie wyjścia ESC na 0.</li>
+      <li>Silniki startują <strong>rozbrojone</strong> – dioda czerwona. Komenda <code>u</code> uzbraja – dioda zielona.</li>
+      <li><kbd>x</kbd> albo <kbd>spacja</kbd> to natychmiastowy STOP. Przycisk <strong>BOOT</strong> na płytce – też STOP.</li>
+      <li>Moc nigdy nie przekracza <code>MAX_MOC</code> (60%).</li>
+      <li>Moc zmienia się przez <strong>rampę</strong>: rośnie najwyżej o <code>RAMPA</code> procent na sekundę, bez skoków. Jak pedał gazu wciskany powoli.</li>
+    </ul>
+<pre class="bez-dymkow"><code> zadana:   ______          moc:       ______
+          |                          /
+     _____|               _______  /</code></pre>
+    <div class="tabela-kontener"><table>
+      <thead><tr><th>Komenda</th><th>Co robi</th></tr></thead>
+      <tbody>
+        <tr><td><code>u</code></td><td>uzbrój</td></tr>
+        <tr><td><code>x</code> albo spacja</td><td>STOP</td></tr>
+        <tr><td><code>0</code> … <code>100</code></td><td>moc silnika M1 w procentach (powyżej MAX_MOC zostanie obcięta)</td></tr>
+      </tbody>
+    </table></div>
+    <p>W Serial Monitorze ustaw zakończenie linii na <strong>Nowa linia</strong>, inaczej komendy nie dojdą.</p>
+    <div data-quiz="rampa"></div>
+  </section>
+
+  <section class="krok" id="kod">
+    <h2><span class="nr">2</span>Wgraj program</h2>
+    <p>Środek programu (część SILNIKI I BEZPIECZEŃSTWO oraz KOMENDY) jest taki sam we wszystkich lekcjach z silnikami. Nie musisz go zmieniać. Ważne są KONFIGURACJA na górze i PROGRAM LEKCJI na dole.</p>
+    <div data-szkic="uczen/L06_jeden_silnik"></div>
+  </section>
+
+  <section class="krok kontrolny" id="przed">
+    <h2>Zawołaj prowadzącego, zanim uzbroisz silniki</h2>
+    <p>Prowadzący sprawdzi, czy śmigła są dobrze założone, dron jest na prowadnicy i nikt nie trzyma rąk przy śmigłach.</p>
+  </section>
+
+  <section class="krok" id="zadania">
+    <h2><span class="nr">3</span>Zadania</h2>
+    <ol>
+      <li>Wpisuj moc 5, 6, 7… aż śmigło ruszy. Zapisz tę wartość w <code>MOC_STARTU</code> – pojawi się na Plotterze jako linia <code>start</code>.</li>
+      <li>Ustaw <code>PWM_HZ = 200</code>, wgraj i posłuchaj silnika. Potem wróć do 20000.</li>
+      <li>Zmień <code>RAMPA</code> na 5, potem na 40. Jak zmienia się pochylnia na Plotterze?</li>
+    </ol>
+  </section>
+</main>
+<script src="../js/config.js"></script>
+<script src="../js/slowniczek.js"></script>
+<script src="../js/quizy.js"></script>
+<script src="../js/szkice.js"></script>
+<script src="../js/rysunki.js"></script>
+<script src="../js/app.js"></script>
+</body>
+</html>
