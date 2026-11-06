@@ -72,6 +72,8 @@ window.SLOWNICZEK = [
     opis: "Czujnik, który mierzy, jak szybko się obracasz (w stopniach na sekundę)." },
   { haslo: "czas lotu (ToF)", formy: ["czas lotu", "czasu lotu", "ToF"],
     opis: "Time of Flight – pomiar odległości przez mierzenie czasu, po którym wraca odbite światło." },
+  { haslo: "kalibracja", formy: ["kalibracja", "kalibracji", "kalibrację", "kalibracją", "skalibrować"],
+    opis: "Sprawdzenie, co czujnik pokazuje w spoczynku, żeby potem odjąć ten błąd – jak „tara” na wadze kuchennej." },
   { haslo: "rampa", formy: ["rampa", "rampy", "rampę", "rampą", "rampie"],
     opis: "Powolna, płynna zmiana mocy zamiast skoku – jak łagodne wciskanie pedału gazu." },
   { haslo: "uzbrojenie", formy: ["uzbrojenie", "uzbrojony", "uzbrojone", "uzbroić", "uzbraja", "rozbrojony", "rozbrojone"],

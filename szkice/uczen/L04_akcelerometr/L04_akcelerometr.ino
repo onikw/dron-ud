@@ -12,6 +12,7 @@
  *
  *  CO MUSI BYĆ PODŁĄCZONE
  *   - MPU6050 na dronie, płasko, strzałka osi X do przodu.
+ *   - Przy starcie dron stoi płasko i nieruchomo (kalibracja).
  *   - Kabel z drona (ok. 1 m) wpięty w płytkę stykową:
  *     czerwony = 3V3, czarny = GND, żółty = SDA -> pin 6,
  *     niebieski = SCL -> pin 7.
@@ -35,6 +36,11 @@
  *   ŻYROSKOP mierzy, jak szybko się obracasz (stopnie na sekundę).
  *   Gdy dron stoi, pokazuje około 0.
  *
+ *   KALIBRACJA: żaden czujnik nie jest idealny – nawet gdy stoi,
+ *   pokazuje trochę więcej albo mniej, niż powinien. Na starcie program
+ *   przez ok. 2 s sprawdza, ile czujnik pokazuje w spoczynku, i potem
+ *   to odejmuje. Dlatego przy starcie dron MUSI stać płasko i nieruchomo.
+ *
  *  ZADANIA (szukaj w kodzie napisu ZADANIE)
  *   1. Przelicz surowe liczby na g i °/s.
  *   2. Przechyl drona i obserwuj osie na Plotterze.
@@ -49,6 +55,8 @@ const int PIN_SCL = 7;
 const int MPU = 0x68;                // adres czujnika na I2C
 const float LSB_NA_G = 16384.0;      // zakres ±2 g:     16384 = 1 g
 const float LSB_NA_STOPIEN = 131.0;  // zakres ±250 °/s: 131 = 1 °/s
+const int CO_ILE_MS = 100;           // nowy punkt wykresu co 100 ms (10 na sekundę)
+const int PROBKI_KALIBRACJI = 200;   // tyle pomiarów uśredniamy przy kalibracji (ok. 2 s)
 // ==================================================
 
 // Zapisuje liczbę do szufladki (rejestru) czujnika.
@@ -73,6 +81,40 @@ int16_t sklej(byte starszy, byte mlodszy) {
   return (int16_t)((starszy << 8) | mlodszy);
 }
 
+int16_t surowe[7];   // ax, ay, az, temperatura, gx, gy, gz – surowe liczby z czujnika
+float zero[7];       // poprawki z kalibracji (to, co czujnik pokazuje w spoczynku)
+unsigned long czas_wykresu = 0;
+
+// Czyta 14 szufladek naraz, zaczynając od 0x3B, i skleja je w 7 liczb.
+void czytajCzujnik() {
+  Wire.beginTransmission(MPU);
+  Wire.write(0x3B);
+  Wire.endTransmission(false);
+  Wire.requestFrom(MPU, 14);
+  for (int i = 0; i < 7; i++) {
+    byte starszy = Wire.read();
+    byte mlodszy = Wire.read();
+    surowe[i] = sklej(starszy, mlodszy);
+  }
+}
+
+// KALIBRACJA: dron stoi płasko i nieruchomo. Liczymy średnią z wielu pomiarów.
+// To, co czujnik wtedy pokazuje, to jego „błąd zera” – potem go odejmujemy.
+// Wyjątek: oś Z ma pokazywać 1 g (grawitację), a nie 0.
+void kalibruj() {
+  Serial.println("KALIBRACJA: dron ma stać płasko i nieruchomo (ok. 2 s)...");
+  float suma[7] = {0, 0, 0, 0, 0, 0, 0};
+  for (int n = 0; n < PROBKI_KALIBRACJI; n++) {
+    czytajCzujnik();
+    for (int i = 0; i < 7; i++) suma[i] += surowe[i];
+    delay(10);
+  }
+  for (int i = 0; i < 7; i++) zero[i] = suma[i] / PROBKI_KALIBRACJI;
+  zero[2] -= LSB_NA_G;   // oś Z: zostawiamy 1 g grawitacji
+  zero[3] = 0;           // temperatury nie poprawiamy
+  Serial.println("Kalibracja gotowa. Żeby ją powtórzyć: postaw drona płasko i naciśnij RST.");
+}
+
 void setup() {
   Serial.begin(115200);
   delay(1000);
@@ -90,26 +132,23 @@ void setup() {
 
   zapiszRejestr(0x6B, 0);   // budzimy czujnik (po włączeniu śpi)
   delay(100);
+  kalibruj();
 }
 
 void loop() {
-  // Czytamy 14 szufladek naraz, zaczynając od 0x3B.
-  Wire.beginTransmission(MPU);
-  Wire.write(0x3B);
-  Wire.endTransmission(false);
-  Wire.requestFrom(MPU, 14);
-  byte b[14];
-  for (int i = 0; i < 14; i++) b[i] = Wire.read();
+  if (millis() - czas_wykresu < CO_ILE_MS) return;   // jeszcze nie czas na nowy punkt
+  czas_wykresu = millis();
+  czytajCzujnik();
 
-  // ZADANIE 1: teraz to surowe liczby (np. 16384 zamiast 1 g).
+  // ZADANIE 1: teraz to liczby bez jednostek (np. 16384 zamiast 1 g).
   // Podziel ax, ay, az przez LSB_NA_G, a gx, gy, gz przez LSB_NA_STOPIEN.
-  // Przykład:  float ax = sklej(b[0], b[1]) / LSB_NA_G;
-  float ax = sklej(b[0], b[1]);
-  float ay = sklej(b[2], b[3]);
-  float az = sklej(b[4], b[5]);
-  float gx = sklej(b[8], b[9]);
-  float gy = sklej(b[10], b[11]);
-  float gz = sklej(b[12], b[13]);
+  // Przykład:  float ax = (surowe[0] - zero[0]) / LSB_NA_G;
+  float ax = surowe[0] - zero[0];
+  float ay = surowe[1] - zero[1];
+  float az = surowe[2] - zero[2];
+  float gx = surowe[4] - zero[4];
+  float gy = surowe[5] - zero[5];
+  float gz = surowe[6] - zero[6];
 
   // ZADANIE 3: policz kąt przechylenia z akcelerometru.
   // Podpowiedź: atan2(ay, az) daje kąt w radianach.
@@ -124,5 +163,4 @@ void loop() {
   Serial.print(",gy:");    Serial.print(gy);
   Serial.print(",gz:");    Serial.print(gz);
   Serial.print(",kat:");   Serial.println(kat);
-  delay(20);   // 50 pomiarów na sekundę
 }

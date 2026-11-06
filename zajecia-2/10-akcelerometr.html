@@ -31,15 +31,23 @@
     </ul>
   </section>
 
+  <section class="krok" id="kalibracja" data-odhacz="Rozumiem">
+    <h2><span class="nr">2</span>Kalibracja</h2>
+    <p>Żaden czujnik nie jest idealny. Nawet gdy dron stoi, MPU6050 pokazuje trochę więcej albo mniej, niż powinien: żyroskop nie pokazuje dokładnie 0, a akcelerometr nie pokazuje dokładnie 1 g. To <strong>błąd zera</strong>.</p>
+    <p>Dlatego program na starcie przez około 2 sekundy mierzy, co czujnik pokazuje w spoczynku, i potem to odejmuje. To jest <strong>kalibracja</strong>.</p>
+    <p class="analogia"><strong>Analogia:</strong> waga kuchenna. Zanim zważysz mąkę, stawiasz pustą miskę i naciskasz „tara”, żeby waga pokazała 0.</p>
+    <div class="ramka uwaga"><span class="tytul">Przy starcie dron stoi płasko i nieruchomo</span>Przez pierwsze 2 sekundy po wgraniu programu (albo po naciśnięciu RST) nie dotykajcie drona ani stołu. Jeśli ktoś go poruszy, kalibracja wyjdzie zła – wtedy postaw drona płasko i naciśnij RST.</div>
+  </section>
+
   <section class="krok" id="kod">
-    <h2><span class="nr">2</span>Wgraj program i otwórz Serial Plotter</h2>
+    <h2><span class="nr">3</span>Wgraj program i otwórz Serial Plotter</h2>
     <div data-szkic="uczen/L04_akcelerometr"></div>
-    <p>Na Plotterze kliknij nazwę linii w legendzie, żeby ją ukryć. Akcelerometr i żyroskop mają bardzo różne liczby, więc łatwiej oglądać je osobno.</p>
+    <p>W Serial Monitorze najpierw pojawi się napis o kalibracji. Potem program wysyła 10 punktów na sekundę (stała <code>CO_ILE_MS</code>). Na Plotterze kliknij nazwę linii w legendzie, żeby ją ukryć. Akcelerometr i żyroskop mają bardzo różne liczby, więc łatwiej oglądać je osobno.</p>
     <figure class="zdjecie" data-plik="img/akcelerometr-01.png" data-opis="Zrzut ekranu Serial Plottera z liniami ax_g, ay_g, az_g podczas przechylania drona"></figure>
   </section>
 
   <section class="krok" id="zadania">
-    <h2><span class="nr">3</span>Zadania</h2>
+    <h2><span class="nr">4</span>Zadania</h2>
     <ol>
       <li>Przelicz surowe liczby: podziel <code>ax</code>, <code>ay</code>, <code>az</code> przez <code>LSB_NA_G</code>, a <code>gx</code>, <code>gy</code>, <code>gz</code> przez <code>LSB_NA_STOPIEN</code>.</li>
       <li>Ostrożnie przechyl drona na prowadnicy w bok i w przód. Która linia się zmienia?</li>
