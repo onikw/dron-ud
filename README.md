@@ -78,7 +78,7 @@ Te wartości pochodzą z planu kursu i **nie zostały sprawdzone na sprzęcie** 
 - mocowanie czujników: puste – uzupełnij `mocowanieCzujnikow`
 - pinout płytki w `config.js` (`pinout`) – używany tylko w rysunkach, sprawdź z nadrukiem na płytce
 
-Na stronach są też ramki „Do uzupełnienia przez prowadzącego”: mocowanie ESC i skręcanie ramy (montaż), kolory sygnałów PWM i wpięcie masy (zajęcia 3), zasady zawodów (zajęcia 5).
+Na stronach są też ramki „Do uzupełnienia przez prowadzącego”: kolory sygnałów PWM i wpięcie masy (zajęcia 3), zasady zawodów (zajęcia 5).
 
 ## Zdjęcia do zrobienia
 
@@ -86,14 +86,11 @@ Logo Uniwersytetu Dzieci jest już w `img/logo-ud.png`. Dopóki zdjęcia nie ma,
 
 | Plik | Co ma być na zdjęciu | Strona |
 |:--|:--|:--|
-| `img/montaz-01.jpg` | Wszystkie części zestawu rozłożone na stole, z podpisami | zajecia-2/03-montaz.html |
-| `img/montaz-02.jpg` | Dwa silniki typu A i dwa typu B obok siebie, dobrze widać kolory przewodów | zajecia-2/03-montaz.html |
-| `img/montaz-03.jpg` | Rama widziana z góry, przód zaznaczony strzałką | zajecia-2/03-montaz.html |
-| `img/montaz-04.jpg` | Wciskanie silnika w gumową tulejkę – ręce i kierunek wciskania | zajecia-2/03-montaz.html |
-| `img/montaz-05.jpg` | Dobrze osadzony silnik z boku: prosto, do oporu | zajecia-2/03-montaz.html |
-| `img/montaz-06.jpg` | Moduły ESC zamocowane na ramie, przewody ułożone wzdłuż ramion | zajecia-2/03-montaz.html |
-| `img/montaz-07.jpg` | Skręcanie ramy – która część na którą, gdzie idą śrubki | zajecia-2/03-montaz.html |
-| `img/montaz-08.jpg` | Złożona rama z silnikami, widok z góry | zajecia-2/03-montaz.html |
+| `img/montaz-01.jpg` | Rama widziana z góry, przód zaznaczony strzałką | zajecia-2/03-montaz.html |
+| `img/montaz-02.jpg` | Wciskanie silnika w gumową tulejkę – ręce i kierunek wciskania | zajecia-2/03-montaz.html |
+| `img/montaz-03.jpg` | Dobrze osadzony silnik z boku: prosto, do oporu | zajecia-2/03-montaz.html |
+| `img/montaz-04.jpg` | Skręcanie ramy – która część na którą, gdzie idą śrubki | zajecia-2/03-montaz.html |
+| `img/montaz-05.jpg` | Złożona rama z silnikami, widok z góry | zajecia-2/03-montaz.html |
 | `img/silniki-01.jpg` | Dron z góry, przy silnikach naklejki M1–M4 | zajecia-2/04-silniki.html |
 | `img/silniki-02.jpg` | Zbliżenie na oznaczenie A i B na śmigłach | zajecia-2/04-silniki.html |
 | `img/silniki-03.jpg` | Zakładanie śmigła na wałek, druga ręka podtrzymuje silnik od spodu | zajecia-2/04-silniki.html |

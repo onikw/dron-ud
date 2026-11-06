@@ -277,8 +277,10 @@
         var lab = el("label");
         var cb = document.createElement("input");
         cb.type = "checkbox";
-        while (li.firstChild) lab.appendChild(li.firstChild);
-        lab.insertBefore(cb, lab.firstChild);
+        var tekst = el("span");
+        while (li.firstChild) tekst.appendChild(li.firstChild);
+        lab.appendChild(cb);
+        lab.appendChild(tekst);
         li.appendChild(lab);
         var klucz = STRONA + ":listy";
         if (!pamiec[klucz]) pamiec[klucz] = {};

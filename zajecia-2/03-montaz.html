@@ -9,21 +9,20 @@
 <body data-strona="z2-03" data-root="../">
 <main class="tresc">
   <div class="okruszki"><a href="../index.html">Start</a> › Zajęcia 2 › Rozdział 3</div>
-<h1>Montaż drona</h1>
-  <p class="wstep">Składamy ramę: wciskamy silniki w gumowe tulejki i skręcamy całość. Prowadzący pokazuje każdy krok – róbcie go razem z nim. Silniki są już przylutowane do modułów ESC, więc nikt z was niczego nie lutuje.</p>
+  <h1>Montaż drona</h1>
+  <p class="wstep">Składamy ramę: wciskamy silniki w gumowe tulejki i skręcamy całość. Prowadzący pokazuje każdy krok – róbcie go razem z nim. Moduły ESC dojdą do silników przed zajęciami 3, dziś pracujemy na samych silnikach.</p>
 
   <section class="krok" id="zestaw">
     <h2><span class="nr">1</span>Sprawdź zestaw</h2>
     <p>Rozłóżcie części na stole i sprawdźcie, czy niczego nie brakuje:</p>
     <ul class="lista-kontrolna" id="czesci">
       <li>rama drona z druku 3D</li>
-      <li>4 silniki 816 z przylutowanymi modułami ESC: 2 typu A (przewody <span data-k="typySilnikow.A.plus">czerwony</span> i <span data-k="typySilnikow.A.minus">niebieski</span>) i 2 typu B (<span data-k="typySilnikow.B.plus">biały</span> i <span data-k="typySilnikow.B.minus">czarny</span>)</li>
+      <li>4 silniki 816: 2 typu A (przewody <span data-k="typySilnikow.A.plus">czerwony</span> i <span data-k="typySilnikow.A.minus">niebieski</span>) i 2 typu B (przewody <span data-k="typySilnikow.B.plus">biały</span> i <span data-k="typySilnikow.B.minus">czarny</span>)</li>
       <li>4 śmigła 60 mm: 2 oznaczone A i 2 oznaczone B</li>
       <li>czujnik MPU6050 i czujnik odległości <span data-k="czujnikOdleglosci.model">VL53L1X</span></li>
       <li>kabel z drona z 4 przewodami I2C</li>
-      <li>elementy do skręcenia ramy (śrubki itp. – pokaże prowadzący)</li>
+      <li>śruby i nakrętki w kilku długościach</li>
     </ul>
-    <figure class="zdjecie" data-plik="img/montaz-01.jpg" data-opis="Wszystkie części zestawu rozłożone na stole, z podpisami"></figure>
   </section>
 
   <section class="krok" id="typy">
@@ -36,13 +35,12 @@
         <tr><td><b>B</b></td><td><span data-k="typySilnikow.B.plus" data-kolor>biały</span> i <span data-k="typySilnikow.B.minus" data-kolor>czarny</span></td><td data-k="typySilnikow.B.kierunek">CCW</td></tr>
       </tbody>
     </table></div>
-    <figure class="zdjecie" data-plik="img/montaz-02.jpg" data-opis="Dwa silniki typu A i dwa typu B obok siebie, dobrze widać kolory przewodów"></figure>
   </section>
 
   <section class="krok" id="przod">
     <h2><span class="nr">3</span>Ustal przód ramy</h2>
     <p>Wszystko na dronie liczymy od przodu: numery silników, kierunki, oś czujnika. Prowadzący pokaże, gdzie jest przód waszej ramy. Zaznaczcie go, np. strzałką z taśmy.</p>
-    <figure class="zdjecie" data-plik="img/montaz-03.jpg" data-opis="Rama widziana z góry, przód zaznaczony strzałką"></figure>
+    <figure class="zdjecie" data-plik="img/montaz-01.jpg" data-opis="Rama widziana z góry, przód zaznaczony strzałką"></figure>
   </section>
 
   <section class="krok" id="silniki">
@@ -56,35 +54,34 @@
       <li>Nie ciągnij za przewody – mogą się urwać przy silniku.</li>
     </ol>
     <div class="zdjecia-2">
-      <figure class="zdjecie" data-plik="img/montaz-04.jpg" data-opis="Wciskanie silnika w gumową tulejkę – ręce i kierunek wciskania"></figure>
-      <figure class="zdjecie" data-plik="img/montaz-05.jpg" data-opis="Dobrze osadzony silnik z boku: prosto, do oporu"></figure>
+      <figure class="zdjecie" data-plik="img/montaz-02.jpg" data-opis="Wciskanie silnika w gumową tulejkę – ręce i kierunek wciskania"></figure>
+      <figure class="zdjecie" data-plik="img/montaz-03.jpg" data-opis="Dobrze osadzony silnik z boku: prosto, do oporu"></figure>
     </div>
   </section>
 
-  <section class="krok" id="esc">
-    <h2><span class="nr">5</span>Ułóż moduły ESC i przewody</h2>
-    <p>Moduły ESC leżą na ramie, blisko swoich silników. Przewody układamy tak, żeby nie dotykały miejsc, w których będą kręcić się śmigła.</p>
-    <div class="ramka uzupelnij"><span class="tytul">Do uzupełnienia przez prowadzącego</span>Jak mocujemy moduły ESC na ramie (taśma, opaska, uchwyt w ramie).</div>
-    <figure class="zdjecie" data-plik="img/montaz-06.jpg" data-opis="Moduły ESC zamocowane na ramie, przewody ułożone wzdłuż ramion"></figure>
-  </section>
-
   <section class="krok" id="skrecanie">
-    <h2><span class="nr">6</span>Skręć ramę</h2>
-    <div class="ramka uzupelnij"><span class="tytul">Do uzupełnienia przez prowadzącego</span>Kolejne kroki skręcania ramy i jakie elementy są potrzebne.</div>
-    <p>Dokręcaj śrubki z wyczuciem. Rama jest z druku 3D i może pęknąć, jeśli przykręcisz za mocno.</p>
-    <figure class="zdjecie" data-plik="img/montaz-07.jpg" data-opis="Skręcanie ramy – która część na którą, gdzie idą śrubki"></figure>
+    <h2><span class="nr">5</span>Skręć ramę</h2>
+    <p>Na stole są śruby i nakrętki w kilku długościach. Którą wybrać – to wasze zadanie. Pomyślcie:</p>
+    <ul>
+      <li>Śruba musi przejść przez <strong>wszystkie</strong> skręcane części i wystawać na tyle, żeby nakrętka weszła na nią cała.</li>
+      <li>Za krótka śruba nie złapie nakrętki albo złapie ją na jeden obrót i się wykręci.</li>
+      <li>Za długa wystaje i może zahaczać o przewody albo śmigło.</li>
+      <li>Najpierw przymierzcie śrubę, potem dokręcajcie.</li>
+    </ul>
+    <p>Dokręcaj z wyczuciem. Rama jest z druku 3D i może pęknąć, jeśli przykręcisz za mocno.</p>
+    <figure class="zdjecie" data-plik="img/montaz-04.jpg" data-opis="Skręcanie ramy – która część na którą, gdzie idą śrubki"></figure>
   </section>
 
   <section class="krok" id="kontrola">
-    <h2><span class="nr">7</span>Sprawdź swoją pracę</h2>
+    <h2><span class="nr">6</span>Sprawdź swoją pracę</h2>
     <ul class="lista-kontrolna" id="kontrola-montazu">
       <li>Wszystkie silniki stoją pionowo i siedzą w tulejkach do oporu.</li>
       <li>Typ A jest na pozycjach CW, typ B na pozycjach CCW (po przekątnej).</li>
       <li>Wałek każdego silnika kręci się lekko, gdy obrócisz go palcem.</li>
       <li>Żaden przewód nie wchodzi w miejsce, gdzie będzie śmigło.</li>
-      <li>Rama jest skręcona i nic się nie rusza.</li>
+      <li>Rama jest skręcona, nic się nie rusza, a śruby nie wystają za bardzo.</li>
     </ul>
-    <figure class="zdjecie" data-plik="img/montaz-08.jpg" data-opis="Złożona rama z silnikami, widok z góry"></figure>
+    <figure class="zdjecie" data-plik="img/montaz-05.jpg" data-opis="Złożona rama z silnikami, widok z góry"></figure>
     <div data-quiz="montaz"></div>
   </section>
 </main>
