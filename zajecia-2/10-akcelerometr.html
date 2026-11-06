@@ -36,7 +36,12 @@
     <p>Żaden czujnik nie jest idealny. Nawet gdy dron stoi, MPU6050 pokazuje trochę więcej albo mniej, niż powinien: żyroskop nie pokazuje dokładnie 0, a akcelerometr nie pokazuje dokładnie 1 g. To <strong>błąd zera</strong>.</p>
     <p>Dlatego program na starcie przez około 2 sekundy mierzy, co czujnik pokazuje w spoczynku, i potem to odejmuje. To jest <strong>kalibracja</strong>.</p>
     <p class="analogia"><strong>Analogia:</strong> waga kuchenna. Zanim zważysz mąkę, stawiasz pustą miskę i naciskasz „tara”, żeby waga pokazała 0.</p>
-    <div class="ramka uwaga"><span class="tytul">Przy starcie dron stoi płasko i nieruchomo</span>Przez pierwsze 2 sekundy po wgraniu programu (albo po naciśnięciu RST) nie dotykajcie drona ani stołu. Jeśli ktoś go poruszy, kalibracja wyjdzie zła – wtedy postaw drona płasko i naciśnij RST.</div>
+    <div class="ramka uwaga"><span class="tytul">Przy starcie dron leży płasko i nieruchomo</span>Po wgraniu programu (albo po naciśnięciu RST) program odlicza 3, 2, 1 – w tym czasie połóż drona płasko i puść go. Potem przez około 2 sekundy nie dotykajcie drona ani stołu.</div>
+    <ul>
+      <li>Jeśli dron się poruszy, program napisze „Dron się ruszał” i sam zacznie kalibrację od nowa.</li>
+      <li>Jeśli napisze „dron był przechylony”, połóż go płasko i naciśnij RST. Gdy ten napis wraca, choć dron leży płasko – czujnik jest krzywo zamocowany, zawołaj prowadzącego.</li>
+      <li>Po dobrej kalibracji leżący dron pokazuje: <code>ax_g</code> i <code>ay_g</code> około 0, <code>az_g</code> około 1, żyroskop około 0.</li>
+    </ul>
   </section>
 
   <section class="krok" id="kod">

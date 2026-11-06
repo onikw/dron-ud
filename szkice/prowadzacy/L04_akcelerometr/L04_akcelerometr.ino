@@ -40,6 +40,7 @@
  *   pokazuje trochę więcej albo mniej, niż powinien. Na starcie program
  *   przez ok. 2 s sprawdza, ile czujnik pokazuje w spoczynku, i potem
  *   to odejmuje. Dlatego przy starcie dron MUSI stać płasko i nieruchomo.
+ *   Program odlicza 3 s, a gdy wykryje ruch – kalibruje jeszcze raz.
  *
  *  ZADANIA
  *   1. Przelicz surowe liczby na g i °/s.
@@ -57,6 +58,8 @@ const float LSB_NA_G = 16384.0;      // zakres ±2 g:     16384 = 1 g
 const float LSB_NA_STOPIEN = 131.0;  // zakres ±250 °/s: 131 = 1 °/s
 const int CO_ILE_MS = 100;           // nowy punkt wykresu co 100 ms (10 na sekundę)
 const int PROBKI_KALIBRACJI = 200;   // tyle pomiarów uśredniamy przy kalibracji (ok. 2 s)
+const int RUCH_AKC = 1500;           // większy rozrzut akcelerometru = dron się ruszał (~0,1 g)
+const int RUCH_ZYRO = 500;           // większy rozrzut żyroskopu = dron się ruszał (~4 °/s)
 // ==================================================
 
 // Zapisuje liczbę do szufladki (rejestru) czujnika.
@@ -101,18 +104,48 @@ void czytajCzujnik() {
 // KALIBRACJA: dron stoi płasko i nieruchomo. Liczymy średnią z wielu pomiarów.
 // To, co czujnik wtedy pokazuje, to jego „błąd zera” – potem go odejmujemy.
 // Wyjątek: oś Z ma pokazywać 1 g (grawitację), a nie 0.
+// Jeśli w trakcie dron się ruszy, kalibracja zaczyna się od nowa.
 void kalibruj() {
-  Serial.println("KALIBRACJA: dron ma stać płasko i nieruchomo (ok. 2 s)...");
-  float suma[7] = {0, 0, 0, 0, 0, 0, 0};
-  for (int n = 0; n < PROBKI_KALIBRACJI; n++) {
-    czytajCzujnik();
-    for (int i = 0; i < 7; i++) suma[i] += surowe[i];
-    delay(10);
+  Serial.println("KALIBRACJA za 3 s: połóż drona płasko i nie ruszaj go.");
+  for (int s = 3; s > 0; s--) {
+    Serial.println(s);
+    delay(1000);
   }
-  for (int i = 0; i < 7; i++) zero[i] = suma[i] / PROBKI_KALIBRACJI;
-  zero[2] -= LSB_NA_G;   // oś Z: zostawiamy 1 g grawitacji
-  zero[3] = 0;           // temperatury nie poprawiamy
-  Serial.println("Kalibracja gotowa. Żeby ją powtórzyć: postaw drona płasko i naciśnij RST.");
+  while (true) {
+    float suma[7] = {0, 0, 0, 0, 0, 0, 0};
+    int16_t najmniej[7], najwiecej[7];
+    czytajCzujnik();
+    for (int i = 0; i < 7; i++) najmniej[i] = najwiecej[i] = surowe[i];
+    for (int n = 0; n < PROBKI_KALIBRACJI; n++) {
+      czytajCzujnik();
+      for (int i = 0; i < 7; i++) {
+        suma[i] += surowe[i];
+        najmniej[i] = min(najmniej[i], surowe[i]);
+        najwiecej[i] = max(najwiecej[i], surowe[i]);
+      }
+      delay(10);
+    }
+    // Ruch? Akcelerometr (0..2) albo żyroskop (4..6) skakał za bardzo.
+    bool ruch = false;
+    for (int i = 0; i < 3; i++) if (najwiecej[i] - najmniej[i] > RUCH_AKC) ruch = true;
+    for (int i = 4; i < 7; i++) if (najwiecej[i] - najmniej[i] > RUCH_ZYRO) ruch = true;
+    if (ruch) {
+      Serial.println("Dron się ruszał – kalibruję jeszcze raz. Nie dotykaj drona ani stołu.");
+      continue;
+    }
+    for (int i = 0; i < 7; i++) zero[i] = suma[i] / PROBKI_KALIBRACJI;
+    // Czy dron leżał płasko? Kąt między grawitacją a osią Z czujnika.
+    float przechylenie = atan2(sqrt(zero[0] * zero[0] + zero[1] * zero[1]), zero[2]) * 180.0 / PI;
+    if (przechylenie > 10) {
+      Serial.print("Uwaga: w czasie kalibracji dron był przechylony o ok. ");
+      Serial.print((int)przechylenie);
+      Serial.println(" stopni. Postaw go płasko i naciśnij RST (albo czujnik jest krzywo zamocowany).");
+    }
+    zero[2] -= LSB_NA_G;   // oś Z: zostawiamy 1 g grawitacji
+    zero[3] = 0;           // temperatury nie poprawiamy
+    Serial.println("Kalibracja gotowa. Żeby ją powtórzyć: postaw drona płasko i naciśnij RST.");
+    return;
+  }
 }
 
 void setup() {
