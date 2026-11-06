@@ -1,0 +1,30 @@
+:root {
+  --md-primary-fg-color: #0e7490;
+  --md-primary-fg-color--light: #0891b2;
+  --md-primary-fg-color--dark: #155e75;
+}
+
+h1, h2, h3, h4 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.md-typeset pre > code {
+  border-radius: 8px;
+}
+
+.md-typeset blockquote {
+  border-left-width: 4px;
+  border-radius: 0 8px 8px 0;
+}
+
+/* Rysunki ASCII w lekcjach */
+.md-typeset pre.rysunek > code,
+.md-typeset .rysunek code {
+  line-height: 1.25;
+}
+
+.center {
+  display: block;
+  margin: 0 auto;
+}
