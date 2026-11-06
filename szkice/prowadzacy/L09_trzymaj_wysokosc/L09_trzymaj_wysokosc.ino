@@ -329,7 +329,7 @@ void setup() {
   delay(1000);
   silnikiStart();
   while (!laserStart()) {
-    Serial.println("Nie widzę lasera! Sprawdź kable i uruchom skaner L02.");
+    Serial.println("Nie widzę lasera! Uruchom skaner L02. Widzi 0x29? To może być inny model czujnika – zawołaj prowadzącego.");
     delay(2000);
   }
   Serial.println("L09: trzymaj wysokość. Wpisz u, potem h 300.");

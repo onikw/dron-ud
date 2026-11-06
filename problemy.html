@@ -44,6 +44,12 @@
           <li>Widać tylko jedno urządzenie? Drugi czujnik ma luźny przewód na dronie.</li>
           <li>MPU6050 pod adresem 0x69 zamiast 0x68 – pin AD0 czujnika jest podłączony do plusa. Zawołaj prowadzącego.</li>
         </ul></td></tr>
+      <tr><td><b>Skaner widzi 0x29, ale program pisze „Nie widzę lasera!”</b></td><td>
+        <ul>
+          <li>Pod adresem 0x29 może być czujnik <b>VL53L0X</b> zamiast VL53L1X – oba mają ten sam adres, a biblioteka VL53L1X nie obsługuje VL53L0X.</li>
+          <li>Prowadzący sprawdza to szkicem <code>narzedzia/rozpoznaj_laser</code> – wypisuje, jaki czujnik jest podłączony.</li>
+          <li>Jeśli to VL53L1X: odłącz i podłącz USB (czujnik czasem nie kończy startu), sprawdź zasilanie 3V3.</li>
+        </ul></td></tr>
       <tr><td><b>Czujnik zwraca 0 albo 65535</b></td><td>
         <ul>
           <li>65535 (albo inne bardzo duże liczby) zwykle znaczy, że czujnik nie odpowiedział – przerwana rozmowa po I2C. Sprawdź SDA, SCL i GND.</li>
