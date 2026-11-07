@@ -50,7 +50,6 @@
     <li>Kable I2C około 1 m, 4 przewody w kolorach z <code>config.js</code>.</li>
     <li>Na każdej platformie: płytka stykowa z wpiętym ESP32, kabel USB z transmisją danych.</li>
     <li>Multimetr, zasilacz laboratoryjny (albo bateria 1,5 V) i jeden zapasowy silnik 816 do doświadczenia.</li>
-    <li>Zdjęcia do poradnika (lista w README) i logo w <code>img/logo-ud.png</code>.</li>
     <li>Strona otwarta lokalnie na komputerach (na wypadek braku internetu).</li>
   </ul>
   <p><b>Po zajęciach 2, przed zajęciami 3:</b> przylutować silniki do modułów ESC (plus silnika do plusa ESC) i zamontować ESC na dronach.</p>
@@ -79,7 +78,7 @@
 
   <h2 id="orientacja">Rozwiązanie ćwiczenia z orientacją</h2>
   <div class="tabela-kontener"><table>
-    <thead><tr><th>Pozycja</th><th>Numer</th><th>Typ</th><th>Kierunek</th><th>Śmigło</th><th>Pin ESC</th></tr></thead>
+    <thead><tr><th>Pozycja</th><th>Numer</th><th>Typ</th><th>Kierunek</th><th>Pin ESC</th></tr></thead>
     <tbody id="orientacja-tabela"></tbody>
   </table></div>
 
@@ -110,13 +109,12 @@
         var td = el("td"); var b = el("b", q.odpowiedzi[q.poprawna]); td.appendChild(b);
         td.appendChild(el("div", q.wyjasnienie)); tr.appendChild(td); tb.appendChild(tr);
       });
-      var T = K.typySilnikow || {}, S = K.smigla || {}, piny = (K.piny || {}).silniki || [];
+      var T = K.typySilnikow || {}, piny = (K.piny || {}).silniki || [];
       function typ(kier) { for (var t in T) if (T[t].kierunek === kier) return t; return "?"; }
-      function sm(kier) { for (var t in S) if (t !== "opis" && S[t] === kier) return t; return "?"; }
       var nazwy = { "przod-lewy": "przód-lewy", "przod-prawy": "przód-prawy", "tyl-prawy": "tył-prawy", "tyl-lewy": "tył-lewy" };
       (K.silniki || []).forEach(function (m, i) {
         var tr = el("tr");
-        [nazwy[m.pozycja] || m.pozycja, m.nr, typ(m.kierunek), m.kierunek, sm(m.kierunek), "GPIO " + piny[i]].forEach(function (v) { tr.appendChild(el("td", v)); });
+        [nazwy[m.pozycja] || m.pozycja, m.nr, typ(m.kierunek), m.kierunek, "GPIO " + piny[i]].forEach(function (v) { tr.appendChild(el("td", v)); });
         document.getElementById("orientacja-tabela").appendChild(tr);
       });
       Object.keys(window.SZKICE || {}).forEach(function (n) {

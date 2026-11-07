@@ -675,13 +675,8 @@
     for (var t in T) if (T[t].kierunek === kier) return t;
     return "?";
   }
-  function smigloDlaKierunku(kier) {
-    var S = K.smigla || {};
-    for (var t in S) if (t !== "opis" && S[t] === kier) return t;
-    return "?";
-  }
   function dronZGory(stan, pokazPodpisy) {
-    // stan: { pozycja: {nr, typ, kier, smiglo} }
+    // stan: { pozycja: {nr, typ, kier} }
     var T = K.typySilnikow || {};
     var s = '<svg viewBox="0 0 440 450" role="img" aria-label="Dron widziany z góry">' +
       '<defs><marker id="dz-gr" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#1F5FC8"/></marker></defs>' +
@@ -701,7 +696,6 @@
         s += '<circle cx="' + (p.x - 10) + '" cy="' + (p.y + 42) + '" r="7" fill="' + kolor(T[st.typ].plus) + '" stroke="#13171F" stroke-width="1.5"/>' +
           '<circle cx="' + (p.x + 10) + '" cy="' + (p.y + 42) + '" r="7" fill="' + kolor(T[st.typ].minus) + '" stroke="#13171F" stroke-width="1.5"/>';
       }
-      if (st.smiglo) s += '<text x="' + (p.x + 40) + '" y="' + (p.y - 38) + '" font-size="13" font-weight="800" fill="#B5711C">śm. ' + st.smiglo + "</text>";
       if (pokazPodpisy) s += '<text x="' + p.x + '" y="' + (p.y + (p.y < 200 ? -64 : 78)) + '" text-anchor="middle" font-size="12" fill="#4A5060">' + p.n + "</text>";
     });
     return s + "</svg>";
@@ -723,22 +717,21 @@
     var T = K.typySilnikow || {};
     var poprawne = {};
     (K.silniki || []).forEach(function (m) {
-      poprawne[m.pozycja] = { nr: m.nr, kier: m.kierunek, typ: typDlaKierunku(m.kierunek), smiglo: smigloDlaKierunku(m.kierunek) };
+      poprawne[m.pozycja] = { nr: m.nr, kier: m.kierunek, typ: typDlaKierunku(m.kierunek) };
     });
     function opcje(lista) { return '<option value="">—</option>' + lista.map(function (o) { return '<option value="' + o[0] + '">' + o[1] + "</option>"; }).join(""); }
     var nrOpcje = opcje((K.silniki || []).map(function (m) { return [m.nr, m.nr]; }).sort());
     var typOpcje = opcje(Object.keys(T).map(function (t) { return [t, t + " (" + T[t].plus + "-" + T[t].minus + ")"]; }));
     var kierOpcje = opcje([["CW", "CW"], ["CCW", "CCW"]]);
-    var smOpcje = opcje(Object.keys(K.smigla || {}).filter(function (k) { return k !== "opis"; }).map(function (k) { return [k, k]; }));
     var wiersze = Object.keys(POZ).map(function (k) {
       return '<tr data-poz="' + k + '"><th scope="row" style="background:#F5F4EF;color:#13171F">' + POZ[k].n + "</th>" +
         '<td><select data-pole="nr" aria-label="Numer – ' + POZ[k].n + '">' + nrOpcje + "</select></td>" +
         '<td><select data-pole="typ" aria-label="Typ – ' + POZ[k].n + '">' + typOpcje + "</select></td>" +
         '<td><select data-pole="kier" aria-label="Kierunek – ' + POZ[k].n + '">' + kierOpcje + "</select></td>" +
-        '<td><select data-pole="smiglo" aria-label="Śmigło – ' + POZ[k].n + '">' + smOpcje + "</select></td></tr>";
+        "</tr>";
     }).join("");
     html(box, '<div class="orientacja"><div class="or-svg"></div><div><div class="tabela-kontener"><table>' +
-      "<thead><tr><th>Pozycja</th><th>Numer</th><th>Typ silnika</th><th>Kierunek</th><th>Śmigło</th></tr></thead><tbody>" + wiersze +
+      "<thead><tr><th>Pozycja</th><th>Numer</th><th>Typ silnika</th><th>Kierunek</th></tr></thead><tbody>" + wiersze +
       '</tbody></table></div><div class="grupa-przyciskow"><button type="button" class="przycisk or-sprawdz">Sprawdź</button>' +
       '<button type="button" class="przycisk drugi or-czysc">Wyczyść</button></div><div class="or-wynik" aria-live="polite"></div></div></div>');
     function stan() {
@@ -769,7 +762,7 @@
       var w = $(box, ".or-wynik");
       if (!bledne && !puste) {
         w.className = "or-wynik komunikat dobrze";
-        w.textContent = "Wszystko się zgadza! Po przekątnej ten sam kierunek, typ silnika i śmigło pasują do kierunku.";
+        w.textContent = "Wszystko się zgadza! Po przekątnej ten sam kierunek, a typ silnika pasuje do kierunku.";
       } else {
         w.className = "or-wynik komunikat zle";
         w.textContent = (puste ? "Uzupełnij puste pola. " : "") + (bledne ? "Pola na czerwono są błędne (" + bledne + "). " : "") +

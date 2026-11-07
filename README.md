@@ -32,7 +32,7 @@ js/szkice.js              GENEROWANY – kod szkiców ucznia dla strony
 narzedzia/wklej_szkice.py wkleja .ino do js/szkice.js i sprawdza zgodność
 szkice/uczen/Lxx_*/       wersje z lukami
 szkice/prowadzacy/Lxx_*/  rozwiązania
-img/                      zdjęcia (lista niżej) i logo-ud.png
+img/                      logo-ud.png
 ```
 
 ## Lekcje
@@ -54,7 +54,7 @@ Każdy szkic jest samodzielny (tylko `Wire` i biblioteka czujnika). Czujnik odle
 
 ## Jak zmienić piny i układ silników
 
-1. **Strona:** zmień wartości w `js/config.js` – piny (`piny`), układ silników (`silniki`), typy i biegunowość (`typySilnikow`), oznaczenie śmigieł (`smigla`), czujnik (`czujnikOdleglosci`), kolory przewodów (`przewodyI2C`), opis mocowania (`mocowanieCzujnikow`). Schematy, tabele i ćwiczenie z orientacją przerysują się same.
+1. **Strona:** zmień wartości w `js/config.js` – piny (`piny`), układ silników (`silniki`), typy i biegunowość (`typySilnikow`), czujnik (`czujnikOdleglosci`), kolory przewodów (`przewodyI2C`), opis mocowania (`mocowanieCzujnikow`). Schematy, tabele i ćwiczenie z orientacją przerysują się same.
 2. **Szkice:** zmień blok `KONFIGURACJA` na górze każdego szkicu (`PIN_SDA`, `PIN_SCL`, `PINY_SILNIKOW`), w obu folderach.
 3. Uruchom:
    ```bash
@@ -72,40 +72,12 @@ Te wartości pochodzą z planu kursu i **nie zostały sprawdzone na sprzęcie** 
 - piny: SDA 6, SCL 7, ESC M1–M4: 18, 19, 20, 21
 - układ silników: M1 przód-lewy CW, M2 przód-prawy CCW, M3 tył-prawy CW, M4 tył-lewy CCW
 - biegunowość: typ A czerwony +, niebieski −; typ B biały +, czarny − (test przed lutowaniem – instrukcja na `prowadzacy.html`)
-- oznaczenie śmigieł: A/B wytłoczone na śmigle (A = CW, B = CCW)
 - kolory przewodów I2C: czerwony 3V3, czarny GND, żółty SDA, niebieski SCL
 - mocowanie czujników: puste – uzupełnij `mocowanieCzujnikow`
 - pinout płytki w `config.js` (`pinout`) – używany tylko w rysunkach, sprawdź z nadrukiem na płytce
 
 Na stronach są też ramki „Do uzupełnienia przez prowadzącego”: kolory sygnałów PWM i wpięcie masy (zajęcia 3), zasady zawodów (zajęcia 5).
 
-## Zdjęcia do zrobienia
-
-Logo Uniwersytetu Dzieci jest już w `img/logo-ud.png`. Dopóki zdjęcia nie ma, strona pokazuje zaślepkę z opisem. Wrzuć zdjęcie pod podaną nazwą do `img/` – pojawi się samo.
-
-| Plik | Co ma być na zdjęciu | Strona |
-|:--|:--|:--|
-| `img/montaz-01.jpg` | Rama widziana z góry, przód zaznaczony strzałką | zajecia-2/03-montaz.html |
-| `img/montaz-02.jpg` | Wciskanie silnika w gumową tulejkę – ręce i kierunek wciskania | zajecia-2/03-montaz.html |
-| `img/montaz-03.jpg` | Dobrze osadzony silnik z boku: prosto, do oporu | zajecia-2/03-montaz.html |
-| `img/montaz-04.jpg` | Skręcanie ramy – która część na którą, gdzie idą śrubki | zajecia-2/03-montaz.html |
-| `img/montaz-05.jpg` | Złożona rama z silnikami, widok z góry | zajecia-2/03-montaz.html |
-| `img/silniki-01.jpg` | Dron z góry, przy silnikach naklejki M1–M4 | zajecia-2/04-silniki.html |
-| `img/silniki-02.jpg` | Zbliżenie na oznaczenie A i B na śmigłach | zajecia-2/04-silniki.html |
-| `img/silniki-03.jpg` | Zakładanie śmigła na wałek, druga ręka podtrzymuje silnik od spodu | zajecia-2/04-silniki.html |
-| `img/czujniki-01.jpg` | MPU6050 zamocowany płasko na środku ramy, widać strzałkę X skierowaną do przodu | zajecia-2/05-czujniki.html |
-| `img/czujniki-02.jpg` | Czujnik odległości pod ramą, okienkiem w dół, widok z boku | zajecia-2/05-czujniki.html |
-| `img/czujniki-03.jpg` | Podłączone przewody I2C przy obu czujnikach, kolory zgodne z tabelą | zajecia-2/05-czujniki.html |
-| `img/podlaczenie-01.jpg` | Platforma z góry: ESP32 na płytce stykowej, zaznaczone kolumny 3V3, GND, 6 i 7 | zajecia-2/06-podlaczenie.html |
-| `img/podlaczenie-02.jpg` | Zbliżenie: cztery przewody wpięte w płytkę stykową obok nóżek 3V3, GND, 6 i 7 | zajecia-2/06-podlaczenie.html |
-| `img/podlaczenie-03.jpg` | Całe stanowisko: dron na prowadnicy, kabel ułożony luźno do platformy | zajecia-2/06-podlaczenie.html |
-| `img/arduino-01.png` | Zrzut ekranu prawdziwego okna Arduino IDE na komputerze w sali | zajecia-2/07-arduino.html |
-| `img/arduino-02.png` | Zrzut ekranu menu Narzędzia z wybraną płytką ESP32C6 Dev Module, portem i USB CDC On Boot: Enabled | zajecia-2/07-arduino.html |
-| `img/arduino-03.png` | Zrzut ekranu Serial Monitora z napisem od płytki i ustawieniem 115200 baud | zajecia-2/07-arduino.html |
-| `img/wysokosc-01.png` | Zrzut ekranu Serial Plottera: wykres odległości, gdy dron jest przesuwany po prowadnicy | zajecia-2/09-wysokosc.html |
-| `img/akcelerometr-01.png` | Zrzut ekranu Serial Plottera z liniami ax_g, ay_g, az_g podczas przechylania drona | zajecia-2/10-akcelerometr.html |
-| `img/esc-01.jpg` | Płytka stykowa z wpiętymi przewodami sygnałów M1–M4 przy nóżkach 18–21 | zajecia-3/01-podlaczenie-esc.html |
-| `img/silniki-04.jpg` | Obserwator patrzy na drona z góry podczas testu kolejności | zajecia-3/04-cztery-silniki.html |
 
 ## Instalacja Arduino IDE i rdzenia esp32 (Windows 11)
 

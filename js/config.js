@@ -34,13 +34,6 @@ window.KONFIG = {
     B: { kierunek: "CCW", plus: "biały",    minus: "czarny" }
   },
 
-  // Jak odróżnić śmigła CW i CCW.
-  smigla: {
-    opis: "litera A albo B wytłoczona na śmigle",
-    A: "CW",
-    B: "CCW"
-  },
-
   czujnikOdleglosci: {
     model: "VL53L0X",        // sprawdzone szkicem narzedzia/rozpoznaj_laser
     biblioteka: "VL53L0X (Pololu)",
@@ -77,7 +70,7 @@ window.KONFIG = {
   },
 
   doPotwierdzenia: [
-    "plytka", "piny", "silniki", "typySilnikow (biegunowość)", "smigla",
+    "plytka", "piny", "silniki", "typySilnikow (biegunowość)",
     "mocowanieCzujnikow", "przewodyI2C", "pinout"
   ]
 };
