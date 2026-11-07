@@ -79,8 +79,52 @@
     <div class="ramka wskazowka"><span class="tytul">Który port to moja płytka?</span>Rozwiń listę portów. Odłącz USB i rozwiń ją jeszcze raz. Port, który zniknął, to twoja płytka. Podłącz ją z powrotem.</div>
   </section>
 
+  <section class="krok" id="jak-czytac" data-odhacz="Rozumiem">
+    <h2><span class="nr">4</span>Jak czytać kod</h2>
+    <p>Nie piszecie programów od zera. <strong>Kod jest w większości gotowy</strong> – waszym zadaniem jest go zrozumieć, uruchomić i uzupełnić kilka miejsc. Każdy program działa od razu, zanim cokolwiek zmienicie.</p>
+
+    <h3>Z czego składa się szkic</h3>
+<pre class="bez-dymkow"><code>/*  LEKCJA 01 ...                     &lt;- 1. NAGŁÓWEK: czego się nauczysz,
+    ZADANIA ...                              co podłączyć, jak to działa
+*/
+
+// ===== KONFIGURACJA =====            &lt;- 2. KONFIGURACJA: liczby, które
+const int TEMPO_MS = 500;                    wolno wam zmieniać
+
+int licznik = 0;                       &lt;- 3. ZMIENNE: pudełka na liczby
+
+void mrugnij(int czas_ms) { ... }      &lt;- 4. FUNKCJE: nazwane kawałki kodu
+
+void setup() { ... }                   &lt;- 5. setup(): raz, po włączeniu
+void loop()  { ... }                   &lt;- 6. loop(): w kółko, bez końca</code></pre>
+
+    <h3>Najważniejsze słowa</h3>
+    <div class="tabela-kontener"><table>
+      <thead><tr><th>W kodzie</th><th>Co znaczy</th></tr></thead>
+      <tbody>
+        <tr><td><code>// tekst</code> i <code>/* tekst */</code></td><td><b>Komentarz</b> – notatka dla ludzi. Płytka go pomija. W komentarzach jest wyjaśnienie, co robi kod.</td></tr>
+        <tr><td><code>int licznik = 0;</code></td><td><b>Zmienna</b> – pudełko z nazwą, w którym leży liczba. Może się zmieniać, np. <code>licznik = licznik + 1;</code></td></tr>
+        <tr><td><code>const int TEMPO_MS = 500;</code></td><td><b>Stała</b> – jak zmienna, ale nie zmienia się w czasie działania programu. Zmieniasz ją w kodzie i wgrywasz program jeszcze raz.</td></tr>
+        <tr><td><code>mrugnij(300);</code></td><td><b>Wywołanie funkcji</b> – „zrób to, co jest w funkcji <code>mrugnij</code>, z liczbą 300”.</td></tr>
+        <tr><td><code>if (warunek) { ... }</code></td><td><b>Jeśli</b> warunek jest prawdziwy, zrób to, co w klamrach.</td></tr>
+        <tr><td><code>for (int i = 0; i &lt; 3; i++) { ... }</code></td><td><b>Pętla</b> – powtórz to, co w klamrach, 3 razy (dla i = 0, 1, 2).</td></tr>
+        <tr><td><code>;</code> i <code>{ }</code></td><td>Średnik kończy każde polecenie. Klamry obejmują kawałek kodu, który należy do funkcji, <code>if</code> albo pętli.</td></tr>
+      </tbody>
+    </table></div>
+    <p>Płytka wykonuje polecenia <strong>po kolei, z góry na dół</strong>. Gdy dojdzie do końca <code>loop()</code>, wraca na jego początek – i tak bez końca.</p>
+
+    <h3>Jak znaleźć zadania</h3>
+    <ol>
+      <li>W Arduino IDE naciśnij <kbd>Ctrl</kbd>+<kbd>F</kbd> i wpisz <code>ZADANIE</code>. Edytor pokaże każde miejsce do uzupełnienia.</li>
+      <li>Przy każdym zadaniu jest komentarz: co zrobić, często z podpowiedzią albo przykładem.</li>
+      <li>Każde zadanie ma bezpieczną wartość na start – możecie wgrać program i zobaczyć, jak działa, zanim cokolwiek zmienicie.</li>
+      <li>Po każdej zmianie: <strong>Weryfikuj</strong> (ptaszek) sprawdza, czy kod jest poprawny, a <strong>Wgraj</strong> (strzałka) wysyła go na płytkę.</li>
+    </ol>
+    <div class="ramka wskazowka"><span class="tytul">Pojawił się czerwony błąd?</span>To nic złego – program się po prostu nie skompilował. Przeczytaj pierwszą linijkę błędu w konsoli: jest w niej numer linii kodu. Najczęściej brakuje średnika <code>;</code> albo zamykającej klamry <code>}</code>. <kbd>Ctrl</kbd>+<kbd>Z</kbd> cofa ostatnią zmianę.</div>
+  </section>
+
   <section class="krok" id="program">
-    <h2><span class="nr">4</span>Pierwszy program</h2>
+    <h2><span class="nr">5</span>Pierwszy program</h2>
     <p>Każdy szkic ma dwie części:</p>
 <pre class="bez-dymkow"><code>   start
      |
@@ -95,7 +139,7 @@
   </section>
 
   <section class="krok" id="wgraj">
-    <h2><span class="nr">5</span>Wgraj program</h2>
+    <h2><span class="nr">6</span>Wgraj program</h2>
     <ol>
       <li>Kliknij <strong>Wgraj</strong> (strzałka) albo naciśnij <kbd>Ctrl</kbd>+<kbd>U</kbd>.</li>
       <li>Poczekaj, aż w konsoli pojawi się <code>Hard resetting via RTS pin...</code>.</li>
@@ -105,7 +149,7 @@
   </section>
 
   <section class="krok" id="monitor">
-    <h2><span class="nr">6</span>Otwórz Serial Monitor</h2>
+    <h2><span class="nr">7</span>Otwórz Serial Monitor</h2>
     <ol>
       <li>Kliknij lupę w prawym górnym rogu albo <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>M</kbd>.</li>
       <li>Na dole ustaw <strong>115200 baud</strong>.</li>
@@ -114,8 +158,8 @@
   </section>
 
   <section class="krok" id="zadania">
-    <h2><span class="nr">7</span>Zadania</h2>
-    <p>W kodzie szukaj napisów <code>// ZADANIE</code>. Po każdej zmianie wgraj program jeszcze raz.</p>
+    <h2><span class="nr">8</span>Zadania</h2>
+    <p>Naciśnij <kbd>Ctrl</kbd>+<kbd>F</kbd> i wpisz <code>ZADANIE</code> – tak znajdziesz miejsca do uzupełnienia. Po każdej zmianie wgraj program jeszcze raz i zobacz, co się zmieniło.</p>
     <ol>
       <li>Zmień tempo mrugania <code>TEMPO_MS</code> na 100, potem na 2000.</li>
       <li>Dokończ sygnał SOS: 3 krótkie, 3 długie, 3 krótkie mrugnięcia. Potem ustaw <code>TRYB_SOS = true</code>.</li>
