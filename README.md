@@ -54,7 +54,7 @@ Każdy szkic jest samodzielny (tylko `Wire` i biblioteka czujnika). Czujnik odle
 
 ## Jak zmienić piny i układ silników
 
-1. **Strona:** zmień wartości w `js/config.js` – piny (`piny`), układ silników (`silniki`), typy i biegunowość (`typySilnikow`), czujnik (`czujnikOdleglosci`), kolory przewodów (`przewodyI2C`), opis mocowania (`mocowanieCzujnikow`). Schematy, tabele i ćwiczenie z orientacją przerysują się same.
+1. **Strona:** zmień wartości w `js/config.js` – piny (`piny`), układ silników (`silniki`), typy i biegunowość (`typySilnikow`), czujnik (`czujnikOdleglosci`), kolory przewodów (`przewodyI2C`: 3V3 czerwony, GND czarny, SDA niebieski, SCL żółty), opis mocowania (`mocowanieCzujnikow`). Schematy, tabele i ćwiczenie z orientacją przerysują się same.
 2. **Szkice:** zmień blok `KONFIGURACJA` na górze każdego szkicu (`PIN_SDA`, `PIN_SCL`, `PINY_SILNIKOW`), w obu folderach.
 3. Uruchom:
    ```bash
@@ -72,7 +72,6 @@ Te wartości pochodzą z planu kursu i **nie zostały sprawdzone na sprzęcie** 
 - piny: SDA 6, SCL 7, ESC M1–M4: 18, 19, 20, 21
 - układ silników: M1 przód-lewy CW, M2 przód-prawy CCW, M3 tył-prawy CW, M4 tył-lewy CCW
 - biegunowość: typ A czerwony +, niebieski −; typ B biały +, czarny − (test przed lutowaniem – instrukcja na `prowadzacy.html`)
-- kolory przewodów I2C: czerwony 3V3, czarny GND, żółty SDA, niebieski SCL
 - mocowanie czujników: puste – uzupełnij `mocowanieCzujnikow`
 - pinout płytki w `config.js` (`pinout`) – używany tylko w rysunkach, sprawdź z nadrukiem na płytce
 

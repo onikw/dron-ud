@@ -15,16 +15,17 @@
   <div class="tabela-kontener"><table>
     <thead><tr><th style="width:28%">Problem</th><th>Co sprawdzić</th></tr></thead>
     <tbody>
+      <tr><td><b>Nie ma płytki ESP32C6 Dev Module na liście</b></td><td>Nie jest zainstalowany pakiet esp32. Zrób <a href="zajecia-2/07-arduino.html#instalacja">krok 1 z rozdziału Arduino</a>.</td></tr>
       <tr><td><b>Brak portu</b> w Narzędzia → Port</td><td>
         <ul>
           <li>Kabel USB może służyć tylko do ładowania. Weź inny kabel.</li>
-          <li>Kabel musi być w złączu płytki oznaczonym <b>USB</b>.</li>
+          <li>Kabel musi być w złączu płytki oznaczonym <b>USB</b>, a nie <b>UART</b>.</li>
           <li>Przytrzymaj BOOT, naciśnij i puść RST, puść BOOT – port powinien wrócić.</li>
           <li>Windows: zobacz, czy w Menedżerze urządzeń płytka pojawia się po podłączeniu.</li>
         </ul></td></tr>
       <tr><td><b>Pusty Serial Monitor</b></td><td>
         <ul>
-          <li>Narzędzia → <b>USB CDC On Boot: Enabled</b>. Po zmianie wgraj program jeszcze raz.</li>
+          <li>Kabel w złączu <b>USB</b> (nie UART) i Narzędzia → <b>USB CDC On Boot: Enabled</b>. Po zmianie wgraj program jeszcze raz.</li>
           <li>Na dole Serial Monitora ustaw <b>115200 baud</b>.</li>
           <li>Zamknij i otwórz Serial Monitor, potem naciśnij RST na płytce.</li>
           <li>Komendy nie działają? Ustaw zakończenie linii na <b>Nowa linia</b>.</li>
@@ -35,7 +36,7 @@
           <li>Zamknij Serial Monitor i Plotter – czasem blokują port.</li>
         </ul></td></tr>
       <tr><td><b>Błąd kompilacji</b> przy <code>ledcAttach</code></td><td>Zainstalowany jest stary pakiet esp32 (2.x). W Menedżerze płytek zainstaluj pakiet <b>esp32 od Espressif w wersji 3.x</b>.</td></tr>
-      <tr><td><b>Błąd: brak pliku VL53L0X.h</b></td><td>Zainstaluj bibliotekę <b><span data-k="czujnikOdleglosci.biblioteka">VL53L0X (Pololu)</span></b> w Menedżerze bibliotek.</td></tr>
+      <tr><td><b>Błąd: brak pliku VL53L0X.h</b></td><td>Biblioteka nie jest zainstalowana. Zainstaluj bibliotekę <b><span data-k="czujnikOdleglosci.biblioteka">VL53L0X (Pololu)</span></b> w Menedżerze bibliotek.</td></tr>
       <tr><td><b>Skaner I2C nic nie widzi</b></td><td>
         <ul>
           <li>Odłącz USB i sprawdź przewody według kolorów: 3V3, GND, SDA → pin <b data-k="piny.sda">6</b>, SCL → pin <b data-k="piny.scl">7</b>.</li>

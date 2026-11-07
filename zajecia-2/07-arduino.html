@@ -12,8 +12,21 @@
 <h1>Arduino od zera</h1>
   <p class="wstep">ESP32 to <strong>mikrokontroler</strong> – mały komputer, który wykonuje jeden program i steruje elektroniką. Program piszemy na komputerze w Arduino IDE i wysyłamy kablem USB. W Arduino program nazywa się <strong>szkic</strong>.</p>
 
+  <section class="krok" id="instalacja">
+    <h2><span class="nr">1</span>Zainstaluj pakiet esp32</h2>
+    <p>Arduino IDE na starcie zna tylko płytki firmy Arduino. Naszą płytkę zrobiła firma Espressif, więc trzeba doinstalować jej pakiet. <strong>Zróbcie to na samym początku zajęć</strong> – pobieranie trwa kilka minut.</p>
+    <ol>
+      <li>Uruchom Arduino IDE.</li>
+      <li>Kliknij ikonę <strong>płytki</strong> na lewym pasku (Menedżer płytek).</li>
+      <li>Wpisz <code>esp32</code>.</li>
+      <li>Znajdź pakiet <strong>„esp32” od Espressif Systems</strong> (nie „Arduino ESP32 Boards”).</li>
+      <li>Wybierz najnowszą wersję <strong>3.x</strong> i kliknij <strong>Instaluj</strong>. Nie zamykaj Arduino IDE, dopóki się nie skończy.</li>
+    </ol>
+    <div class="ramka wskazowka"><span class="tytul">Nie ma pakietu esp32 na liście?</span><strong>Plik → Preferencje</strong>, w polu „Dodatkowe adresy URL do menedżera płytek” wklej:<br><code>https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json</code><br>kliknij OK i wyszukaj <code>esp32</code> jeszcze raz.</div>
+  </section>
+
   <section class="krok" id="okno">
-    <h2><span class="nr">1</span>Okno programu Arduino IDE</h2>
+    <h2><span class="nr">2</span>Okno programu Arduino IDE</h2>
     <p>Uruchom Arduino IDE. Zapamiętaj, gdzie są najważniejsze przyciski:</p>
     <div class="rysunek">
       <svg viewBox="0 0 720 400" role="img" aria-label="Schemat okna Arduino IDE z ponumerowanymi przyciskami">
@@ -55,9 +68,10 @@
   </section>
 
   <section class="krok" id="plytka">
-    <h2><span class="nr">2</span>Wybierz płytkę i port</h2>
+    <h2><span class="nr">3</span>Wybierz płytkę i port</h2>
+    <div class="ramka uwaga"><span class="tytul">Złącze USB, nie UART</span>Płytka ESP32 ma dwa złącza do kabla. Kabel podłącz do złącza z napisem <strong>USB</strong>, a nie do tego z napisem <strong>UART</strong>. Przez złącze USB wgrywamy program i przez nie płytka pisze do Serial Monitora.</div>
     <ol>
-      <li>Podłącz płytkę ESP32 kablem USB (prowadzący sprawdził już połączenia).</li>
+      <li>Podłącz płytkę ESP32 kablem do złącza <strong>USB</strong> na płytce (prowadzący sprawdził już połączenia).</li>
       <li><strong>Narzędzia → Płytka → esp32 → ESP32C6 Dev Module</strong>.</li>
       <li><strong>Narzędzia → Port</strong> – wybierz port płytki, np. <code>COM5</code>.</li>
       <li><strong>Narzędzia → USB CDC On Boot → Enabled</strong>. Bez tego Serial Monitor będzie pusty.</li>
@@ -66,7 +80,7 @@
   </section>
 
   <section class="krok" id="program">
-    <h2><span class="nr">3</span>Pierwszy program</h2>
+    <h2><span class="nr">4</span>Pierwszy program</h2>
     <p>Każdy szkic ma dwie części:</p>
 <pre class="bez-dymkow"><code>   start
      |
@@ -81,7 +95,7 @@
   </section>
 
   <section class="krok" id="wgraj">
-    <h2><span class="nr">4</span>Wgraj program</h2>
+    <h2><span class="nr">5</span>Wgraj program</h2>
     <ol>
       <li>Kliknij <strong>Wgraj</strong> (strzałka) albo naciśnij <kbd>Ctrl</kbd>+<kbd>U</kbd>.</li>
       <li>Poczekaj, aż w konsoli pojawi się <code>Hard resetting via RTS pin...</code>.</li>
@@ -91,7 +105,7 @@
   </section>
 
   <section class="krok" id="monitor">
-    <h2><span class="nr">5</span>Otwórz Serial Monitor</h2>
+    <h2><span class="nr">6</span>Otwórz Serial Monitor</h2>
     <ol>
       <li>Kliknij lupę w prawym górnym rogu albo <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>M</kbd>.</li>
       <li>Na dole ustaw <strong>115200 baud</strong>.</li>
@@ -100,7 +114,7 @@
   </section>
 
   <section class="krok" id="zadania">
-    <h2><span class="nr">6</span>Zadania</h2>
+    <h2><span class="nr">7</span>Zadania</h2>
     <p>W kodzie szukaj napisów <code>// ZADANIE</code>. Po każdej zmianie wgraj program jeszcze raz.</p>
     <ol>
       <li>Zmień tempo mrugania <code>TEMPO_MS</code> na 100, potem na 2000.</li>

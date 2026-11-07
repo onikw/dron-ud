@@ -45,7 +45,7 @@ window.KONFIG = {
   mpu: { model: "MPU6050", adres: 0x68 },
 
   // Kolory przewodów I2C z drona.
-  przewodyI2C: { "3V3": "czerwony", GND: "czarny", SDA: "żółty", SCL: "niebieski" },
+  przewodyI2C: { "3V3": "czerwony", GND: "czarny", SDA: "niebieski", SCL: "żółty" },
 
   // Opis mocowania czujników na dronie (prowadzący uzupełni).
   // Pusty tekst = na stronie pojawi się ramka "do uzupełnienia".
@@ -71,6 +71,6 @@ window.KONFIG = {
 
   doPotwierdzenia: [
     "plytka", "piny", "silniki", "typySilnikow (biegunowość)",
-    "mocowanieCzujnikow", "przewodyI2C", "pinout"
+    "mocowanieCzujnikow", "pinout"
   ]
 };

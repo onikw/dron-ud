@@ -13,8 +13,8 @@
  *  CO MUSI BYĆ PODŁĄCZONE
  *   - Na dronie: MPU6050 i laser VL53L0X (oba na tych samych 4 przewodach).
  *   - Kabel z drona (ok. 1 m) wpięty w płytkę stykową:
- *     czerwony = 3V3, czarny = GND, żółty = SDA -> pin 6,
- *     niebieski = SCL -> pin 7.
+ *     czerwony = 3V3, czarny = GND, niebieski = SDA -> pin 6,
+ *     żółty = SCL -> pin 7.
  *
  *  JAK TO DZIAŁA
  *   I2C to dwie wspólne linie dla wielu urządzeń:

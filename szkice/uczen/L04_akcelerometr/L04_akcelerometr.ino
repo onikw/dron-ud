@@ -14,8 +14,8 @@
  *   - MPU6050 na dronie, w swoim miejscu na ramie.
  *   - Przy starcie dron stoi płasko i nieruchomo (kalibracja).
  *   - Kabel z drona (ok. 1 m) wpięty w płytkę stykową:
- *     czerwony = 3V3, czarny = GND, żółty = SDA -> pin 6,
- *     niebieski = SCL -> pin 7.
+ *     czerwony = 3V3, czarny = GND, niebieski = SDA -> pin 6,
+ *     żółty = SCL -> pin 7.
  *
  *  JAK TO DZIAŁA
  *   Czujnik ma w środku ponumerowane SZUFLADKI (rejestry).

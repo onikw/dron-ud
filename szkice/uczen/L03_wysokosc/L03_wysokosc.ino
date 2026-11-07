@@ -13,8 +13,8 @@
  *  CO MUSI BYĆ PODŁĄCZONE
  *   - Czujnik VL53L0X na dronie, patrzy w dół na podłogę.
  *   - Kabel z drona (ok. 1 m) wpięty w płytkę stykową:
- *     czerwony = 3V3, czarny = GND, żółty = SDA -> pin 6,
- *     niebieski = SCL -> pin 7.
+ *     czerwony = 3V3, czarny = GND, niebieski = SDA -> pin 6,
+ *     żółty = SCL -> pin 7.
  *   - Biblioteka „VL53L0X” od Pololu (Menedżer bibliotek).
  *
  *  JAK TO DZIAŁA
