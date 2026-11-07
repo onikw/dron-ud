@@ -15,33 +15,9 @@
   <div class="ramka uzupelnij" data-k-ramka="mocowanieCzujnikow" data-tytul="Jak mocujemy czujniki"><span class="tytul">Do uzupełnienia przez prowadzącego</span>Opis mocowania czujników na waszej ramie (wpisz go w <code>js/config.js</code> w polu <code>mocowanieCzujnikow</code>).</div>
 
   <section class="krok" id="mpu">
-    <h2><span class="nr">1</span>MPU6050: płasko, na środku, strzałką X do przodu</h2>
-    <p><strong>MPU6050</strong> to akcelerometr i żyroskop w jednym układzie. Na płytce czujnika są narysowane osie X i Y.</p>
-    <ul>
-      <li><strong>Płasko</strong> – czujnik leży poziomo, równolegle do ramy. Krzywy czujnik pokazuje przechylenie, nawet gdy dron stoi prosto.</li>
-      <li><strong>Na środku</strong> – tam, gdzie dron się obraca. Z dala od środka czujnik czuje dodatkowe szarpnięcia.</li>
-      <li><strong>Strzałka X do przodu</strong> – wtedy oś X czujnika to oś przód–tył drona.</li>
-    </ul>
-    <div class="rysunek">
-      <svg viewBox="0 0 440 300" role="img" aria-label="MPU6050 na środku ramy, strzałka X do przodu">
-        <defs><marker id="m-gr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#D7352A"/></marker>
-        <marker id="m-gr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#2E8B4F"/></marker>
-        <marker id="m-gr3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#1F5FC8"/></marker></defs>
-        <line x1="380" y1="80" x2="380" y2="30" stroke="#1F5FC8" stroke-width="5" marker-end="url(#m-gr3)"/>
-        <text x="392" y="50" font-size="14" font-weight="800" fill="#1F5FC8">PRZÓD</text>
-        <line x1="90" y1="50" x2="290" y2="250" stroke="#13171F" stroke-width="14" stroke-linecap="round"/>
-        <line x1="290" y1="50" x2="90" y2="250" stroke="#13171F" stroke-width="14" stroke-linecap="round"/>
-        <circle cx="90" cy="50" r="30" fill="#E9E7DF" stroke="#13171F" stroke-width="3"/><circle cx="290" cy="50" r="30" fill="#E9E7DF" stroke="#13171F" stroke-width="3"/>
-        <circle cx="90" cy="250" r="30" fill="#E9E7DF" stroke="#13171F" stroke-width="3"/><circle cx="290" cy="250" r="30" fill="#E9E7DF" stroke="#13171F" stroke-width="3"/>
-        <rect x="150" y="115" width="80" height="70" rx="6" fill="#1F4F8A" stroke="#13171F" stroke-width="2"/>
-        <line x1="190" y1="150" x2="190" y2="100" stroke="#D7352A" stroke-width="4" marker-end="url(#m-gr)"/>
-        <text x="198" y="108" font-size="15" font-weight="800" fill="#D7352A">X</text>
-        <line x1="190" y1="150" x2="140" y2="150" stroke="#2E8B4F" stroke-width="4" marker-end="url(#m-gr2)"/>
-        <text x="130" y="142" font-size="15" font-weight="800" fill="#2E8B4F">Y</text>
-        <text x="190" y="178" text-anchor="middle" font-size="11" fill="#FFFFFF">MPU6050</text>
-      </svg>
-      <p class="podpis">Widok z góry. Strzałka X na płytce czujnika pokazuje przód drona, strzałka Y – lewą stronę.</p>
-    </div>
+    <h2><span class="nr">1</span>MPU6050</h2>
+    <p><strong>MPU6050</strong> to akcelerometr i żyroskop w jednym układzie. Czuje przechylenie i obrót drona.</p>
+    <p>Na ramie jest dla niego jedno miejsce. Zamocujcie go tam tak, żeby siedział pewnie i się nie ruszał. Na płytce czujnika są narysowane osie X i Y – nie musicie się nimi przejmować. Który kierunek czujnika to przód drona, ustawimy później w programie.</p>
   </section>
 
   <section class="krok" id="laser">

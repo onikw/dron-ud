@@ -11,7 +11,7 @@
  *   - Co mierzy akcelerometr, a co żyroskop.
  *
  *  CO MUSI BYĆ PODŁĄCZONE
- *   - MPU6050 na dronie, płasko, strzałka osi X do przodu.
+ *   - MPU6050 na dronie, w swoim miejscu na ramie.
  *   - Przy starcie dron stoi płasko i nieruchomo (kalibracja).
  *   - Kabel z drona (ok. 1 m) wpięty w płytkę stykową:
  *     czerwony = 3V3, czarny = GND, żółty = SDA -> pin 6,
