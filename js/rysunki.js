@@ -695,6 +695,7 @@
       if (st.typ && T[st.typ]) {
         s += '<circle cx="' + (p.x - 10) + '" cy="' + (p.y + 42) + '" r="7" fill="' + kolor(T[st.typ].plus) + '" stroke="#13171F" stroke-width="1.5"/>' +
           '<circle cx="' + (p.x + 10) + '" cy="' + (p.y + 42) + '" r="7" fill="' + kolor(T[st.typ].minus) + '" stroke="#13171F" stroke-width="1.5"/>';
+        if (st.podpiszTyp) s += '<text x="' + (p.x + 40) + '" y="' + (p.y - 38) + '" font-size="13" font-weight="800" fill="#B5711C">typ ' + st.typ + "</text>";
       }
       if (pokazPodpisy) s += '<text x="' + p.x + '" y="' + (p.y + (p.y < 200 ? -64 : 78)) + '" text-anchor="middle" font-size="12" fill="#4A5060">' + p.n + "</text>";
     });
@@ -705,10 +706,10 @@
   // Montaż: gdzie wcisnąć silniki typu A i B (bez numerów – numery są w ćwiczeniu z orientacji)
   R.ukladTypow = function (box) {
     var stan = {};
-    (K.silniki || []).forEach(function (m) { stan[m.pozycja] = { nr: typDlaKierunku(m.kierunek), typ: typDlaKierunku(m.kierunek), kier: m.kierunek }; });
+    (K.silniki || []).forEach(function (m) { stan[m.pozycja] = { nr: m.nr, typ: typDlaKierunku(m.kierunek), kier: m.kierunek, podpiszTyp: true }; });
     var T = K.typySilnikow || {};
     html(box, '<div style="max-width:420px;margin:0 auto">' + dronZGory(stan, true) + "</div>" +
-      '<p class="podpis">Litera w środku to typ silnika. Kropki to kolory przewodów: ' + Object.keys(T).map(function (t) {
+      '<p class="podpis">W środku numer silnika, obok typ silnika. Kropki to kolory przewodów: ' + Object.keys(T).map(function (t) {
         return "typ " + t + " – " + T[t].plus + " i " + T[t].minus + " (" + T[t].kierunek + ")";
       }).join(", ") + ". Zielona strzałka pokazuje kierunek obrotu.</p>");
   };
