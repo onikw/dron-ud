@@ -21,6 +21,13 @@
  *  KOMENDY (Serial Monitor, 115200, „Nowa linia”)
  *   u – uzbrój         t – test silników po kolei
  *   x – STOP           s – ponowny skan I2C i start czujników
+ *   f 1000 – zmień częstotliwość PWM (tylko TRYB_MOSFET, gdy rozbrojony)
+ *
+ *  SILNIK RUSZA DOPIERO PRZY 100%?
+ *   Moduł MOSFET nie nadąża za PWM 20 kHz (np. ma transoptor PC817
+ *   albo słaby sterownik bramki). Przy 100% wyjście jest stale
+ *   włączone, więc wtedy działa. Wpisz x, potem f 1000 (albo f 500,
+ *   f 200), u, t – i sprawdź, od ilu % silnik rusza.
  *
  *  PODŁĄCZENIE
  *   I2C: SDA pin 6, SCL pin 7 (kabel z drona).
@@ -48,7 +55,7 @@ const int CZAS_W_DOL_MS = 4000;  // zwalnianie MOC_TESTU -> 0
 const int PRZERWA_MS = 1500;     // przerwa przed kolejnym silnikiem
 const int CO_ILE_MS = 50;        // jak często wypisywać pomiary
 
-const int PWM_HZ = 20000;        // TRYB_MOSFET: częstotliwość PWM
+int pwm_hz = 20000;              // TRYB_MOSFET: częstotliwość PWM (zmiana na żywo: f 1000)
 const int PWM_BITY = 10;
 const int ESC_HZ = 50;           // TRYB_ESC_RC: 50 impulsów na sekundę
 const int ESC_BITY = 14;
@@ -106,7 +113,7 @@ void silnikiStart() {
 #ifdef TRYB_ESC_RC
     ledcAttach(PINY_SILNIKOW[i], ESC_HZ, ESC_BITY);
 #else
-    ledcAttach(PINY_SILNIKOW[i], PWM_HZ, PWM_BITY);
+    ledcAttach(PINY_SILNIKOW[i], pwm_hz, PWM_BITY);
 #endif
     wyslijMoc(i, 0);
   }
@@ -206,19 +213,50 @@ void wypisz() {
 // ================== KOMENDY ==================
 bool chce_test = false;
 
+String linia = "";
+
+void obsluzLinie() {
+  char z = linia.charAt(0);
+  float liczba = linia.substring(1).toFloat();
+  (void)liczba;   // w TRYB_ESC_RC nieużywana
+  if (z == 'u' || z == 'U') {
+    uzbrojony = true;
+    Serial.println("UZBROJONY! Uwaga na śmigła. Wpisz t, żeby zacząć test.");
+    pokazStan();
+  } else if (z == 't' || z == 'T') {
+    if (uzbrojony) chce_test = true;
+    else Serial.println("Najpierw uzbrój: wpisz u");
+  } else if (z == 's' || z == 'S') {
+    if (!uzbrojony) startCzujnikow();
+  } else if (z == 'f' || z == 'F') {
+#ifdef TRYB_ESC_RC
+    Serial.println("W TRYB_ESC_RC częstotliwość to zawsze 50 Hz.");
+#else
+    if (uzbrojony) Serial.println("Najpierw x (rozbrój), potem f.");
+    else if (liczba < 50 || liczba > 40000) Serial.println("Podaj od 50 do 40000, np. f 1000");
+    else {
+      pwm_hz = liczba;
+      for (int i = 0; i < 4; i++) ledcChangeFrequency(PINY_SILNIKOW[i], pwm_hz, PWM_BITY);
+      Serial.println("PWM: " + String(pwm_hz) + " Hz");
+    }
+#endif
+  } else {
+    Serial.println("Znam komendy: u, t, x, s, f <Hz>");
+  }
+}
+
 void obsluzSerial() {
   while (Serial.available() > 0) {
     char z = Serial.read();
-    if (z == 'x' || z == 'X' || z == ' ') stop("komenda x");
-    else if (z == 'u' || z == 'U') {
-      uzbrojony = true;
-      Serial.println("UZBROJONY! Uwaga na śmigła. Wpisz t, żeby zacząć test.");
-      pokazStan();
-    } else if (z == 't' || z == 'T') {
-      if (uzbrojony) chce_test = true;
-      else Serial.println("Najpierw uzbrój: wpisz u");
-    } else if (z == 's' || z == 'S') {
-      if (!uzbrojony) startCzujnikow();
+    if (linia.length() == 0 && (z == 'x' || z == 'X' || z == ' ')) {
+      stop("komenda x");
+      continue;
+    }
+    if (z == '\n' || z == '\r') {
+      if (linia.length() > 0) obsluzLinie();
+      linia = "";
+    } else {
+      linia += z;
     }
   }
 }
@@ -272,7 +310,10 @@ void setup() {
   Wire.setTimeOut(50);
   Serial.println("TEST DRONA");
   startCzujnikow();
-  Serial.println("Komendy: u = uzbrój, t = test silników, x = STOP, s = skan I2C.");
+  Serial.println("Komendy: u = uzbrój, t = test silników, x = STOP, s = skan I2C, f 1000 = PWM 1000 Hz.");
+#ifndef TRYB_ESC_RC
+  Serial.println("PWM: " + String(pwm_hz) + " Hz");
+#endif
 }
 
 void loop() {
