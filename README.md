@@ -50,7 +50,7 @@ img/                      logo-ud.png
 | 4 | `L09_trzymaj_wysokosc` | moc zawisu + PID, komendy, anti-windup |
 | 5 (19.12) | `L10_misja` | maszyna stanów, tablica kroków, start „s” |
 
-Każdy szkic jest samodzielny (tylko `Wire` i biblioteka czujnika). Czujnik odległości to **VL53L0X** (biblioteka Pololu „VL53L0X”). Do rozpoznania modelu służy `narzedzia/rozpoznaj_laser/`. I2C: `Wire.setClock(100000)` i `Wire.setTimeOut(50)` (kabel ok. 1 m). Szkice z silnikami: najpierw wyjścia ESC na 0, start rozbrojony, `u` uzbraja, `x`/spacja i BOOT (GPIO9) to STOP, `MAX_MOC` 60%, zawsze rampa. L09 i L10: STOP przy braku pomiaru > 200 ms, wysokości > `WYSOKOSC_MAX` i po `CZAS_MAX`, z wypisaniem powodu. Tryb ESC wybiera jeden `#define`: `TRYB_MOSFET` (domyślny, LEDC 20 kHz, 10 bitów) albo `TRYB_ESC_RC` (1000–2000 µs, 50 Hz).
+Każdy szkic jest samodzielny (tylko `Wire` i biblioteka czujnika). Czujnik odległości to **VL53L0X** (biblioteka Pololu „VL53L0X”). Do rozpoznania modelu służy `narzedzia/rozpoznaj_laser/`. Do sprawdzenia całego drona służy `narzedzia/test_drona/` (skan I2C, pomiary VL53L0X i MPU6050 na żywo, po `u` i `t` silniki po kolei 0 → 100% → 0; pierwszy raz bez śmigieł). I2C: `Wire.setClock(100000)` i `Wire.setTimeOut(50)` (kabel ok. 1 m). Szkice z silnikami: najpierw wyjścia ESC na 0, start rozbrojony, `u` uzbraja, `x`/spacja i BOOT (GPIO9) to STOP, `MAX_MOC` 60%, zawsze rampa. L09 i L10: STOP przy braku pomiaru > 200 ms, wysokości > `WYSOKOSC_MAX` i po `CZAS_MAX`, z wypisaniem powodu. Tryb ESC wybiera jeden `#define`: `TRYB_MOSFET` (domyślny, LEDC 20 kHz, 10 bitów) albo `TRYB_ESC_RC` (1000–2000 µs, 50 Hz).
 
 ## Jak zmienić piny i układ silników
 
