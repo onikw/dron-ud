@@ -24,10 +24,11 @@
  *   f 1000 – zmień częstotliwość PWM (tylko TRYB_MOSFET, gdy rozbrojony)
  *
  *  SILNIK RUSZA DOPIERO PRZY 100%?
- *   Moduł MOSFET nie nadąża za PWM 20 kHz (np. ma transoptor PC817
- *   albo słaby sterownik bramki). Przy 100% wyjście jest stale
- *   włączone, więc wtedy działa. Wpisz x, potem f 1000 (albo f 500,
- *   f 200), u, t – i sprawdź, od ilu % silnik rusza.
+ *   Szkic jest w TRYB_MOSFET, a na dronie są regulatory RC (nasze
+ *   mini ESC 1S 10A są RC). Przy 100% sygnał jest stale włączony
+ *   i tylko wtedy ESC coś rozumie. Włącz TRYB_ESC_RC.
+ *   Moduły MOSFET bez procesora: zostaw TRYB_MOSFET i próbuj
+ *   f 1000, f 500, f 200 (gdy nie nadążają za 20 kHz).
  *
  *  PODŁĄCZENIE
  *   I2C: SDA pin 6, SCL pin 7 (kabel z drona).
@@ -39,8 +40,8 @@
 #include <VL53L0X.h>
 
 // ================== KONFIGURACJA ==================
-#define TRYB_MOSFET          // moduły ESC sterowane PWM 20 kHz (domyślnie)
-// #define TRYB_ESC_RC       // albo regulatory ESC (impulsy 1000-2000 us)
+// #define TRYB_MOSFET       // albo moduły MOSFET sterowane wprost PWM 20 kHz
+#define TRYB_ESC_RC          // regulatory ESC: impuls 1000-2000 us co 20 ms (domyślnie)
                              // Zostaw odkomentowany TYLKO JEDEN tryb!
 
 const int PIN_SDA = 6;

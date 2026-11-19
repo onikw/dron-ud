@@ -15,9 +15,11 @@
  *   - Silnik M1 na pinie 18 (przez moduł ESC).
  *
  *  JAK TO DZIAŁA
- *   Silnik to „duża dioda”: im większe wypełnienie PWM,
- *   tym szybciej się kręci. Moduł ESC (w środku tranzystor MOSFET)
- *   to szybki włącznik, który przełącza duży prąd silnika.
+ *   ESP32 nie daje prądu silnikowi – robi to moduł ESC (regulator).
+ *   ESP32 wysyła mu co 20 ms krótki impuls. Długość impulsu mówi,
+ *   jaka ma być moc:  1000 us (1 ms) = stop,  2000 us (2 ms) = 100%.
+ *   ESC ma w środku własny mały procesor i tranzystor, który
+ *   bardzo szybko włącza i wyłącza duży prąd silnika.
  *
  *   ESP32 --PWM--> [ESC] ==prąd==> (M1)
  *
@@ -47,8 +49,8 @@
  */
 
 // ================== KONFIGURACJA ==================
-#define TRYB_MOSFET          // moduły ESC sterowane PWM 20 kHz (domyślnie)
-// #define TRYB_ESC_RC       // albo regulatory ESC (impulsy 1000-2000 us)
+// #define TRYB_MOSFET       // albo moduły MOSFET sterowane wprost PWM 20 kHz
+#define TRYB_ESC_RC          // regulatory ESC: impuls 1000-2000 us co 20 ms (domyślnie)
                              // Zostaw odkomentowany TYLKO JEDEN tryb!
 
 const int PINY_SILNIKOW[4] = {18, 19, 20, 21};   // M1, M2, M3, M4

@@ -65,8 +65,8 @@
 #include <VL53L0X.h>
 
 // ================== KONFIGURACJA ==================
-#define TRYB_MOSFET          // moduły ESC sterowane PWM 20 kHz (domyślnie)
-// #define TRYB_ESC_RC       // albo regulatory ESC (impulsy 1000-2000 us)
+// #define TRYB_MOSFET       // albo moduły MOSFET sterowane wprost PWM 20 kHz
+#define TRYB_ESC_RC          // regulatory ESC: impuls 1000-2000 us co 20 ms (domyślnie)
                              // Zostaw odkomentowany TYLKO JEDEN tryb!
 
 const int PINY_SILNIKOW[4] = {18, 19, 20, 21};   // M1, M2, M3, M4
