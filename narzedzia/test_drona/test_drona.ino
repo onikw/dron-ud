@@ -21,6 +21,7 @@
  *  KOMENDY (Serial Monitor, 115200, „Nowa linia”)
  *   u – uzbrój         t – test silników po kolei
  *   x – STOP           s – ponowny skan I2C i start czujników
+ *   k – kalibracja zakresu gazu ESC (tylko TRYB_ESC_RC, opis niżej)
  *   f 1000 – zmień częstotliwość PWM (tylko TRYB_MOSFET, gdy rozbrojony)
  *
  *  SILNIK RUSZA DOPIERO PRZY 100%?
@@ -29,6 +30,18 @@
  *   i tylko wtedy ESC coś rozumie. Włącz TRYB_ESC_RC.
  *   Moduły MOSFET bez procesora: zostaw TRYB_MOSFET i próbuj
  *   f 1000, f 500, f 200 (gdy nie nadążają za 20 kHz).
+ *
+ *  KALIBRACJA ESC (komenda k) – BEZ ŚMIGIEŁ!
+ *   Każdy ESC zapamiętuje, jaki impuls to „zero”, a jaki „pełny gaz”.
+ *   Gdy silniki ruszają przy różnych % albo któryś nie rusza wcale:
+ *   1. Wyłącz zasilanie ESC (USB do ESP zostaje).
+ *   2. Wpisz k  -> ESP wysyła na wszystkie kanały pełny gaz (2000 us).
+ *   3. Włącz zasilanie ESC. Poczekaj na piknięcia z silników
+ *      (zwykle 1–2 krótkie = zapamiętał „pełny gaz”).
+ *   4. Od razu (w ciągu ok. 2 s) wpisz k jeszcze raz -> zero (1000 us).
+ *      Dłuższe piknięcie = zapamiętał „zero”. Gotowe.
+ *   5. Wyłącz i włącz zasilanie ESC, potem u, t.
+ *   x w każdej chwili = zero na wszystkich kanałach.
  *
  *  PODŁĄCZENIE
  *   I2C: SDA pin 6, SCL pin 7 (kabel z drona).
@@ -122,8 +135,24 @@ void silnikiStart() {
   pokazStan();
 }
 
+// Kalibracja: 0 = nie trwa, 1 = wysyłamy pełny gaz i czekamy na zasilanie ESC.
+int krok_kalibracji = 0;
+
+// Wysyła impuls o długości us na wszystkie kanały – z pominięciem uzbrojenia.
+// Tylko do kalibracji ESC.
+void impulsWszystkie(int us) {
+#ifdef TRYB_ESC_RC
+  uint32_t wypelnienie = (uint32_t)us * ESC_HZ * (1 << ESC_BITY) / 1000000UL;
+  for (int i = 0; i < 4; i++) {
+    ledcWrite(PINY_SILNIKOW[i], wypelnienie);
+    moc[i] = (us - 1000) / 10.0;
+  }
+#endif
+}
+
 void stop(String powod) {
   uzbrojony = false;
+  krok_kalibracji = 0;
   for (int i = 0; i < 4; i++) wyslijMoc(i, 0);
   Serial.println("STOP! Powód: " + powod);
   pokazStan();
@@ -221,6 +250,10 @@ void obsluzLinie() {
   float liczba = linia.substring(1).toFloat();
   (void)liczba;   // w TRYB_ESC_RC nieużywana
   if (z == 'u' || z == 'U') {
+    if (krok_kalibracji != 0) {
+      Serial.println("Trwa kalibracja. Dokończ ją (k) albo przerwij (x).");
+      return;
+    }
     uzbrojony = true;
     Serial.println("UZBROJONY! Uwaga na śmigła. Wpisz t, żeby zacząć test.");
     pokazStan();
@@ -241,8 +274,26 @@ void obsluzLinie() {
       Serial.println("PWM: " + String(pwm_hz) + " Hz");
     }
 #endif
+  } else if (z == 'k' || z == 'K') {
+#ifndef TRYB_ESC_RC
+    Serial.println("Kalibracja jest tylko w TRYB_ESC_RC.");
+#else
+    if (uzbrojony) {
+      Serial.println("Najpierw x (rozbrój), potem k.");
+    } else if (krok_kalibracji == 0) {
+      krok_kalibracji = 1;
+      impulsWszystkie(2000);
+      Serial.println("KALIBRACJA: wysyłam PEŁNY GAZ (2000 us). Śmigła zdjęte?");
+      Serial.println("Teraz WŁĄCZ zasilanie ESC. Po piknięciach od razu wpisz k.");
+    } else {
+      krok_kalibracji = 0;
+      impulsWszystkie(1000);
+      Serial.println("KALIBRACJA: wysyłam ZERO (1000 us). Po długim piknięciu gotowe.");
+      Serial.println("Wyłącz i włącz zasilanie ESC, potem u, t.");
+    }
+#endif
   } else {
-    Serial.println("Znam komendy: u, t, x, s, f <Hz>");
+    Serial.println("Znam komendy: u, t, x, s, k, f <Hz>");
   }
 }
 
@@ -265,7 +316,7 @@ void obsluzSerial() {
 // Wszystko, co dzieje się „w tle”: komendy, BOOT, czujniki, wypisywanie.
 void pilnuj() {
   obsluzSerial();
-  if (uzbrojony && digitalRead(PIN_STOP) == LOW) stop("przycisk BOOT");
+  if ((uzbrojony || krok_kalibracji != 0) && digitalRead(PIN_STOP) == LOW) stop("przycisk BOOT");
   czytajLaser();
   if (millis() - czas_wypisu >= CO_ILE_MS) {
     czas_wypisu = millis();
@@ -311,7 +362,7 @@ void setup() {
   Wire.setTimeOut(50);
   Serial.println("TEST DRONA");
   startCzujnikow();
-  Serial.println("Komendy: u = uzbrój, t = test silników, x = STOP, s = skan I2C, f 1000 = PWM 1000 Hz.");
+  Serial.println("Komendy: u = uzbrój, t = test silników, x = STOP, s = skan I2C, k = kalibracja ESC, f 1000 = PWM 1000 Hz.");
 #ifndef TRYB_ESC_RC
   Serial.println("PWM: " + String(pwm_hz) + " Hz");
 #endif
